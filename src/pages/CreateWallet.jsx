@@ -40,57 +40,55 @@ function CreateWallet() {
 
   return (
     <Layout>
-      <>
-        <h2 className="text-2xl uppercase tracking-tight mb-2">Create a new wallet</h2>
-        <form onSubmit={handleSubmit}>
-          <p className="mb-4">
-            Enter and confirm a password for your wallet then click the 'Create' button. After your
-            wallet is successfully created you will be prompted to download the keystore file for
-            your wallet.
-          </p>
-          <fieldset disabled={isLoading}>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={passwordInput.value}
-                onChange={(...args) => {
-                  if (errors.password) {
-                    setErrors({ ...errors, password: null });
-                  }
-                  passwordInput.onChange(...args);
-                }}
-                placeholder="eg. s0meth!ngsup3rsecre7"
-                className={errors.password && 'border border-red-600'}
-              />
-              {errors.password && <p className="text-red-600">{errors.password}</p>}
-            </div>
+      <h2 className="text-2xl uppercase tracking-tight mb-2">Create a new wallet</h2>
+      <form onSubmit={handleSubmit}>
+        <p className="mb-4">
+          Enter and confirm a password for your wallet then click the 'Create' button. After your
+          wallet is successfully created you will be prompted to download the keystore file for your
+          wallet.
+        </p>
+        <fieldset disabled={isLoading}>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={passwordInput.value}
+              onChange={(...args) => {
+                if (errors.password) {
+                  setErrors({ ...errors, password: null });
+                }
+                passwordInput.onChange(...args);
+              }}
+              placeholder="eg. s0meth!ngsup3rsecre7"
+              className={errors.password && 'border border-red-600'}
+            />
+            {errors.password && <p className="text-red-600">{errors.password}</p>}
+          </div>
 
-            <div>
-              <label htmlFor="confirmPassword">Confirm password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={confirmPasswordInput.value}
-                onChange={(...args) => {
-                  if (errors.confirmPassword) {
-                    setErrors({ ...errors, confirmPassword: null });
-                  }
-                  confirmPasswordInput.onChange(...args);
-                }}
-                placeholder="eg. s0meth!ngsup3rsecre7"
-                className={errors.confirmPassword && 'border border-red-600'}
-              />
-              {errors.confirmPassword && <p className="text-red-600">{errors.confirmPassword}</p>}
-            </div>
+          <div>
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={confirmPasswordInput.value}
+              onChange={(...args) => {
+                if (errors.confirmPassword) {
+                  setErrors({ ...errors, confirmPassword: null });
+                }
+                confirmPasswordInput.onChange(...args);
+              }}
+              placeholder="eg. s0meth!ngsup3rsecre7"
+              className={errors.confirmPassword && 'border border-red-600'}
+            />
+            {errors.confirmPassword && <p className="text-red-600">{errors.confirmPassword}</p>}
+          </div>
 
-            <button type="submit">Creat{isLoading ? 'ing' : 'e'}</button>
-          </fieldset>
-        </form>
-      </>
+          <button type="submit">Creat{isLoading ? 'ing' : 'e'}</button>
+        </fieldset>
+      </form>
     </Layout>
   );
 }
