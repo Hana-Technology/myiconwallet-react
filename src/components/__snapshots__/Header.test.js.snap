@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the header 1`] = `
-<h1
-  aria-label="my icon wallet"
-  class="text-2xl lg:text-3xl whitespace-no-wrap"
+exports[`renders the logo 1`] = `
+<a
+  aria-current="page"
+  href="/"
 >
   my
   <svg
@@ -46,5 +46,5 @@ exports[`renders the header 1`] = `
     </g>
   </svg>
   wallet
-</h1>
+</a>
 `;
