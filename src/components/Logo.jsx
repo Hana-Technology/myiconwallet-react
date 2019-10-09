@@ -8,7 +8,7 @@ function Logo({ className, iconClassName, textClassName }) {
       viewBox="0 0 350 120"
       role="logo"
       aria-label="ICON Foundation logo"
-      className={`fill-current inline align-middle ${className || 'text-white'}`}
+      className={`fill-current inline align-middle ${className || ''}`}
       style={{ height: '0.675em' }}
     >
       {/* o icon */}
