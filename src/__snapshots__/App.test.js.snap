@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the header and footer 1`] = `
+exports[`renders the header 1`] = `
 <h1
   aria-label="my icon wallet"
   class="text-2xl lg:text-3xl whitespace-no-wrap"
