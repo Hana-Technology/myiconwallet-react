@@ -65,7 +65,7 @@ function CreateWallet({ onCreateWallet }) {
               passwordInput.onChange(...args);
             }}
             placeholder="eg. s0meth!ngsup3rsecre7"
-            hasError={errors.password}
+            hasError={!!errors.password}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>
@@ -84,7 +84,7 @@ function CreateWallet({ onCreateWallet }) {
               confirmPasswordInput.onChange(...args);
             }}
             placeholder="eg. s0meth!ngsup3rsecre7"
-            hasError={errors.confirmPassword}
+            hasError={!!errors.confirmPassword}
           />
           {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
         </InputGroup>
