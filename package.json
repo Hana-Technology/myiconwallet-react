@@ -1,5 +1,6 @@
 {
   "name": "my-icon-wallet",
+  "description": "A wallet application for the ICON blockchain network",
   "version": "1.0.0",
   "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
   "license": "MIT",
