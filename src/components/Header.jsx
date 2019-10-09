@@ -32,7 +32,7 @@ function Header() {
             <NavLink to="/create">Create Wallet</NavLink>
           </ul>
           <ul>
-            <NavLink to="/unlock">Unlock Wallet</NavLink>
+            <NavLink to="/unlock">Unlock</NavLink>
           </ul>
         </nav>
       </div>

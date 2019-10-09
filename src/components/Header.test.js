@@ -12,7 +12,7 @@ it('renders the nav links', () => {
   const createLink = getByText('Create Wallet');
   expect(createLink).toBeInTheDocument();
   expect(createLink).toHaveAttribute('href', '/create');
-  const updateLink = getByText('Unlock Wallet');
+  const updateLink = getByText('Unlock');
   expect(updateLink).toBeInTheDocument();
   expect(updateLink).toHaveAttribute('href', '/unlock');
 });
