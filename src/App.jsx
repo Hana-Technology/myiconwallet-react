@@ -6,7 +6,7 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 text-gray-100 p-4 pt-3 shadow-lg">
         <div className="container mx-auto">
-          <h1 className="text-2xl lg:text-3xl whitespace-no-wrap">
+          <h1 className="text-2xl lg:text-3xl whitespace-no-wrap" aria-label="my icon wallet">
             my
             <Logo className="text-cyan mx-1" />
             wallet
