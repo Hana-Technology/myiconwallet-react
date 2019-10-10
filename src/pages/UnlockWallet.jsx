@@ -9,6 +9,7 @@ import {
 } from 'utils/readKeystoreFile';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
@@ -76,8 +77,7 @@ function UnlockWalletPage() {
       <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
       <div className="sm:flex items-start justify-center mb-4">
         <p className="sm:pr-5">
-          Choose your keystore file and enter the wallet password to unlock your wallet. Your
-          keystore file won't be sent anywhere, it will only stay in your web browser session.
+          Choose your keystore file and enter the wallet password to unlock your wallet.
         </p>
         <img
           src={authenticationSvg}
@@ -85,6 +85,12 @@ function UnlockWalletPage() {
           className="hidden sm:block w-1/3 max-w-full flex-none -mt-8"
         />
       </div>
+
+      <Alert
+        type="info"
+        text="Your keystore file won't be sent anywhere, it will only stay in your web browser session"
+        className="mb-4"
+      />
 
       <form onSubmit={handleOnSubmit}>
         <fieldset disabled={isLoading}>
