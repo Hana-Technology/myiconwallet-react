@@ -11,7 +11,7 @@ exports[`renders the logo 1`] = `
     class="fill-current inline align-middle text-cyan mx-1"
     data-testid="logo"
     role="logo"
-    style="height: 0.675em;"
+    style="height: 0.68em;"
     viewBox="0 0 350 120"
     xmlns="http://www.w3.org/2000/svg"
   >

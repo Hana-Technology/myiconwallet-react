@@ -9,7 +9,7 @@ function Logo({ className, iconClassName, textClassName }) {
       role="logo"
       aria-label="ICON Foundation logo"
       className={`fill-current inline align-middle ${className || ''}`}
-      style={{ height: '0.675em' }}
+      style={{ height: '0.68em' }}
       data-testid="logo"
     >
       {/* o icon */}
