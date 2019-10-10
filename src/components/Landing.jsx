@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
+import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import { Link } from '@reach/router';
 import Logo from 'components/Logo';
 import connectedWorldSvg from 'assets/connected_world.svg';
@@ -17,7 +18,10 @@ function MegaButton({ to, title, description, cta, icon, className }) {
         {title}
       </h3>
       <p className="mb-3">{description}</p>
-      <p className="text-lg font-bold">{cta} ➜</p>
+      <p className="text-lg font-bold">
+        {cta}
+        <FontAwesomeIcon icon={faLongArrowRight} fixedWidth className="text-sm ml-2" />
+      </p>
     </Link>
   );
 }
