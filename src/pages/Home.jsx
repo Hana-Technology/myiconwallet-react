@@ -7,7 +7,7 @@ import { useWallet } from 'components/Wallet';
 function HomePage() {
   const { wallet } = useWallet();
 
-  return <Layout>{wallet ? <ViewWallet /> : <Landing />}</Layout>;
+  return <Layout styleMain={!!wallet}>{wallet ? <ViewWallet /> : <Landing />}</Layout>;
 }
 
 export default HomePage;
