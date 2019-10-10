@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTextInput } from 'utils/useTextInput';
+import { wait } from 'utils/wait';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import { useWallet } from 'components/Wallet';
@@ -15,21 +16,21 @@ function CreateWallet({ onCreateWallet }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setIsLoading(true);
+    await wait(); // wait to ensure loading state shows
 
-    if (validate()) {
-      setIsLoading(true);
-      // setTimeout to ensure loading state shows before thread-locking createWallet call
-      setTimeout(() => {
-        createWallet(passwordInput.value);
-        onCreateWallet();
-      }, 100);
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+    if (validate(password, confirmPassword)) {
+      createWallet(passwordInput.value);
+      onCreateWallet();
+    } else {
+      setIsLoading(false);
     }
   }
 
-  function validate() {
+  function validate(password, confirmPassword) {
     const errors = {};
-    const password = passwordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
 
     if (!password) errors.password = 'Please enter your password.';
     else if (password.length < 8)

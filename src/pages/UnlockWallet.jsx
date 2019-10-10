@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
+import {
+  ERROR_FAILED_READING_FILE,
+  ERROR_INVALID_KEYSTORE,
+  readKeystoreFile,
+} from 'utils/readKeystoreFile';
 import { useTextInput } from 'utils/useTextInput';
+import { wait } from 'utils/wait';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
@@ -11,20 +17,39 @@ function UnlockWallet() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
-  function handleOnSubmit(event) {
+  async function handleOnSubmit(event) {
     event.preventDefault();
-    if (validate()) {
-      setIsLoading(true);
+    setIsLoading(true);
+    await wait(); // wait to ensure loading state shows
+
+    let keystore = null;
+    if (keystoreFile) {
+      try {
+        keystore = await readKeystoreFile(keystoreFile);
+      } catch (error) {
+        keystore = error;
+      }
+    }
+    const password = passwordInput.value;
+
+    if (validate(keystore, password)) {
       console.log('Unlock wallet!', { keystoreFile, password: passwordInput.value });
       setTimeout(() => setIsLoading(false), 1000);
+    } else {
+      setIsLoading(false);
     }
   }
 
-  function validate() {
+  function validate(keystore, password) {
     const errors = {};
 
-    if (!keystoreFile) errors.keystoreFile = 'Please choose your keystore file.';
-    if (!passwordInput.value) errors.password = 'Please enter your password.';
+    if (!keystore) errors.keystoreFile = 'Please choose your keystore file.';
+    else if (keystore === ERROR_FAILED_READING_FILE)
+      errors.keystoreFile = 'Failed reading file, please try again with a valid keystore file.';
+    else if (keystore === ERROR_INVALID_KEYSTORE)
+      errors.keystoreFile = 'Please choose a valid keystore file.';
+
+    if (!password) errors.password = 'Please enter your password.';
 
     setErrors(errors);
     return !errors.password && !errors.keystoreFile;
