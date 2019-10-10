@@ -1,15 +1,13 @@
 import React from 'react';
+import Landing from 'components/Landing';
 import Layout from 'components/Layout';
-import Logo from 'components/Logo';
+import ViewWallet from 'components/ViewWallet';
+import { useWallet } from 'components/Wallet';
 
 function HomePage() {
-  return (
-    <Layout>
-      <p className="text-lg">
-        Your <Logo iconClassName="text-teal-600" /> wallet goes here!
-      </p>
-    </Layout>
-  );
+  const { wallet } = useWallet();
+
+  return <Layout>{wallet ? <ViewWallet /> : <Landing />}</Layout>;
 }
 
 export default HomePage;
