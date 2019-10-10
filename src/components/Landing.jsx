@@ -17,7 +17,7 @@ function MegaButton({ to, title, description, cta, className }) {
 
 function Landing() {
   return (
-    <div class="container mx-auto py-8">
+    <div className="container mx-auto py-8">
       <p className="text-lg mb-6">
         Welcome to my
         <Logo className="text-teal-600 mx-px" />
