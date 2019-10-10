@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { navigate } from '@reach/router';
 import {
   ERROR_FAILED_READING_FILE,
   ERROR_INVALID_KEYSTORE,
@@ -9,8 +10,10 @@ import { wait } from 'utils/wait';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
+import { useWallet } from 'components/Wallet';
 
 function UnlockWallet() {
+  const { unlockWallet } = useWallet();
   const passwordInput = useTextInput('');
   const [keystoreFile, setKeystoreFile] = useState(null);
   const [errors, setErrors] = useState({});
@@ -33,11 +36,14 @@ function UnlockWallet() {
     const password = passwordInput.value;
 
     if (validate(keystore, password)) {
-      console.log('Unlock wallet!', { keystoreFile, password: passwordInput.value });
-      setTimeout(() => setIsLoading(false), 1000);
-    } else {
-      setIsLoading(false);
+      if (unlockWallet(keystore, password)) {
+        navigate('/');
+      } else {
+        setErrors({ password: 'Incorrect password for the provided keystore.' });
+      }
     }
+
+    setIsLoading(false);
   }
 
   function validate(keystore, password) {

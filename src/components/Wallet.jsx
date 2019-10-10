@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import IconSDK from 'icon-sdk-js';
+import { IconWallet } from 'icon-sdk-js';
 
 const INITIAL_STATE = {
   wallet: null,
   keystore: null,
   createWallet: null,
+  unlockWallet: null,
   unloadWallet: null,
 };
 
@@ -20,10 +21,21 @@ function Wallet({ children }) {
   const [keystore, setKeystore] = useState(null);
 
   function createWallet(password) {
-    const wallet = IconSDK.IconWallet.create();
+    const wallet = IconWallet.create();
     const keystore = wallet.store(password);
     setWallet(wallet);
     setKeystore(keystore);
+  }
+
+  function unlockWallet(keystore, password) {
+    try {
+      const wallet = IconWallet.loadKeystore(keystore, password);
+      setWallet(wallet);
+      setKeystore(keystore);
+      return true;
+    } catch (_error) {
+      return false;
+    }
   }
 
   function unloadWallet() {
@@ -32,7 +44,7 @@ function Wallet({ children }) {
   }
 
   return (
-    <WalletContext.Provider value={{ wallet, keystore, createWallet, unloadWallet }}>
+    <WalletContext.Provider value={{ wallet, keystore, createWallet, unlockWallet, unloadWallet }}>
       {children}
     </WalletContext.Provider>
   );
