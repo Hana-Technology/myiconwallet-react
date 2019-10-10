@@ -29,7 +29,7 @@ function MegaButton({ to, title, description, cta, icon, className }) {
 function Landing() {
   return (
     <div className="container mx-auto py-8">
-      <div className="sm:flex items-center justify-center mb-6">
+      <div className="sm:flex items-center justify-center max-w-4xl mx-auto mb-6">
         <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8">
           <h2 className="text-3xl leading-tight mb-3">
             Welcome to{' '}
@@ -54,14 +54,14 @@ function Landing() {
         <img
           src={connectedWorldSvg}
           alt="world map with network lines"
-          className="hidden sm:block w-2/5 md:w-1/3 lg:w-1/4 max-w-full flex-none pr-6"
+          className="hidden sm:block w-2/5 md:w-1/3 max-w-full flex-none pr-6"
         />
       </div>
-      <div className="sm:flex justify-between px-4 sm:px-6">
+      <div className="sm:flex justify-between max-w-4xl mx-auto px-4 sm:px-6">
         <MegaButton
           to="/create"
           title="Create a wallet"
-          description="Provide a password and we'll create a new wallet and give you the keystore to access it next time"
+          description="Enter a password to create a new wallet then download the keystore to access it next time"
           cta="Get started"
           icon={faWallet}
           className="mb-6 sm:mb-0 sm:mr-6 bg-teal-500 hover:bg-teal-600 text-teal-100"
