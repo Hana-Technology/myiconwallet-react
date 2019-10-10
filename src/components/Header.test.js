@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import Header from './Header';
 
 it('renders the logo', () => {
-  const { getByText } = render(<App />);
+  const { getByText } = render(<Header />);
   expect(getByText(/my.*wallet/)).toMatchSnapshot();
 });
 
 it('renders the nav links', () => {
-  const { getByText } = render(<App />);
+  const { getByText } = render(<Header />);
   const createLink = getByText('Create Wallet');
   expect(createLink).toBeInTheDocument();
   expect(createLink).toHaveAttribute('href', '/create');
