@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import IconSDK from 'icon-sdk-js';
-const { HttpProvider, IconWallet } = IconSDK;
+import { useWallet } from 'components/Wallet';
+const { HttpProvider } = IconSDK;
 
 const NETWORK_MAINNET = 'mainnet';
 const NETWORK_TESTNET = 'testnet';
@@ -10,9 +11,6 @@ const INITIAL_STATE = {
   network: NETWORK_TESTNET,
   toggleNetwork: null,
   iconService: null,
-  wallet: null,
-  createWallet: null,
-  unloadWallet: null,
 };
 
 function getIconProviderUrl(network) {
@@ -32,10 +30,10 @@ export function useIconService() {
 }
 
 function IconService({ children }) {
+  const { unloadWallet } = useWallet();
   const [network, setNetwork] = useState(INITIAL_STATE.network);
   const [iconProvider, setIconProvider] = useState(new HttpProvider(getIconProviderUrl(network)));
   const [iconService, setIconService] = useState(new IconSDK(iconProvider));
-  const [wallet, setWallet] = useState(null);
 
   function toggleNetwork() {
     const newNetwork = network === NETWORK_TESTNET ? NETWORK_MAINNET : NETWORK_TESTNET;
@@ -47,27 +45,8 @@ function IconService({ children }) {
     unloadWallet();
   }
 
-  function createWallet(password) {
-    const wallet = IconWallet.create();
-    setWallet(wallet);
-    return wallet.store(password);
-  }
-
-  function unloadWallet() {
-    setWallet(null);
-  }
-
   return (
-    <IconServiceContext.Provider
-      value={{
-        network,
-        toggleNetwork,
-        iconService,
-        wallet,
-        createWallet,
-        unloadWallet,
-      }}
-    >
+    <IconServiceContext.Provider value={{ network, toggleNetwork, iconService }}>
       {children}
     </IconServiceContext.Provider>
   );

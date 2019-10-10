@@ -5,10 +5,8 @@ import Layout from 'components/Layout';
 
 function CreateWalletPage() {
   const [isCreated, setIsCreated] = useState(false);
-  const [keystoreFile, setKeystoreFile] = useState(null);
 
-  function handleOnCreateWallet(keystoreFile) {
-    setKeystoreFile(keystoreFile);
+  function handleOnCreateWallet() {
     setIsCreated(true);
   }
 
@@ -17,11 +15,7 @@ function CreateWalletPage() {
       <h2 className="text-2xl uppercase tracking-tight mb-2">
         Create{isCreated && 'd'} a new wallet
       </h2>
-      {isCreated ? (
-        <CreatedWallet keystoreFile={keystoreFile} />
-      ) : (
-        <CreateWallet onCreateWallet={handleOnCreateWallet} />
-      )}
+      {isCreated ? <CreatedWallet /> : <CreateWallet onCreateWallet={handleOnCreateWallet} />}
     </Layout>
   );
 }

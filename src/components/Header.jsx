@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, navigate } from '@reach/router';
-import { useIconService } from 'components/IconService';
 import Logo from 'components/Logo';
+import { useWallet } from 'components/Wallet';
 
 const navLinkBaseClasses =
   'flex h-full text-center hover:text-gray-100 focus:text-gray-100 items-center p-1 mx-2 border-b-2';
@@ -22,12 +22,12 @@ function NavLink({ children, to }) {
 }
 
 function Header() {
-  const { wallet, unloadWallet } = useIconService();
+  const { wallet, unloadWallet } = useWallet();
 
   function handleUnloadWallet(event) {
     event.preventDefault();
-    unloadWallet();
     navigate('/');
+    unloadWallet();
   }
 
   return (

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useTextInput } from 'utils/useTextInput';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
-import { useIconService } from 'components/IconService';
+import { useWallet } from 'components/Wallet';
 
 function CreateWallet({ onCreateWallet }) {
-  const { createWallet } = useIconService();
+  const { createWallet } = useWallet();
   const passwordInput = useTextInput('');
   const confirmPasswordInput = useTextInput('');
   const [errors, setErrors] = useState({});
@@ -19,8 +19,8 @@ function CreateWallet({ onCreateWallet }) {
       setIsLoading(true);
       // setTimeout to ensure loading state shows before thread-locking createWallet call
       setTimeout(() => {
-        const keystoreFile = createWallet(passwordInput.value);
-        onCreateWallet(keystoreFile);
+        createWallet(passwordInput.value);
+        onCreateWallet();
       }, 100);
     }
   }
