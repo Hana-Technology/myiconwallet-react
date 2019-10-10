@@ -82,7 +82,7 @@ function UnlockWalletPage() {
         <img
           src={authenticationSvg}
           alt="person entering secure website"
-          className="hidden sm:block w-1/3 max-w-full flex-none -mt-6"
+          className="hidden sm:block w-1/3 max-w-full flex-none -mt-8"
         />
       </div>
 

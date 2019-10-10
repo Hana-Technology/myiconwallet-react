@@ -65,7 +65,7 @@ function CreateWallet({ onCreateWallet }) {
         <img
           src={securitySvg}
           alt="website security with guard"
-          className="hidden sm:block w-1/3 max-w-full flex-none -mt-6"
+          className="hidden sm:block w-1/3 max-w-full flex-none -mt-8"
         />
       </div>
 
