@@ -26,12 +26,7 @@ function Landing() {
   return (
     <div className="container mx-auto py-8">
       <div className="sm:flex items-center justify-center mb-6">
-        <img
-          src={connectedWorldSvg}
-          alt="connected world"
-          className="hidden sm:block w-2/5 md:w-1/3 lg:w-1/4 max-w-full flex-none pr-6 order-2"
-        />
-        <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8 order-1">
+        <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8">
           <h2 className="text-3xl leading-tight mb-3">
             Welcome to{' '}
             <span className="whitespace-no-wrap">
@@ -52,6 +47,11 @@ function Landing() {
             before you can continue.
           </p>
         </div>
+        <img
+          src={connectedWorldSvg}
+          alt="world map with network lines"
+          className="hidden sm:block w-2/5 md:w-1/3 lg:w-1/4 max-w-full flex-none pr-6"
+        />
       </div>
       <div className="sm:flex justify-between px-4 sm:px-6">
         <MegaButton

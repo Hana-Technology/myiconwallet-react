@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinnerThird, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import PropTypes from 'prop-types';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import { useWallet } from 'components/Wallet';
+import securitySvg from 'assets/security.svg';
 
 function CreateWallet({ onCreateWallet }) {
   const { createWallet } = useWallet();
@@ -53,11 +56,18 @@ function CreateWallet({ onCreateWallet }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-4">
-        Enter and confirm a password for your wallet then press the <i>Create&nbsp;wallet</i>{' '}
-        button. After your wallet is created you will be prompted to download the keystore file for
-        your new wallet.
-      </p>
+      <div className="sm:flex items-start justify-center mb-4">
+        <p className="sm:pr-5">
+          Enter and confirm a password for your wallet then press the <i>Create&nbsp;wallet</i>{' '}
+          button. After your wallet is created you will be prompted to download the keystore file
+          for your new wallet.
+        </p>
+        <img
+          src={securitySvg}
+          alt="website security with guard"
+          className="hidden sm:block w-1/3 max-w-full flex-none -mt-6"
+        />
+      </div>
 
       <fieldset disabled={isLoading}>
         <InputGroup>
@@ -100,6 +110,12 @@ function CreateWallet({ onCreateWallet }) {
         </InputGroup>
 
         <Button type="submit" disabled={isLoading}>
+          <FontAwesomeIcon
+            icon={isLoading ? faSpinnerThird : faWallet}
+            spin={isLoading}
+            fixedWidth
+            className="mr-1"
+          />
           Creat{isLoading ? 'ing' : 'e'} wallet
         </Button>
       </fieldset>

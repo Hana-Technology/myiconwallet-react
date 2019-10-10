@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinnerThird, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
 import { navigate } from '@reach/router';
 import {
   ERROR_FAILED_READING_FILE,
@@ -11,6 +13,7 @@ import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
+import authenticationSvg from 'assets/authentication.svg';
 
 function UnlockWalletPage() {
   const { unlockWallet } = useWallet();
@@ -70,11 +73,19 @@ function UnlockWalletPage() {
 
   return (
     <Layout>
-      <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock an existing wallet</h2>
-      <p className="mb-4">
-        Choose your keystore file and enter the wallet password to unlock your wallet. Your keystore
-        file won't be sent anywhere, it will only stay in your web browser session.
-      </p>
+      <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
+      <div className="sm:flex items-start justify-center mb-4">
+        <p className="sm:pr-5">
+          Choose your keystore file and enter the wallet password to unlock your wallet. Your
+          keystore file won't be sent anywhere, it will only stay in your web browser session.
+        </p>
+        <img
+          src={authenticationSvg}
+          alt="person entering secure website"
+          className="hidden sm:block w-1/3 max-w-full flex-none -mt-6"
+        />
+      </div>
+
       <form onSubmit={handleOnSubmit}>
         <fieldset disabled={isLoading}>
           <InputGroup>
@@ -115,6 +126,12 @@ function UnlockWalletPage() {
           </InputGroup>
 
           <Button type="submit" disabled={isLoading}>
+            <FontAwesomeIcon
+              icon={isLoading ? faSpinnerThird : faUnlockAlt}
+              spin={isLoading}
+              fixedWidth
+              className="mr-1"
+            />
             Unlock{isLoading ? 'ing' : ''} wallet
           </Button>
         </fieldset>
