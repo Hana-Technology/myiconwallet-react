@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from 'components/Layout';
 import Logo from 'components/Logo';
 
-function Home() {
+function HomePage() {
   return (
     <Layout>
       <p className="text-lg">
@@ -12,4 +12,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

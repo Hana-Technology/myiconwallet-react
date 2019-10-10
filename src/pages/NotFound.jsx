@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'components/Button';
 import Layout from 'components/Layout';
 
-function NotFound() {
+function NotFoundPage() {
   return (
     <Layout>
       <h2 className="text-2xl uppercase tracking-tight mb-2">Page not found</h2>
@@ -12,4 +12,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

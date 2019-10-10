@@ -12,7 +12,7 @@ import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 
-function UnlockWallet() {
+function UnlockWalletPage() {
   const { unlockWallet } = useWallet();
   const passwordInput = useTextInput('');
   const [keystoreFile, setKeystoreFile] = useState(null);
@@ -123,4 +123,4 @@ function UnlockWallet() {
   );
 }
 
-export default UnlockWallet;
+export default UnlockWalletPage;
