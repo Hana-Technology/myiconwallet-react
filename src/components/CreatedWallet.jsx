@@ -5,6 +5,7 @@ import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import Alert, { ALERT_TYPE_SUCCESS, ALERT_TYPE_WARN } from 'components/Alert';
 import Button from 'components/Button';
 import { useWallet } from 'components/Wallet';
+import buildingBlocksSvg from 'assets/building_blocks.svg';
 
 function CreatedWallet() {
   const { keystore, wallet } = useWallet();
@@ -14,13 +15,22 @@ function CreatedWallet() {
   return (
     wallet && (
       <>
-        <p className="mb-2">Your new wallet has been created with address:</p>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title={wallet.getAddress()}
-          showIcon={false}
-          className="break-all mb-8"
-        />
+        <div className="sm:flex items-start justify-between mb-8">
+          <div className="sm:pr-5">
+            <p className="mb-2">Your new wallet has been created with address:</p>
+            <Alert
+              type={ALERT_TYPE_SUCCESS}
+              text={wallet.getAddress()}
+              showIcon={false}
+              className="break-all"
+            />
+          </div>
+          <img
+            src={buildingBlocksSvg}
+            alt="people filling giant wallet"
+            className="hidden sm:block w-1/4 max-w-full flex-none -mt-6 mr-1"
+          />
+        </div>
         <p className="mb-2">
           You should download your keystore file now and keep it somewhere private.
         </p>
