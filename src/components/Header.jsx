@@ -31,7 +31,7 @@ function Header() {
   }
 
   return (
-    <header className="bg-gray-800 text-gray-100 p-4 pt-3 shadow-lg">
+    <header className="bg-gray-800 text-gray-100 p-4 pt-3 shadow-lg z-10">
       <div className="container mx-auto flex justify-between">
         <h1 className="text-2xl lg:text-3xl whitespace-no-wrap" aria-label="my icon wallet">
           <Link to="/">
