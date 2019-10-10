@@ -12,7 +12,7 @@ export function readKeystoreFile(file) {
 
       try {
         const keystore = JSON.parse(fileReader.result);
-        if (!validate(keystore)) throw void 0;
+        if (!validate(keystore)) throw new Error();
         resolve(keystore);
       } catch (_error) {
         reject(ERROR_INVALID_KEYSTORE);
