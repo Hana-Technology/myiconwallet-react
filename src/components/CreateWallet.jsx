@@ -54,9 +54,9 @@ function CreateWallet({ onCreateWallet }) {
   return (
     <form onSubmit={handleSubmit}>
       <p className="mb-4">
-        Enter and confirm a password for your wallet then press the 'Create&nbsp;wallet' button.
-        After your wallet is successfully created you will be prompted to download the keystore file
-        for your new wallet.
+        Enter and confirm a password for your wallet then press the <i>Create&nbsp;wallet</i>{' '}
+        button. After your wallet is created you will be prompted to download the keystore file for
+        your new wallet.
       </p>
 
       <fieldset disabled={isLoading}>

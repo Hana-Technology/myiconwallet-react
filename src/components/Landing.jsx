@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import Logo from 'components/Logo';
+import connectedWorldSvg from 'assets/connected_world.svg';
 
 function MegaButton({ to, title, description, cta, className }) {
   return (
     <Link
       to={to}
-      className={`inline-block w-1/2 px-8 py-6 rounded-lg hover:shadow-md ${className || ''}`}
+      className={`block sm:inline-block sm:w-1/2 px-8 py-6 rounded-lg hover:shadow-md ${className ||
+        ''}`}
     >
       <h3 className="text-xl uppercase tracking-tight mb-3">{title}</h3>
       <p className="mb-3">{description}</p>
@@ -18,33 +20,48 @@ function MegaButton({ to, title, description, cta, className }) {
 function Landing() {
   return (
     <div className="container mx-auto py-8">
-      <p className="text-lg mb-6">
-        Welcome to my
-        <Logo className="text-teal-600 mx-px" />
-        wallet! You'll need to{' '}
-        <Link to="/create" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
-          create a new wallet
-        </Link>{' '}
-        or{' '}
-        <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
-          unlock an existing wallet
-        </Link>{' '}
-        before you continue.
-      </p>
-      <div className="flex justify-between">
+      <div className="sm:flex items-center justify-center mb-6">
+        <img
+          src={connectedWorldSvg}
+          alt="connected world"
+          className="hidden sm:block w-2/5 md:w-1/3 lg:w-1/4 max-w-full flex-none pr-6 order-2"
+        />
+        <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8 order-1">
+          <h2 className="text-3xl leading-tight mb-3">
+            Welcome to{' '}
+            <span className="whitespace-no-wrap">
+              my
+              <Logo className="text-teal-600 mx-px" />
+              wallet
+            </span>
+          </h2>
+          <p className="text-lg">
+            You'll need to{' '}
+            <Link to="/create" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
+              create a new wallet
+            </Link>{' '}
+            or{' '}
+            <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
+              unlock an existing wallet
+            </Link>{' '}
+            before you can continue.
+          </p>
+        </div>
+      </div>
+      <div className="sm:flex justify-between px-4 sm:px-6">
         <MegaButton
           to="/create"
-          title="Create a new wallet"
+          title="Create a wallet"
           description="Provide a password and we'll create a new wallet and give you the keystore to access it next time"
           cta="Get started"
-          className="mr-6 bg-teal-500 hover:bg-teal-600 text-teal-100"
+          className="mb-6 sm:mb-0 sm:mr-6 bg-teal-500 hover:bg-teal-600 text-teal-100"
         />
         <MegaButton
           to="/unlock"
-          title="Unlock an existing wallet"
+          title="Unlock a wallet"
           description="Provide your existing keystore and password to unlock and start using your wallet"
           cta="Access now"
-          className="bg-gray-600 hover:bg-gray-700 text-gray-100"
+          className="bg-blue-600 hover:bg-blue-700 text-blue-100"
         />
       </div>
     </div>
