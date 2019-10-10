@@ -9,7 +9,7 @@ import {
 } from 'utils/readKeystoreFile';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
-import Alert from 'components/Alert';
+import Alert, { ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import Layout from 'components/Layout';
@@ -87,7 +87,7 @@ function UnlockWalletPage() {
       </div>
 
       <Alert
-        type="info"
+        type={ALERT_TYPE_INFO}
         text="Your keystore file won't be sent anywhere, it will only stay in your web browser session"
         className="mb-4"
       />
