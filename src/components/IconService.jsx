@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import IconSDK from 'icon-sdk-js';
+import IconSDK, { HttpProvider } from 'icon-sdk-js';
 import { useWallet } from 'components/Wallet';
-const { HttpProvider } = IconSDK;
 
 const NETWORK_MAINNET = 'mainnet';
 const NETWORK_TESTNET = 'testnet';
