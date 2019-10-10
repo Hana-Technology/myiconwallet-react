@@ -1,16 +1,21 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import { Link } from '@reach/router';
 import Logo from 'components/Logo';
 import connectedWorldSvg from 'assets/connected_world.svg';
 
-function MegaButton({ to, title, description, cta, className }) {
+function MegaButton({ to, title, description, cta, icon, className }) {
   return (
     <Link
       to={to}
       className={`block sm:inline-block sm:w-1/2 px-8 py-6 rounded-lg hover:shadow-md ${className ||
         ''}`}
     >
-      <h3 className="text-xl uppercase tracking-tight mb-3">{title}</h3>
+      <h3 className="text-xl uppercase tracking-tight mb-3">
+        <FontAwesomeIcon icon={icon} className="mr-2" />
+        {title}
+      </h3>
       <p className="mb-3">{description}</p>
       <p className="text-lg font-bold">{cta} ➜</p>
     </Link>
@@ -54,6 +59,7 @@ function Landing() {
           title="Create a wallet"
           description="Provide a password and we'll create a new wallet and give you the keystore to access it next time"
           cta="Get started"
+          icon={faWallet}
           className="mb-6 sm:mb-0 sm:mr-6 bg-teal-500 hover:bg-teal-600 text-teal-100"
         />
         <MegaButton
@@ -61,6 +67,7 @@ function Landing() {
           title="Unlock a wallet"
           description="Provide your existing keystore and password to unlock and start using your wallet"
           cta="Access now"
+          icon={faUnlockAlt}
           className="bg-blue-600 hover:bg-blue-700 text-blue-100"
         />
       </div>
