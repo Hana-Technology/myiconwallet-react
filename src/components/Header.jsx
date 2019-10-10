@@ -40,26 +40,36 @@ function Header() {
             wallet
           </Link>
         </h1>
-        <nav className="flex items-stretch justify-start">
-          {wallet ? (
-            <ul>
-              <button
-                onClick={handleUnloadWallet}
-                className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
-              >
-                Unload Wallet
-              </button>
-            </ul>
-          ) : (
-            <>
-              <ul>
-                <NavLink to="/create">Create Wallet</NavLink>
-              </ul>
-              <ul>
-                <NavLink to="/unlock">Unlock</NavLink>
-              </ul>
-            </>
-          )}
+        <nav>
+          <ul className="flex items-stretch justify-start">
+            {wallet ? (
+              <>
+                <li>
+                  <NavLink to="/stake">Stake</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/vote">Vote</NavLink>
+                </li>
+                <li>
+                  <button
+                    onClick={handleUnloadWallet}
+                    className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
+                  >
+                    Unload Wallet
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/create">Create Wallet</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/unlock">Unlock</NavLink>
+                </li>
+              </>
+            )}
+          </ul>
         </nav>
       </div>
     </header>
