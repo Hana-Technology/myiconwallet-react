@@ -47,7 +47,7 @@ function Alert({ type, text, title, className, showIcon = true }) {
     <div className={`border-l-4 px-4 py-3 ${getColors(type)} ${className || ''}`} role="alert">
       <div className="flex items-start">
         {showIcon && (
-          <div className="flex-none text-3xl mr-2">
+          <div className="flex-none text-3xl -mt-1 -ml-2 mr-2">
             <FontAwesomeIcon icon={getIcon(type)} fixedWidth />
           </div>
         )}
