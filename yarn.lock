@@ -930,6 +930,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.25"
 
+"@fortawesome/pro-solid-svg-icons@^5.11.2":
+  version "5.11.2"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-solid-svg-icons/-/pro-solid-svg-icons-5.11.2.tgz#5d72c801b3413191a81841c606d8cc7926014b76"
+  integrity sha512-YYrEFhda4KIUweXed1s+RQko53O7rXGK1jEbdlGXZlHnNTX7OyrkvJDQYqhQ7H+H62HV0BxF/xtDXvSJRlyO1Q==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.25"
+
 "@fortawesome/react-fontawesome@^0.1.5":
   version "0.1.5"
   resolved "https://npm.fontawesome.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.5.tgz#8bc3cd5c617749534787a35e29caa7a6cff705c9"
