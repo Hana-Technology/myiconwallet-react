@@ -8,9 +8,10 @@ function CreatedWallet({ keystoreFile }) {
 
   return (
     <>
-      <p className="mb-4">
-        Your new wallet has been created with address <b>{keystoreFile.address}</b>
-      </p>
+      <p className="mb-2">Your new wallet has been created with address:</p>
+      <div className="inline-block break-all bg-teal-100 text-teal-800 text-lg font-bold p-2 mb-4 border border-teal-200 rounded">
+        {keystoreFile.address}
+      </div>
       <p className="mb-4">
         You should download your keystore now and keep it somewhere private. Also make sure that you
         remember the password to your keystore so that you can continue using it.

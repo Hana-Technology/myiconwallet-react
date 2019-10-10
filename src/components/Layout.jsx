@@ -7,8 +7,10 @@ function Layout({ children }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 text-gray-800 px-4 py-6">
-        <div className="container mx-auto">{children}</div>
+      <main className="flex-1 bg-gray-100 text-gray-800 px-4">
+        <div className="w-full bg-white max-w-xl mx-auto px-4 py-6 md:p-6 lg:p-8 shadow-md">
+          {children}
+        </div>
       </main>
       <Footer />
     </div>

@@ -26,7 +26,7 @@ Label.propTypes = {
 export function Input({ hasError, ...props }) {
   return (
     <input
-      className={`text-lg w-64 max-w-full p-2 rounded border ${
+      className={`text-lg w-full p-2 rounded border ${
         hasError ? 'bg-red-100 border-red-700' : 'bg-gray-100'
       }`}
       {...props}

@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 
-function Button({ children, className, disabled, href, ...props }) {
-  const TagName = href ? 'a' : 'button';
+function Button({ children, className, disabled, href, to, ...props }) {
+  const TagName = to ? Link : href ? 'a' : 'button';
   return (
     <TagName
       href={href}
-      className={`inline-block text-lg mt-2 px-3 py-2 rounded hover:shadow-md ${
-        disabled ? 'bg-gray-500 text-gray-100' : 'bg-teal-500 text-teal-100'
+      to={to}
+      className={`inline-block text-lg font-bold mt-2 px-4 py-2 rounded hover:shadow focus:shadow ${
+        disabled
+          ? 'bg-gray-500 text-gray-100'
+          : 'bg-teal-500 hover:bg-teal-600 focus:bg-teal-600 text-teal-100'
       } ${className || ''}`}
       {...props}
     >
@@ -21,6 +25,7 @@ Button.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   href: PropTypes.string,
+  to: PropTypes.string,
 };
 
 export default Button;
