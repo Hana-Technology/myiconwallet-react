@@ -33,7 +33,8 @@ function UnlockWallet() {
     <Layout>
       <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock an existing wallet</h2>
       <p className="mb-4">
-        Upload your keystore file and enter the wallet password to use your wallet.
+        Choose your keystore file and enter the wallet password to unlock your wallet. Your keystore
+        file won't be sent anywhere, it will only stay in your web browser session.
       </p>
       <form onSubmit={handleOnSubmit}>
         <fieldset disabled={isLoading}>

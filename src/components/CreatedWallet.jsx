@@ -13,8 +13,9 @@ function CreatedWallet({ keystoreFile }) {
         {keystoreFile.address}
       </div>
       <p className="mb-4">
-        You should download your keystore now and keep it somewhere private. Also make sure that you
-        remember the password to your keystore so that you can continue using it.
+        You should download your keystore file now and keep it somewhere private. Also make sure
+        that you remember the password to your keystore, there is no way to recover your wallet if
+        you forget the password!
       </p>
       <p>
         <Button href={keystoreDataUri} download="iconwallet.keystore">
