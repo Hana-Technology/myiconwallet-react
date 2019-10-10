@@ -11,6 +11,7 @@ function CreateWallet({ onCreateWallet }) {
   const confirmPasswordInput = useTextInput('');
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -42,6 +43,13 @@ function CreateWallet({ onCreateWallet }) {
     return !errors.password && !errors.confirmPassword;
   }
 
+  function handleRefFocus(element) {
+    if (element && !hasFocusedInput) {
+      element.focus();
+      setHasFocusedInput(true);
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <p className="mb-4">
@@ -66,6 +74,7 @@ function CreateWallet({ onCreateWallet }) {
             }}
             placeholder="eg. s0meth!ngsup3rsecre7"
             hasError={!!errors.password}
+            ref={handleRefFocus}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>

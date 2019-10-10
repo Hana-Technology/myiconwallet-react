@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 export function InputGroup({ children, ...props }) {
@@ -23,9 +23,10 @@ Label.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export function Input({ hasError, ...props }) {
+function RawInput({ hasError, ...props }, ref) {
   return (
     <input
+      ref={ref}
       className={`text-lg w-full p-2 rounded border ${
         hasError ? 'bg-red-100 border-red-700' : 'bg-gray-100'
       }`}
@@ -33,6 +34,7 @@ export function Input({ hasError, ...props }) {
     />
   );
 }
+export const Input = forwardRef(RawInput);
 Input.propTypes = {
   hasError: PropTypes.bool,
 };

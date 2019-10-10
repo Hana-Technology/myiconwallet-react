@@ -9,6 +9,7 @@ function UnlockWallet() {
   const [keystoreFile, setKeystoreFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   function handleOnSubmit(event) {
     event.preventDefault();
@@ -27,6 +28,13 @@ function UnlockWallet() {
 
     setErrors(errors);
     return !errors.password && !errors.keystoreFile;
+  }
+
+  function handleRefFocus(element) {
+    if (element && !hasFocusedInput) {
+      element.focus();
+      setHasFocusedInput(true);
+    }
   }
 
   return (
@@ -51,6 +59,7 @@ function UnlockWallet() {
                 setKeystoreFile(event.target.files[0]);
               }}
               hasError={!!errors.keystoreFile}
+              ref={handleRefFocus}
             />
             {errors.keystoreFile && <ErrorMessage>{errors.keystoreFile}</ErrorMessage>}
           </InputGroup>
