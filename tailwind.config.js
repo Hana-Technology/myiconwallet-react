@@ -1,10 +1,6 @@
 module.exports = {
   theme: {
-    extend: {
-      colors: {
-        cyan: '#19c6ca',
-      },
-    },
+    colors: require('./src/utils/colors'),
   },
   variants: {},
   plugins: [],

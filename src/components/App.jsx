@@ -11,8 +11,8 @@ import NotFound from 'pages/NotFound';
 
 function App() {
   return (
-    <Wallet>
-      <IconService>
+    <IconService>
+      <Wallet>
         <Router>
           <Home path="/" />
           <CreateWallet path="/create" />
@@ -21,8 +21,8 @@ function App() {
           <Vote path="/vote" />
           <NotFound default />
         </Router>
-      </IconService>
-    </Wallet>
+      </Wallet>
+    </IconService>
   );
 }
 
