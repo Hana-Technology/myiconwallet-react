@@ -40,7 +40,7 @@ function ViewWallet() {
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-2xl uppercase tracking-tight">Your wallet</h2>
           <button
-            onClick={refreshWallet}
+            onClick={() => refreshWallet()}
             disabled={isLoading}
             className="bg-gray-100 border border-gray-300 text-gray-700 text-sm uppercase tracking-tight px-2 py-1 rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow flex-none"
           >
@@ -67,7 +67,7 @@ function ViewWallet() {
           <div>
             <div className="mb-2">
               <div className="text-4xl leading-tight">
-                {isLoading ? (
+                {!balance && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
                   balance && (
@@ -84,7 +84,7 @@ function ViewWallet() {
             </div>
             <div className="mb-2">
               <div className="text-4xl leading-tight">
-                {isLoading ? (
+                {!stake && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
                   stake && (
@@ -99,7 +99,7 @@ function ViewWallet() {
             </div>
             <div>
               <div className="text-4xl leading-tight">
-                {isLoading ? (
+                {!iscore && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
                   iscore && (
