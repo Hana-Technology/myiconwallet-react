@@ -7,8 +7,8 @@ const INITIAL_STATE = {
   wallet: null,
   keystore: null,
   balance: null,
-  iScore: {},
   stake: {},
+  iScore: {},
   createWallet: null,
   unlockWallet: null,
   unloadWallet: null,
@@ -27,8 +27,8 @@ function Wallet({ children }) {
   const [wallet, setWallet] = useState(INITIAL_STATE.wallet);
   const [keystore, setKeystore] = useState(INITIAL_STATE.keystore);
   const [balance, setBalance] = useState(INITIAL_STATE.balance);
-  const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
   const [stake, setStake] = useState(INITIAL_STATE.stake);
+  const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
 
   // TODO: unload wallet when icon service changes?
@@ -68,11 +68,11 @@ function Wallet({ children }) {
     const balance = await getBalance(address);
     setBalance(balance);
 
-    const iScore = await getIScore(address);
-    setIScore(iScore);
-
     const stake = await getStake(address);
     setStake(stake);
+
+    const iScore = await getIScore(address);
+    setIScore(iScore);
 
     setIsLoading(false);
   }
@@ -83,8 +83,8 @@ function Wallet({ children }) {
         wallet,
         keystore,
         balance,
-        iScore,
         stake,
+        iScore,
         createWallet,
         unlockWallet,
         unloadWallet,

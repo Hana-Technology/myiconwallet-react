@@ -7,21 +7,34 @@ import { formatNumber } from 'utils/formatNumber';
 import { useWallet } from 'components/Wallet';
 
 const TRACKER_BASE_URL = 'https://zicon.tracker.solidwallet.io/address';
+const EMPTY_CHART_DATA = {
+  datasets: [
+    {
+      data: [100],
+      backgroundColor: [colors.gray['200']],
+      hoverBackgroundColor: [colors.gray['200']],
+    },
+  ],
+};
+const EMPTY_CHART_OPTIONS = { events: [] };
 
 function ViewWallet() {
   const {
     balance,
-    iScore: { iScore, estimatedICX },
     stake: { stake, unstake },
+    iScore: { iScore, estimatedICX },
     wallet,
     isLoading,
     refreshWallet,
   } = useWallet();
   const [chartData, setChartData] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
-    if (!(balance && stake)) return;
+    if (!(balance && stake)) return void setChartData(null);
+    if (balance.isZero() && stake.isZero()) return void setIsEmpty(true);
 
+    setIsEmpty(false);
     setChartData({
       labels: ['Available', 'Staked', 'Unstaking'],
       datasets: [
@@ -115,7 +128,14 @@ function ViewWallet() {
             </div>
           </div>
           <div className="flex-none mx-auto mt-6 sm:m-0">
-            {chartData && <Pie data={chartData} legend={{ position: 'bottom' }} height={200} />}
+            {(isEmpty || chartData) && (
+              <Pie
+                data={isEmpty ? EMPTY_CHART_DATA : chartData}
+                legend={{ position: 'bottom' }}
+                options={isEmpty ? EMPTY_CHART_OPTIONS : {}}
+                height={200}
+              />
+            )}
           </div>
         </div>
       </>
