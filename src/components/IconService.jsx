@@ -1,30 +1,20 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import IconSDK, { IconBuilder, IconConverter, HttpProvider } from 'icon-sdk-js';
+import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
+import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 
-const NETWORK_MAINNET = 'mainnet';
-const NETWORK_TESTNET = 'testnet';
 const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000000';
 const ICX_LOOP_RATIO = Math.pow(10, 18);
 
 const INITIAL_STATE = {
-  network: NETWORK_TESTNET,
+  network: getNetwork(NETWORK_REF_TESTNET),
   toggleNetwork: null,
   iconService: null,
   getBalance: null,
-  getIScore: null,
   getStake: null,
+  getIScore: null,
+  claimIScore: null,
 };
-
-function getIconProviderUrl(network) {
-  switch (network) {
-    case NETWORK_MAINNET:
-      return process.env.REACT_APP_ICON_PROVIDER_MAINNET;
-    case NETWORK_TESTNET:
-    default:
-      return process.env.REACT_APP_ICON_PROVIDER_TESTNET;
-  }
-}
 
 export const IconServiceContext = createContext(INITIAL_STATE);
 
@@ -42,7 +32,7 @@ function convertLoopsToICX(value) {
 
 function IconService({ children }) {
   const [network, setNetwork] = useState(INITIAL_STATE.network);
-  const [iconProvider, setIconProvider] = useState(new HttpProvider(getIconProviderUrl(network)));
+  const [iconProvider, setIconProvider] = useState(new HttpProvider(network.apiEndpoint));
   const [iconService, setIconService] = useState(new IconSDK(iconProvider));
 
   /**
@@ -52,30 +42,6 @@ function IconService({ children }) {
   async function getBalance(address) {
     const balanceInLoops = await iconService.getBalance(address).execute();
     return convertLoopsToICX(balanceInLoops);
-  }
-
-  /**
-   * @typedef {Object} IScoreResult
-   * @property {BigNumber} iScore value as ICX
-   * @property {BigNumber} estimatedICX value as ICX
-   *
-   * @function
-   * @param {string} address a wallet address
-   * @returns {IScoreResult}
-   */
-  async function getIScore(address) {
-    const builder = new IconBuilder.CallBuilder();
-    const queryIScoreCall = builder
-      .to(GOVERNANCE_ADDRESS)
-      .method('queryIScore')
-      .params({ address })
-      .build();
-    const result = await iconService.call(queryIScoreCall).execute();
-
-    return {
-      iScore: convertLoopsToICX(IconConverter.toBigNumber(result.iscore)),
-      estimatedICX: convertLoopsToICX(IconConverter.toBigNumber(result.estimatedICX)),
-    };
   }
 
   /**
@@ -106,10 +72,52 @@ function IconService({ children }) {
     };
   }
 
+  /**
+   * @typedef {Object} IScoreResult
+   * @property {BigNumber} iScore value as ICX
+   * @property {BigNumber} estimatedICX value as ICX
+   *
+   * @function
+   * @param {string} address a wallet address
+   * @returns {IScoreResult}
+   */
+  async function getIScore(address) {
+    const builder = new IconBuilder.CallBuilder();
+    const queryIScoreCall = builder
+      .to(GOVERNANCE_ADDRESS)
+      .method('queryIScore')
+      .params({ address })
+      .build();
+    const result = await iconService.call(queryIScoreCall).execute();
+
+    return {
+      iScore: convertLoopsToICX(IconConverter.toBigNumber(result.iscore)),
+      estimatedICX: convertLoopsToICX(IconConverter.toBigNumber(result.estimatedICX)),
+    };
+  }
+
+  function claimIScore(wallet) {
+    const builder = new IconBuilder.CallTransactionBuilder();
+    const claimIScoreTransaction = builder
+      .nid(network.nid)
+      .from(wallet.getAddress())
+      .to(GOVERNANCE_ADDRESS)
+      .value(0)
+      .method('claimIScore')
+      .stepLimit(IconConverter.toBigNumber(1000000))
+      .version(IconConverter.toBigNumber(3))
+      .timestamp(Date.now() * 1000)
+      .build();
+    const signedTransaction = new SignedTransaction(claimIScoreTransaction, wallet);
+    return iconService.sendTransaction(signedTransaction).execute();
+  }
+
   function toggleNetwork() {
-    const newNetwork = network === NETWORK_TESTNET ? NETWORK_MAINNET : NETWORK_TESTNET;
-    const newIconProvider = new HttpProvider(getIconProviderUrl(newNetwork));
-    const newIconService = new IconSDK(newIconProvider);
+    const newNetworkRef =
+      network.ref === NETWORK_REF_TESTNET ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET;
+    const newNetwork = getNetwork(newNetworkRef);
+    const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
+    const newIconService = new IconSDK(iconProvider);
     setNetwork(newNetwork);
     setIconProvider(newIconProvider);
     setIconService(newIconService);
@@ -117,7 +125,7 @@ function IconService({ children }) {
 
   return (
     <IconServiceContext.Provider
-      value={{ network, toggleNetwork, iconService, getBalance, getIScore, getStake }}
+      value={{ network, toggleNetwork, iconService, getBalance, getStake, getIScore, claimIScore }}
     >
       {children}
     </IconServiceContext.Provider>

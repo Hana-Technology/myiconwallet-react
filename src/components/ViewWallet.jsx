@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLink, faSpinnerThird, faSync } from '@fortawesome/pro-duotone-svg-icons';
+import {
+  faExchange,
+  faExternalLink,
+  faSpinnerThird,
+  faSync,
+} from '@fortawesome/pro-duotone-svg-icons';
 import { Pie } from 'react-chartjs-2';
+import swal from '@sweetalert/with-react';
 import colors from 'utils/colors';
 import { formatNumber } from 'utils/formatNumber';
+import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
-const TRACKER_BASE_URL = 'https://zicon.tracker.solidwallet.io/address';
 const EMPTY_CHART_DATA = {
   datasets: [
     {
@@ -20,6 +26,10 @@ const EMPTY_CHART_OPTIONS = { events: [] };
 
 function ViewWallet() {
   const {
+    claimIScore,
+    network: { trackerUrl },
+  } = useIconService();
+  const {
     balance,
     stake: { stake, unstake },
     iScore: { iScore, estimatedICX },
@@ -29,6 +39,7 @@ function ViewWallet() {
   } = useWallet();
   const [chartData, setChartData] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
 
   useEffect(() => {
     if (!(balance && stake)) return void setChartData(null);
@@ -46,6 +57,44 @@ function ViewWallet() {
       ],
     });
   }, [balance, stake, unstake]);
+
+  async function handleClaimIScore() {
+    setIsClaiming(true);
+    if (
+      await swal({
+        // TODO: style SweetAlert messages!
+        content: (
+          <p>
+            Continue converting {formatNumber(iScore)} I-Score to an estimated{' '}
+            {formatNumber(estimatedICX)} ICX?
+          </p>
+        ),
+        buttons: ['Cancel', 'Continue'],
+      })
+    ) {
+      const transactionHash = await claimIScore(wallet);
+      await swal(
+        <div>
+          <p className="mb-4">Successfully converted I-Score to ICX</p>
+          <p className="break-all">
+            Transaction:
+            <br />
+            {transactionHash}
+            <a
+              href={`${trackerUrl}/transaction/${transactionHash}`}
+              title="View on ICON tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+            </a>
+          </p>
+        </div>
+      );
+      refreshWallet();
+    }
+    setIsClaiming(false);
+  }
 
   return (
     wallet && (
@@ -66,7 +115,7 @@ function ViewWallet() {
           <div className="break-all text-lg">
             {wallet.getAddress()}{' '}
             <a
-              href={`${TRACKER_BASE_URL}/${wallet.getAddress()}`}
+              href={`${trackerUrl}/address/${wallet.getAddress()}`}
               title="View on ICON tracker"
               target="_blank"
               rel="noopener noreferrer"
@@ -124,7 +173,19 @@ function ViewWallet() {
                   )
                 )}
               </div>
-              <div className="text-sm text-gray-600 uppercase tracking-tight">I-Score</div>
+              <div className="text-sm text-gray-600 uppercase tracking-tight">
+                I-Score
+                {iScore && !iScore.isZero() && (
+                  <button
+                    onClick={handleClaimIScore}
+                    disabled={isClaiming}
+                    className="bg-gray-100 border border-gray-300 uppercase tracking-tight text-gray-700 px-2 py-px rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow ml-4"
+                  >
+                    <FontAwesomeIcon icon={faExchange} className="mr-2" />
+                    Convert to ICX
+                  </button>
+                )}
+              </div>
             </div>
           </div>
           <div className="flex-none mx-auto mt-6 sm:m-0">

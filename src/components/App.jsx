@@ -15,10 +15,10 @@ function App() {
       <Wallet>
         <Router>
           <Home path="/" />
-          <CreateWallet path="/create" />
-          <UnlockWallet path="/unlock" />
-          <Stake path="/stake" />
-          <Vote path="/vote" />
+          <CreateWallet path="create" />
+          <UnlockWallet path="unlock" />
+          <Stake path="stake" />
+          <Vote path="vote" />
           <NotFound default />
         </Router>
       </Wallet>
