@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   wallet: null,
   keystore: null,
   balance: null,
-  iscore: {},
+  iScore: {},
   stake: {},
   createWallet: null,
   unlockWallet: null,
@@ -23,11 +23,11 @@ export function useWallet() {
 }
 
 function Wallet({ children }) {
-  const { getBalance, getIscore, getStake } = useIconService();
+  const { getBalance, getIScore, getStake } = useIconService();
   const [wallet, setWallet] = useState(INITIAL_STATE.wallet);
   const [keystore, setKeystore] = useState(INITIAL_STATE.keystore);
   const [balance, setBalance] = useState(INITIAL_STATE.balance);
-  const [iscore, setIscore] = useState(INITIAL_STATE.iscore);
+  const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
   const [stake, setStake] = useState(INITIAL_STATE.stake);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
 
@@ -57,7 +57,7 @@ function Wallet({ children }) {
     setWallet(null);
     setKeystore(null);
     setBalance(INITIAL_STATE.balance);
-    setIscore(INITIAL_STATE.iscore);
+    setIScore(INITIAL_STATE.iScore);
     setStake(INITIAL_STATE.stake);
   }
 
@@ -68,8 +68,8 @@ function Wallet({ children }) {
     const balance = await getBalance(address);
     setBalance(balance);
 
-    const iscore = await getIscore(address);
-    setIscore(iscore);
+    const iScore = await getIScore(address);
+    setIScore(iScore);
 
     const stake = await getStake(address);
     setStake(stake);
@@ -83,7 +83,7 @@ function Wallet({ children }) {
         wallet,
         keystore,
         balance,
-        iscore,
+        iScore,
         stake,
         createWallet,
         unlockWallet,

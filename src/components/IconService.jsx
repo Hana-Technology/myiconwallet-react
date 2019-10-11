@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   toggleNetwork: null,
   iconService: null,
   getBalance: null,
-  getIscore: null,
+  getIScore: null,
   getStake: null,
 };
 
@@ -55,15 +55,15 @@ function IconService({ children }) {
   }
 
   /**
-   * @typedef {Object} IscoreResult
-   * @property {BigNumber} iscore value as ICX
+   * @typedef {Object} IScoreResult
+   * @property {BigNumber} iScore value as ICX
    * @property {BigNumber} estimatedICX value as ICX
    *
    * @function
    * @param {string} address a wallet address
-   * @returns {IscoreResult}
+   * @returns {IScoreResult}
    */
-  async function getIscore(address) {
+  async function getIScore(address) {
     const builder = new IconBuilder.CallBuilder();
     const queryIScoreCall = builder
       .to(GOVERNANCE_ADDRESS)
@@ -73,7 +73,7 @@ function IconService({ children }) {
     const result = await iconService.call(queryIScoreCall).execute();
 
     return {
-      iscore: convertLoopsToICX(IconConverter.toBigNumber(result.iscore)),
+      iScore: convertLoopsToICX(IconConverter.toBigNumber(result.iscore)),
       estimatedICX: convertLoopsToICX(IconConverter.toBigNumber(result.estimatedICX)),
     };
   }
@@ -117,7 +117,7 @@ function IconService({ children }) {
 
   return (
     <IconServiceContext.Provider
-      value={{ network, toggleNetwork, iconService, getBalance, getIscore, getStake }}
+      value={{ network, toggleNetwork, iconService, getBalance, getIScore, getStake }}
     >
       {children}
     </IconServiceContext.Provider>

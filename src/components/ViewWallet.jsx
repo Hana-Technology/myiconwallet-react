@@ -11,7 +11,7 @@ const TRACKER_BASE_URL = 'https://zicon.tracker.solidwallet.io/address';
 function ViewWallet() {
   const {
     balance,
-    iscore: { iscore, estimatedICX },
+    iScore: { iScore, estimatedICX },
     stake: { stake, unstake },
     wallet,
     isLoading,
@@ -100,18 +100,18 @@ function ViewWallet() {
             </div>
             <div>
               <div className="text-4xl leading-tight">
-                {!iscore && isLoading ? (
+                {!iScore && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
-                  iscore && (
+                  iScore && (
                     <>
-                      {formatNumber(iscore)}
+                      {formatNumber(iScore)}
                       <span className="text-lg ml-2">~{formatNumber(estimatedICX)} ICX</span>
                     </>
                   )
                 )}
               </div>
-              <div className="text-sm text-gray-600 uppercase tracking-tight">iScore</div>
+              <div className="text-sm text-gray-600 uppercase tracking-tight">I-Score</div>
             </div>
           </div>
           <div className="flex-none mx-auto mt-6 sm:m-0">
