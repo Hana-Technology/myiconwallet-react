@@ -56,6 +56,7 @@ function ViewWallet() {
               href={`${TRACKER_BASE_URL}/${wallet.getAddress()}`}
               title="View on ICON tracker"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
             </a>
