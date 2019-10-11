@@ -27,7 +27,7 @@ function CreatedWallet() {
           </div>
           <img
             src={buildingBlocksSvg}
-            alt="people filling giant wallet"
+            alt="person building with blocks"
             className="hidden sm:block w-1/4 max-w-full flex-none -mt-6 mr-1"
           />
         </div>
