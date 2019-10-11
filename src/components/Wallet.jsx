@@ -38,6 +38,7 @@ function Wallet({ children }) {
     const keystore = wallet.store(password);
     setWallet(wallet);
     setKeystore(keystore);
+    refreshWallet(wallet);
   }
 
   function unlockWallet(keystore, password) {
