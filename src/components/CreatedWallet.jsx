@@ -15,7 +15,7 @@ function CreatedWallet() {
   return (
     wallet && (
       <>
-        <div className="sm:flex items-start justify-between mb-8">
+        <div className="sm:flex items-start justify-between mb-6">
           <div className="sm:pr-5">
             <p className="mb-2">Your new wallet has been created with address:</p>
             <Alert
@@ -31,25 +31,31 @@ function CreatedWallet() {
             className="hidden sm:block w-1/4 max-w-full flex-none -mt-6 mr-1"
           />
         </div>
-        <p className="mb-2">
+
+        <p className="mb-6">
           You should download your keystore file now and keep it somewhere private.
         </p>
-        <Button href={keystoreFileUri} download="iconwallet.keystore" className="mb-8">
-          <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
-          Download wallet keystore
-        </Button>
         <Alert
           type={ALERT_TYPE_WARN}
           title="Don't forget your password"
           text="There is no way to recover your wallet if you forget the password"
-          className="mb-8"
+          className="mb-6"
         />
-        <divc className="flex flex-row-reverse">
-          <Button to="/">
+
+        <div className="sm:flex justify-between">
+          <Button
+            href={keystoreFileUri}
+            download="iconwallet.keystore"
+            className="block sm:inline-block"
+          >
+            <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
+            Download keystore
+          </Button>
+          <Button to="/" className="block sm:inline-block text-right sm:ml-2">
             View your wallet
             <FontAwesomeIcon icon={faLongArrowRight} fixedWidth className="text-sm ml-2" />
           </Button>
-        </divc>
+        </div>
       </>
     )
   );
