@@ -55,71 +55,72 @@ function CreateWallet({ onCreateWallet }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="sm:flex items-start justify-center mb-4">
-        <p className="sm:pr-5">
+    <div className="sm:flex items-start justify-between">
+      <img
+        src={securitySvg}
+        alt="website security with guard"
+        className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+      />
+
+      <form onSubmit={handleSubmit} className="sm:order-1 sm:flex-1">
+        <p className="mb-4">
           Enter and confirm a password for your wallet then press the <i>Create&nbsp;wallet</i>{' '}
           button. After your wallet is created you will be prompted to download the keystore file
           for your new wallet.
         </p>
-        <img
-          src={securitySvg}
-          alt="website security with guard"
-          className="hidden sm:block w-1/3 max-w-full flex-none -mt-8"
-        />
-      </div>
 
-      <fieldset disabled={isLoading}>
-        <InputGroup>
-          <Label htmlFor="password">Enter your password</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            value={passwordInput.value}
-            onChange={(...args) => {
-              if (errors.password) {
-                setErrors({ ...errors, password: null });
-              }
-              passwordInput.onChange(...args);
-            }}
-            placeholder="eg. s0meth!ngsup3rsecre7"
-            hasError={!!errors.password}
-            ref={handleRefFocus}
-          />
-          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-        </InputGroup>
+        <fieldset disabled={isLoading}>
+          <InputGroup>
+            <Label htmlFor="password">Enter your password</Label>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              value={passwordInput.value}
+              onChange={(...args) => {
+                if (errors.password) {
+                  setErrors({ ...errors, password: null });
+                }
+                passwordInput.onChange(...args);
+              }}
+              placeholder="eg. s0meth!ngsup3rsecre7"
+              hasError={!!errors.password}
+              ref={handleRefFocus}
+            />
+            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+          </InputGroup>
 
-        <InputGroup>
-          <Label htmlFor="confirmPassword">Confirm your password</Label>
-          <Input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={confirmPasswordInput.value}
-            onChange={(...args) => {
-              if (errors.confirmPassword) {
-                setErrors({ ...errors, confirmPassword: null });
-              }
-              confirmPasswordInput.onChange(...args);
-            }}
-            placeholder="eg. s0meth!ngsup3rsecre7"
-            hasError={!!errors.confirmPassword}
-          />
-          {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
-        </InputGroup>
+          <InputGroup>
+            <Label htmlFor="confirmPassword">Confirm your password</Label>
+            <Input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={confirmPasswordInput.value}
+              onChange={(...args) => {
+                if (errors.confirmPassword) {
+                  setErrors({ ...errors, confirmPassword: null });
+                }
+                confirmPasswordInput.onChange(...args);
+              }}
+              placeholder="eg. s0meth!ngsup3rsecre7"
+              hasError={!!errors.confirmPassword}
+            />
+            {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
+          </InputGroup>
 
-        <Button type="submit" disabled={isLoading}>
-          <FontAwesomeIcon
-            icon={isLoading ? faSpinnerThird : faWallet}
-            spin={isLoading}
-            fixedWidth
-            className="mr-1"
-          />
-          Creat{isLoading ? 'ing' : 'e'} wallet
-        </Button>
-      </fieldset>
-    </form>
+          <Button type="submit" disabled={isLoading}>
+            <FontAwesomeIcon
+              icon={isLoading ? faSpinnerThird : faWallet}
+              spin={isLoading}
+              fixedWidth
+              className="mr-1"
+            />
+            Creat{isLoading ? 'ing' : 'e'} wallet
+          </Button>
+        </fieldset>
+      </form>
+    </div>
   );
 }
 

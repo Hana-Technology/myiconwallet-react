@@ -75,73 +75,73 @@ function UnlockWalletPage() {
   return (
     <Layout>
       <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
-      <div className="sm:flex items-start justify-center mb-4">
-        <p className="sm:pr-5">
-          Choose your keystore file and enter the wallet password to unlock your wallet.
-        </p>
+      <div className="sm:flex items-start justify-between">
         <img
           src={authenticationSvg}
           alt="person entering secure website"
-          className="hidden sm:block w-1/3 max-w-full flex-none -mt-8"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
         />
+
+        <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
+          <p className="mb-4">
+            Choose your keystore file and enter the wallet password to unlock your wallet.
+          </p>
+          <Alert
+            type={ALERT_TYPE_INFO}
+            text="Your keystore file won't be sent anywhere, it will only stay in your web browser session"
+            className="mb-4"
+          />
+
+          <fieldset disabled={isLoading}>
+            <InputGroup>
+              <Label htmlFor="keystoreFile">Keystore file</Label>
+              <Input
+                type="file"
+                id="keystoreFile"
+                name="keystoreFile"
+                onChange={event => {
+                  if (errors.keystoreFile) {
+                    setErrors({ ...errors, keystoreFile: null });
+                  }
+                  setKeystoreFile(event.target.files[0]);
+                }}
+                hasError={!!errors.keystoreFile}
+                ref={handleRefFocus}
+              />
+              {errors.keystoreFile && <ErrorMessage>{errors.keystoreFile}</ErrorMessage>}
+            </InputGroup>
+
+            <InputGroup>
+              <Label htmlFor="password">Enter your password</Label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                value={passwordInput.value}
+                onChange={(...args) => {
+                  if (errors.password) {
+                    setErrors({ ...errors, password: null });
+                  }
+                  passwordInput.onChange(...args);
+                }}
+                placeholder="eg. s0meth!ngsup3rsecre7"
+                hasError={!!errors.password}
+              />
+              {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+            </InputGroup>
+
+            <Button type="submit" disabled={isLoading}>
+              <FontAwesomeIcon
+                icon={isLoading ? faSpinnerThird : faUnlockAlt}
+                spin={isLoading}
+                fixedWidth
+                className="mr-1"
+              />
+              Unlock{isLoading ? 'ing' : ''} wallet
+            </Button>
+          </fieldset>
+        </form>
       </div>
-
-      <Alert
-        type={ALERT_TYPE_INFO}
-        text="Your keystore file won't be sent anywhere, it will only stay in your web browser session"
-        className="mb-4"
-      />
-
-      <form onSubmit={handleOnSubmit}>
-        <fieldset disabled={isLoading}>
-          <InputGroup>
-            <Label htmlFor="keystoreFile">Keystore file</Label>
-            <Input
-              type="file"
-              id="keystoreFile"
-              name="keystoreFile"
-              onChange={event => {
-                if (errors.keystoreFile) {
-                  setErrors({ ...errors, keystoreFile: null });
-                }
-                setKeystoreFile(event.target.files[0]);
-              }}
-              hasError={!!errors.keystoreFile}
-              ref={handleRefFocus}
-            />
-            {errors.keystoreFile && <ErrorMessage>{errors.keystoreFile}</ErrorMessage>}
-          </InputGroup>
-
-          <InputGroup>
-            <Label htmlFor="password">Enter your password</Label>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              value={passwordInput.value}
-              onChange={(...args) => {
-                if (errors.password) {
-                  setErrors({ ...errors, password: null });
-                }
-                passwordInput.onChange(...args);
-              }}
-              placeholder="eg. s0meth!ngsup3rsecre7"
-              hasError={!!errors.password}
-            />
-            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-          </InputGroup>
-
-          <Button type="submit" disabled={isLoading}>
-            <FontAwesomeIcon
-              icon={isLoading ? faSpinnerThird : faUnlockAlt}
-              spin={isLoading}
-              fixedWidth
-              className="mr-1"
-            />
-            Unlock{isLoading ? 'ing' : ''} wallet
-          </Button>
-        </fieldset>
-      </form>
     </Layout>
   );
 }
