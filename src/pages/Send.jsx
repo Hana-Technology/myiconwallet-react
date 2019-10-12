@@ -27,6 +27,7 @@ function SendPage() {
   const { balance, wallet, refreshWallet } = useWallet();
   const amountInput = useTextInput('');
   const addressInput = useTextInput('');
+  const [useFullBalance, setUseFullBalance] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [hasFocusedInput, setHasFocusedInput] = useState(false);
@@ -36,7 +37,7 @@ function SendPage() {
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
-    const amount = amountInput.value;
+    const amount = useFullBalance ? balance.minus(TRANSACTION_FEE) : amountInput.value;
     const address = addressInput.value;
     if (!validate(amount, address)) return setIsLoading(false);
 
@@ -103,6 +104,14 @@ function SendPage() {
     return !errors.amount && !errors.address;
   }
 
+  function handleUseFullBalanceChange(event) {
+    const { checked } = event.target;
+    setUseFullBalance(checked);
+
+    let value = checked ? formatNumber(balance.minus(TRANSACTION_FEE)) : '';
+    amountInput.onChange({ currentTarget: { value } });
+  }
+
   function handleRefFocus(element) {
     if (element && !hasFocusedInput) {
       element.focus();
@@ -138,7 +147,20 @@ function SendPage() {
 
             <fieldset disabled={isLoading}>
               <InputGroup>
-                <Label htmlFor="amount">Amount in ICX</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="amount">Amount in ICX</Label>
+                  <label htmlFor="sendAll" className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="sendAll"
+                      name="sendAll"
+                      checked={useFullBalance}
+                      onChange={handleUseFullBalanceChange}
+                      className="mr-2"
+                    />
+                    <span className="text-sm">Send full balance?</span>
+                  </label>
+                </div>
                 <Input
                   type="text"
                   id="amount"
@@ -153,6 +175,7 @@ function SendPage() {
                   placeholder="eg. 42"
                   hasError={!!errors.amount}
                   ref={handleRefFocus}
+                  disabled={useFullBalance}
                 />
                 {errors.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
               </InputGroup>
