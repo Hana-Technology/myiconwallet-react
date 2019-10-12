@@ -5,8 +5,8 @@ import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
 import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 
 const API_VERSION = IconConverter.toBigNumber(3);
-const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000000';
-const GOVERNANCE_SCORE_ADDRESS = 'cx0000000000000000000000000000000000000001';
+const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000001';
+const SCORE_INSTALL_ADDRESS = 'cx0000000000000000000000000000000000000000';
 
 const INITIAL_STATE = {
   network: getNetwork(NETWORK_REF_TESTNET),
@@ -52,7 +52,7 @@ function IconService({ children }) {
   async function getStake(address) {
     const builder = new IconBuilder.CallBuilder();
     const getStakeCall = builder
-      .to(GOVERNANCE_ADDRESS)
+      .to(SCORE_INSTALL_ADDRESS)
       .method('getStake')
       .params({ address })
       .build();
@@ -79,7 +79,7 @@ function IconService({ children }) {
   async function getIScore(address) {
     const builder = new IconBuilder.CallBuilder();
     const queryIScoreCall = builder
-      .to(GOVERNANCE_ADDRESS)
+      .to(SCORE_INSTALL_ADDRESS)
       .method('queryIScore')
       .params({ address })
       .build();
@@ -103,7 +103,7 @@ function IconService({ children }) {
     const claimIScoreTransaction = builder
       .nid(network.nid)
       .from(wallet.getAddress())
-      .to(GOVERNANCE_ADDRESS)
+      .to(SCORE_INSTALL_ADDRESS)
       .value(0)
       .method('claimIScore')
       .stepLimit(IconConverter.toBigNumber(1000000))
@@ -139,7 +139,7 @@ function IconService({ children }) {
   async function getDefaultStepCost() {
     const builder = new IconBuilder.CallBuilder();
     const getStepCostsCall = builder
-      .to(GOVERNANCE_SCORE_ADDRESS)
+      .to(GOVERNANCE_ADDRESS)
       .method('getStepCosts')
       .build();
     const { default: defaultStepCost } = await iconService.call(getStepCostsCall).execute();
