@@ -49,17 +49,21 @@ function ViewWallet() {
     if (!(balance && stake)) return void setChartData(null);
     if (balance.isZero() && stake.isZero()) return void setIsEmpty(true);
 
+    const chartLabels = ['Available', 'Staked'];
+    const chartDataset = {
+      data: [balance.toNumber(), stake.toNumber()],
+      backgroundColor: [colors.teal['500'], colors.blue['500']],
+      hoverBackgroundColor: [colors.teal['600'], colors.blue['600']],
+    };
+    if (unstake) {
+      chartLabels.push('Unstaking');
+      chartDataset.data.push(unstake.toNumber());
+      chartDataset.backgroundColor.push(colors.purple['500']);
+      chartDataset.hoverBackgroundColor.push(colors.purple['600']);
+    }
+
+    setChartData({ labels: chartLabels, datasets: [chartDataset] });
     setIsEmpty(false);
-    setChartData({
-      labels: ['Available', 'Staked', 'Unstaking'],
-      datasets: [
-        {
-          data: [balance.toNumber(), stake.toNumber(), unstake ? unstake.toNumber() : 0],
-          backgroundColor: [colors.teal['500'], colors.blue['500'], colors.purple['500']],
-          hoverBackgroundColor: [colors.teal['600'], colors.blue['600'], colors.purple['600']],
-        },
-      ],
-    });
   }, [balance, stake, unstake]);
 
   async function handleClaimIScore() {
