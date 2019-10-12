@@ -4,7 +4,7 @@ import WalletHeader from 'components/WalletHeader';
 
 function SendPage() {
   return (
-    <Layout>
+    <Layout title="Send ICX">
       <WalletHeader />
       <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Send ICX</h2>
       <p>Coming soon...</p>

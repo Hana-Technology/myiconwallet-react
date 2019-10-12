@@ -73,7 +73,7 @@ function UnlockWalletPage() {
   }
 
   return (
-    <Layout>
+    <Layout title="Unlock Existing Wallet">
       <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
       <div className="sm:flex items-start justify-between">
         <img

@@ -4,7 +4,7 @@ import WalletHeader from 'components/WalletHeader';
 
 function StakePage() {
   return (
-    <Layout>
+    <Layout title="Stake ICX">
       <WalletHeader />
       <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Stake ICX</h2>
       <p>Coming soon...</p>

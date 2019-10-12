@@ -4,7 +4,7 @@ import WalletHeader from 'components/WalletHeader';
 
 function VotePage() {
   return (
-    <Layout>
+    <Layout title="Allocate Votes">
       <WalletHeader />
       <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Allocate votes</h2>
       <p>Coming soon...</p>

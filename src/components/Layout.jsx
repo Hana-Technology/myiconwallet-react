@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 
-function Layout({ children, styleMain = true }) {
+function Layout({ children, styleMain = true, title }) {
+  useEffect(() => {
+    document.title = `${title ? `${title} | ` : ''}My ICON Wallet`;
+  }, [title]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -24,6 +28,7 @@ function Layout({ children, styleMain = true }) {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   styleMain: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default Layout;

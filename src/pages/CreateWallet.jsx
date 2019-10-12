@@ -11,7 +11,7 @@ function CreateWalletPage() {
   }
 
   return (
-    <Layout>
+    <Layout title="Create a New Wallet">
       <h2 className="text-2xl uppercase tracking-tight mb-2">
         Create{isCreated && 'd'} a new wallet
       </h2>
