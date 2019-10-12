@@ -70,7 +70,6 @@ function ViewWallet() {
     setIsClaiming(true);
     if (
       await swal({
-        // TODO: style SweetAlert messages!
         content: (
           <p>
             Continue converting {formatNumber(iScore)} I-Score to an estimated{' '}

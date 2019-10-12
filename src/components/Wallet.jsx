@@ -31,8 +31,6 @@ function Wallet({ children }) {
   const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
 
-  // TODO: unload wallet when icon service changes?
-
   function createWallet(password) {
     const wallet = IconWallet.create();
     const keystore = wallet.store(password);
