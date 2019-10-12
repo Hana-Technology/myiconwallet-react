@@ -4,12 +4,16 @@ import {
   faExchange,
   faExternalLink,
   faSpinnerThird,
+  faShareSquare,
+  faSignIn,
   faSync,
+  faVoteYea,
 } from '@fortawesome/pro-duotone-svg-icons';
 import { Pie } from 'react-chartjs-2';
 import swal from '@sweetalert/with-react';
 import colors from 'utils/colors';
 import { formatNumber } from 'utils/formatNumber';
+import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
@@ -198,6 +202,21 @@ function ViewWallet() {
               />
             )}
           </div>
+        </div>
+
+        <div className="sm:flex justify-between mt-6">
+          <Button to="/send" className="text-center block sm:w-1/3 ">
+            <FontAwesomeIcon icon={faShareSquare} className="mr-2" />
+            Send ICX
+          </Button>
+          <Button to="/stake" className="text-center block sm:w-1/3 sm:ml-2 text-center">
+            <FontAwesomeIcon icon={faSignIn} className="mr-2" />
+            Stake ICX
+          </Button>
+          <Button to="/vote" className="text-center block sm:w-1/3 sm:ml-2 text-center">
+            <FontAwesomeIcon icon={faVoteYea} className="mr-2" />
+            Voting
+          </Button>
         </div>
       </>
     )
