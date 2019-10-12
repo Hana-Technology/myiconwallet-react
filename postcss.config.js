@@ -6,8 +6,9 @@ module.exports = {
     ...(process.env.NODE_ENV === 'production'
       ? [
           require('@fullhuman/postcss-purgecss')({
-            content: ['public/index.html', 'src/**/*.jsx'],
+            content: ['public/index.html', 'src/**/*.jsx', 'src/**/*.css'],
             defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+            whitelistPatternsChildren: [/\.swal-/, /\.rangeslider/],
           }),
         ]
       : []),
