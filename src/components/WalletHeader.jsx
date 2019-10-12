@@ -21,7 +21,7 @@ function WalletHeader() {
             rel="noopener noreferrer"
             className="hover:text-white focus:text-white"
           >
-            <FontAwesomeIcon icon={faWallet} className="mr-1" />
+            <FontAwesomeIcon icon={faWallet} className="mr-2" />
             hx&hellip;{wallet.getAddress().substr(-6)}
           </a>
         </div>
