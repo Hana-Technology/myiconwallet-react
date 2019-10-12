@@ -45,6 +45,9 @@ function Header() {
             {wallet ? (
               <>
                 <li>
+                  <NavLink to="/send">Send</NavLink>
+                </li>
+                <li>
                   <NavLink to="/stake">Stake</NavLink>
                 </li>
                 <li>
