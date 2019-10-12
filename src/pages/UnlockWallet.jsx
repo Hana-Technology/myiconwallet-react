@@ -53,13 +53,15 @@ function UnlockWalletPage() {
   function validate(keystore, password) {
     const errors = {};
 
-    if (!keystore) errors.keystoreFile = 'Please choose your keystore file.';
-    else if (keystore === ERROR_FAILED_READING_FILE)
-      errors.keystoreFile = 'Failed reading file, please try again with a valid keystore file.';
-    else if (keystore === ERROR_INVALID_KEYSTORE)
-      errors.keystoreFile = 'Please choose a valid keystore file.';
+    if (!keystore) {
+      errors.keystoreFile = 'Please choose your keystore file';
+    } else if (keystore === ERROR_FAILED_READING_FILE) {
+      errors.keystoreFile = 'Failed reading file, please try again with a valid keystore file';
+    } else if (keystore === ERROR_INVALID_KEYSTORE) {
+      errors.keystoreFile = 'Please choose a valid keystore file';
+    }
 
-    if (!password) errors.password = 'Please enter your password.';
+    if (!password) errors.password = 'Please enter your password';
 
     setErrors(errors);
     return !errors.password && !errors.keystoreFile;

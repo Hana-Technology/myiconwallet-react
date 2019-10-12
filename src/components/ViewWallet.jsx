@@ -9,8 +9,8 @@ import {
   faSync,
   faVoteYea,
 } from '@fortawesome/pro-duotone-svg-icons';
-import { Pie } from 'react-chartjs-2';
 import swal from '@sweetalert/with-react';
+import { Pie } from 'react-chartjs-2';
 import colors from 'utils/colors';
 import { formatNumber } from 'utils/formatNumber';
 import Button from 'components/Button';

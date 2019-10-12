@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
+import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
 import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 
+const API_VERSION = IconConverter.toBigNumber(3);
 const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000000';
-const ICX_LOOP_RATIO = Math.pow(10, 18);
+const GOVERNANCE_SCORE_ADDRESS = 'cx0000000000000000000000000000000000000001';
+export const MINIMUM_ICX_TO_KEEP = IconConverter.toBigNumber(5);
 
 const INITIAL_STATE = {
   network: getNetwork(NETWORK_REF_TESTNET),
@@ -14,20 +17,13 @@ const INITIAL_STATE = {
   getStake: null,
   getIScore: null,
   claimIScore: null,
+  sendIcx: null,
 };
 
 export const IconServiceContext = createContext(INITIAL_STATE);
 
 export function useIconService() {
   return useContext(IconServiceContext);
-}
-
-/**
- * @param {BigNumber} value value as loops
- * @returns {BigNumber} value as ICX
- */
-function convertLoopsToICX(value) {
-  return value.dividedBy(ICX_LOOP_RATIO);
 }
 
 function IconService({ children }) {
@@ -41,7 +37,7 @@ function IconService({ children }) {
    */
   async function getBalance(address) {
     const balanceInLoops = await iconService.getBalance(address).execute();
-    return convertLoopsToICX(balanceInLoops);
+    return convertLoopToIcx(balanceInLoops);
   }
 
   /**
@@ -64,8 +60,8 @@ function IconService({ children }) {
     const result = await iconService.call(getStakeCall).execute();
 
     return {
-      stake: convertLoopsToICX(IconConverter.toBigNumber(result.stake)),
-      unstake: result.unstake ? convertLoopsToICX(IconConverter.toBigNumber(result.unstake)) : null,
+      stake: convertLoopToIcx(IconConverter.toBigNumber(result.stake)),
+      unstake: result.unstake ? convertLoopToIcx(IconConverter.toBigNumber(result.unstake)) : null,
       remainingBlocks: result.remainingBlocks
         ? IconConverter.toBigNumber(result.remainingBlocks)
         : null,
@@ -91,11 +87,18 @@ function IconService({ children }) {
     const result = await iconService.call(queryIScoreCall).execute();
 
     return {
-      iScore: convertLoopsToICX(IconConverter.toBigNumber(result.iscore)),
-      estimatedICX: convertLoopsToICX(IconConverter.toBigNumber(result.estimatedICX)),
+      iScore: convertLoopToIcx(IconConverter.toBigNumber(result.iscore)),
+      estimatedICX: convertLoopToIcx(IconConverter.toBigNumber(result.estimatedICX)),
     };
   }
 
+  /**
+   * @typedef {Object} Wallet
+   *
+   * @function
+   * @param {Wallet} wallet
+   * @returns {Promise<string>}
+   */
   function claimIScore(wallet) {
     const builder = new IconBuilder.CallTransactionBuilder();
     const claimIScoreTransaction = builder
@@ -105,11 +108,43 @@ function IconService({ children }) {
       .value(0)
       .method('claimIScore')
       .stepLimit(IconConverter.toBigNumber(1000000))
-      .version(IconConverter.toBigNumber(3))
+      .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
     const signedTransaction = new SignedTransaction(claimIScoreTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
+  }
+
+  /**
+   * @param {Wallet} wallet
+   * @param {string} amount
+   * @param {string} destinationAddress
+   * @returns {Promise<string>}
+   */
+  async function sendIcx(wallet, amount, destinationAddress) {
+    const stepLimit = await getDefaultStepCost();
+    const builder = new IconBuilder.IcxTransactionBuilder();
+    const sendIcxTransaction = builder
+      .nid(network.nid)
+      .from(wallet.getAddress())
+      .to(destinationAddress)
+      .value(convertIcxToLoop(amount))
+      .stepLimit(stepLimit)
+      .version(API_VERSION)
+      .timestamp(Date.now() * 1000)
+      .build();
+    const signedTransaction = new SignedTransaction(sendIcxTransaction, wallet);
+    return iconService.sendTransaction(signedTransaction).execute();
+  }
+
+  async function getDefaultStepCost() {
+    const builder = new IconBuilder.CallBuilder();
+    const getStepCostsCall = builder
+      .to(GOVERNANCE_SCORE_ADDRESS)
+      .method('getStepCosts')
+      .build();
+    const { default: defaultStepCost } = await iconService.call(getStepCostsCall).execute();
+    return defaultStepCost;
   }
 
   function toggleNetwork() {
@@ -125,7 +160,16 @@ function IconService({ children }) {
 
   return (
     <IconServiceContext.Provider
-      value={{ network, toggleNetwork, iconService, getBalance, getStake, getIScore, claimIScore }}
+      value={{
+        network,
+        toggleNetwork,
+        iconService,
+        getBalance,
+        getStake,
+        getIScore,
+        claimIScore,
+        sendIcx,
+      }}
     >
       {children}
     </IconServiceContext.Provider>

@@ -26,7 +26,7 @@ function WalletHeader() {
             className="hover:text-white focus:text-white"
           >
             <FontAwesomeIcon icon={faWallet} className="mr-2" />
-            hx&hellip;{wallet.getAddress().substr(-6)}
+            hx&hellip;{wallet.getAddress().substr(-8)}
           </a>
         </div>
       )}

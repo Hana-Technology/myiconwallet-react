@@ -25,7 +25,7 @@ function CreateWallet({ onCreateWallet }) {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
     if (validate(password, confirmPassword)) {
-      createWallet(passwordInput.value);
+      createWallet(password);
       onCreateWallet();
     } else {
       setIsLoading(false);
@@ -35,13 +35,17 @@ function CreateWallet({ onCreateWallet }) {
   function validate(password, confirmPassword) {
     const errors = {};
 
-    if (!password) errors.password = 'Please enter your password.';
-    else if (password.length < 8)
-      errors.password = 'Please enter a password that is at least 8 characters long.';
+    if (!password) {
+      errors.password = 'Please enter your password';
+    } else if (password.length < 8) {
+      errors.password = 'Please enter a password that is at least 8 characters long';
+    }
 
-    if (!confirmPassword) errors.confirmPassword = 'Please confirm your password.';
-    else if (confirmPassword !== password)
-      errors.confirmPassword = 'The passwords you entered are different.';
+    if (!confirmPassword) {
+      errors.confirmPassword = 'Please confirm your password';
+    } else if (confirmPassword !== password) {
+      errors.confirmPassword = 'The passwords you entered are different';
+    }
 
     setErrors(errors);
     return !errors.password && !errors.confirmPassword;
