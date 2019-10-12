@@ -10,7 +10,7 @@ import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
-import { MINIMUM_ICX_TO_KEEP, useIconService } from 'components/IconService';
+import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
@@ -84,16 +84,13 @@ function SendPage() {
   function validate(amount, address) {
     const errors = {};
 
+    const parsedAmount = IconConverter.toBigNumber(amount);
     if (!amount) {
       errors.amount = 'Please enter an amount';
-    } else if (IconConverter.toBigNumber(amount).isNaN()) {
+    } else if (parsedAmount.isNaN() || parsedAmount.isLessThanOrEqualTo(0)) {
       errors.amount = 'Please enter a valid ICX amount';
-    } else if (
-      IconConverter.toBigNumber(amount)
-        .plus(MINIMUM_ICX_TO_KEEP)
-        .isGreaterThan(balance)
-    ) {
-      errors.amount = 'Please enter an amount which is less than your available balance - 5 ICX';
+    } else if (parsedAmount.isGreaterThan(balance)) {
+      errors.amount = 'You have entered an amount more than your available balance';
     }
 
     if (!address) {
