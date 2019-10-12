@@ -50,6 +50,7 @@ function SendPage() {
         })
       ) {
         const transactionHash = await sendIcx(wallet, amount, address);
+        setTimeout(() => refreshWallet(), 3000); // allow time for transaction before refreshing
         await swal(
           <div>
             <Alert
@@ -73,7 +74,6 @@ function SendPage() {
             </p>
           </div>
         );
-        refreshWallet();
         navigate('/');
       }
     } else {
