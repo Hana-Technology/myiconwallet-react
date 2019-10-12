@@ -1,0 +1,4 @@
+# Netlify Redirects
+
+# Clean URLs for SPA
+/* /index.html 200
