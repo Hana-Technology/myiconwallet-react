@@ -3,6 +3,29 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* SweetAlert overrides */
 .swal-modal {
   @apply text-left;
+}
+
+/* React-Rangeslider overrides */
+#root .rangeslider {
+  @apply mt-4 mb-10;
+}
+#root .rangeslider-horizontal .rangeslider__fill {
+  @apply bg-teal-600;
+}
+#root .rangeslider-horizontal .rangeslider__handle {
+  @apply z-10;
+}
+#root .rangeslider-horizontal .rangeslider__handle-tooltip {
+  @apply whitespace-no-wrap w-auto px-2;
+}
+#root .rangeslider__labels .rangeslider__label-item {
+  @apply text-sm text-gray-600 uppercase tracking-tight;
+}
+#root .rangeslider__labels .rangeslider__label-item:before {
+  @apply block border-l-2 border-gray-600 w-full h-3 -mt-2 z-0;
+  content: '';
+  transform: translateX(50%);
 }

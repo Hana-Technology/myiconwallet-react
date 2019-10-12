@@ -35,50 +35,47 @@ function SendPage() {
 
     const amount = amountInput.value;
     const address = addressInput.value;
-    if (validate(amount, address)) {
-      if (
-        await swal({
-          content: (
-            <Alert
-              type={ALERT_TYPE_DANGER}
-              title="This is your final confirmation"
-              text={`Are you sure you want to send ${amount} ICX to ${address}?`}
-              className="break-all"
-            />
-          ),
-          buttons: ['Cancel', 'Continue'],
-        })
-      ) {
-        const transactionHash = await sendIcx(wallet, amount, address);
-        setTimeout(() => refreshWallet(), 3000); // allow time for transaction before refreshing
-        await swal(
-          <div>
-            <Alert
-              type={ALERT_TYPE_SUCCESS}
-              title="Sent ICX"
-              text={`Successfully sent ${amount} ICX to ${address}`}
-              className="break-all mb-4"
-            />
-            <p className="break-all">
-              Transaction:
-              <br />
-              {transactionHash}
-              <a
-                href={`${trackerUrl}/transaction/${transactionHash}`}
-                title="View on ICON tracker"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-              </a>
-            </p>
-          </div>
-        );
-        navigate('/');
-      }
-    } else {
-      setIsLoading(false);
-    }
+    if (!validate(amount, address)) return setIsLoading(false);
+
+    const confirmation = await swal({
+      content: (
+        <Alert
+          type={ALERT_TYPE_DANGER}
+          title="This is your final confirmation"
+          text={`Are you sure you want to send ${amount} ICX to ${address}?`}
+          className="break-all"
+        />
+      ),
+      buttons: ['Cancel', 'Continue'],
+    });
+    if (!confirmation) return setIsLoading(false);
+
+    const transactionHash = await sendIcx(wallet, amount, address);
+    setTimeout(() => refreshWallet(), 3000); // allow time for transaction before refreshing
+    await swal(
+      <div>
+        <Alert
+          type={ALERT_TYPE_SUCCESS}
+          title="Sent ICX"
+          text={`Successfully sent ${amount} ICX to ${address}`}
+          className="break-all mb-4"
+        />
+        <p className="break-all">
+          Transaction:
+          <br />
+          {transactionHash}
+          <a
+            href={`${trackerUrl}/transaction/${transactionHash}`}
+            title="View on ICON tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+          </a>
+        </p>
+      </div>
+    );
+    navigate('/');
   }
 
   function validate(amount, address) {
@@ -124,8 +121,8 @@ function SendPage() {
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
             <p className="mb-4">
-              Choose an amount in ICX and a destination address then click the <i>Send ICX</i>{' '}
-              button. You will be prompted to confirm before the transaction is completed.
+              Choose an amount in ICX and a destination address. You will be prompted to confirm
+              before the transaction is completed.
             </p>
             {balance && (
               <Alert

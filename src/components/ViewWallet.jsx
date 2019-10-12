@@ -68,39 +68,37 @@ function ViewWallet() {
 
   async function handleClaimIScore() {
     setIsClaiming(true);
-    if (
-      await swal({
-        content: (
-          <p>
-            Continue converting {formatNumber(iScore)} I-Score to an estimated{' '}
-            {formatNumber(estimatedICX)} ICX?
-          </p>
-        ),
-        buttons: ['Cancel', 'Continue'],
-      })
-    ) {
-      const transactionHash = await claimIScore(wallet);
-      await swal(
-        <div>
-          <p className="mb-4">Successfully converted I-Score to ICX</p>
-          <p className="break-all">
-            Transaction:
-            <br />
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
-          </p>
-        </div>
-      );
-      refreshWallet();
-    }
-    setIsClaiming(false);
+    const confirmation = await swal({
+      content: (
+        <p>
+          Continue converting {formatNumber(iScore)} I-Score to an estimated{' '}
+          {formatNumber(estimatedICX)} ICX?
+        </p>
+      ),
+      buttons: ['Cancel', 'Continue'],
+    });
+    if (!confirmation) return setIsClaiming(false);
+
+    const transactionHash = await claimIScore(wallet);
+    await swal(
+      <div>
+        <p className="mb-4">Successfully converted I-Score to ICX</p>
+        <p className="break-all">
+          Transaction:
+          <br />
+          {transactionHash}
+          <a
+            href={`${trackerUrl}/transaction/${transactionHash}`}
+            title="View on ICON tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+          </a>
+        </p>
+      </div>
+    );
+    refreshWallet();
   }
 
   return (

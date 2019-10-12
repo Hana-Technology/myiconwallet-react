@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   getIScore: null,
   claimIScore: null,
   sendIcx: null,
+  setStake: null,
 };
 
 export const IconServiceContext = createContext(INITIAL_STATE);
@@ -136,6 +137,27 @@ function IconService({ children }) {
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
+  /**
+   * @param {Wallet} wallet
+   * @param {number} newStake
+   * @returns {Promise<string>}
+   */
+  async function setStake(wallet, newStake) {
+    const builder = new IconBuilder.CallTransactionBuilder();
+    const stakeIcxTransaction = builder
+      .nid(network.nid)
+      .from(wallet.getAddress())
+      .to(SCORE_INSTALL_ADDRESS)
+      .method('setStake')
+      .params({ value: IconConverter.toHex(convertIcxToLoop(newStake)) })
+      .stepLimit(IconConverter.toBigNumber(1000000))
+      .version(API_VERSION)
+      .timestamp(Date.now() * 1000)
+      .build();
+    const signedTransaction = new SignedTransaction(stakeIcxTransaction, wallet);
+    return iconService.sendTransaction(signedTransaction).execute();
+  }
+
   async function getDefaultStepCost() {
     const builder = new IconBuilder.CallBuilder();
     const getStepCostsCall = builder
@@ -168,6 +190,7 @@ function IconService({ children }) {
         getIScore,
         claimIScore,
         sendIcx,
+        setStake,
       }}
     >
       {children}
