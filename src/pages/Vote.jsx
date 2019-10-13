@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import WalletHeader from 'components/WalletHeader';
 
 function VotePage() {
+  const { getPReps } = useIconService();
+  const [pReps, setPReps] = useState(null);
+
+  useEffect(() => {
+    getPReps().then(pReps => setPReps(pReps));
+  }, [getPReps]);
+
+  if (pReps) console.log('P-Reps', pReps);
+
   return (
     <Layout title="Allocate Votes">
       <WalletHeader />

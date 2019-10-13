@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   claimIScore: null,
   sendIcx: null,
   setStake: null,
+  getPReps: null,
 };
 
 export const IconServiceContext = createContext(INITIAL_STATE);
@@ -142,7 +143,7 @@ function IconService({ children }) {
    * @param {number} newStake
    * @returns {Promise<string>}
    */
-  async function setStake(wallet, newStake) {
+  function setStake(wallet, newStake) {
     const builder = new IconBuilder.CallTransactionBuilder();
     const stakeIcxTransaction = builder
       .nid(network.nid)
@@ -156,6 +157,26 @@ function IconService({ children }) {
       .build();
     const signedTransaction = new SignedTransaction(stakeIcxTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
+  }
+
+  /**
+   * @typedef PRep
+   * @property {string} address
+   * @property {string} name
+   * @property {string} city
+   * @property {string} country
+   *
+   * @function
+   * @returns {Promise<[PRep]>}
+   */
+  async function getPReps() {
+    const builder = new IconBuilder.CallBuilder();
+    const getPRepsCall = builder
+      .to(SCORE_INSTALL_ADDRESS)
+      .method('getPReps')
+      .build();
+    const { preps } = await iconService.call(getPRepsCall).execute();
+    return preps;
   }
 
   async function getDefaultStepCost() {
@@ -191,6 +212,7 @@ function IconService({ children }) {
         claimIScore,
         sendIcx,
         setStake,
+        getPReps,
       }}
     >
       {children}
