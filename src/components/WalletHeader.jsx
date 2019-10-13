@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSync, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import { Link } from '@reach/router';
@@ -10,7 +10,21 @@ function WalletHeader() {
   const {
     network: { trackerUrl },
   } = useIconService();
-  const { balance, isLoading, refreshWallet, wallet } = useWallet();
+  const {
+    balance,
+    isLoading,
+    refreshWallet,
+    stake: { stake, unstake },
+    wallet,
+  } = useWallet();
+  const [totalBalance, setTotalBalance] = useState(null);
+
+  useEffect(() => {
+    if (!(balance && stake)) return void setTotalBalance(null);
+    let totalBalance = balance.plus(stake);
+    if (unstake) totalBalance = totalBalance.plus(unstake);
+    setTotalBalance(totalBalance);
+  }, [balance, stake, unstake]);
 
   return (
     wallet && (
@@ -35,7 +49,7 @@ function WalletHeader() {
               disabled={isLoading}
               className="ml-4 sm:ml-6 whitespace-no-wrap hover:text-white focus:text-white"
             >
-              {balance && `${formatNumber(balance, 2)} ICX`}
+              {totalBalance && `${formatNumber(totalBalance, 2)} ICX`}
               <FontAwesomeIcon icon={faSync} spin={isLoading} className="ml-2" />
             </button>
           </div>
