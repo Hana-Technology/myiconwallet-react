@@ -8,7 +8,6 @@ module.exports = {
           require('@fullhuman/postcss-purgecss')({
             content: ['public/index.html', 'src/**/*.jsx', 'src/**/*.css'],
             defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-            whitelistPatternsChildren: [/\.swal-/, /\.rangeslider/],
           }),
         ]
       : []),
