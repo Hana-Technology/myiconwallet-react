@@ -15,14 +15,14 @@ function CreatedWallet() {
   return (
     wallet && (
       <>
-        <div className="sm:flex items-start justify-between mb-6">
+        <div className="sm:flex items-start justify-between">
           <div className="sm:pr-5">
-            <p className="mb-2">Your new wallet has been created with address:</p>
+            <p>Your new wallet has been created with address:</p>
             <Alert
               type={ALERT_TYPE_SUCCESS}
               text={wallet.getAddress()}
               showIcon={false}
-              className="break-all"
+              className="break-all mt-2"
             />
           </div>
           <img
@@ -32,17 +32,17 @@ function CreatedWallet() {
           />
         </div>
 
-        <p className="mb-6">
+        <p className="mt-6">
           You should download your keystore file now and keep it somewhere private.
         </p>
         <Alert
           type={ALERT_TYPE_WARN}
           title="Don't forget your password"
           text="There is no way to recover your wallet if you forget the password"
-          className="mb-6"
+          className="mt-6"
         />
 
-        <div className="sm:flex justify-between">
+        <div className="sm:flex justify-between mt-6">
           <Button
             href={keystoreFileUri}
             download="iconwallet.keystore"

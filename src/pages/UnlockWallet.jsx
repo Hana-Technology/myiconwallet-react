@@ -85,13 +85,11 @@ function UnlockWalletPage() {
         />
 
         <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-          <p className="mb-4">
-            Choose your keystore file and enter the wallet password to unlock your wallet.
-          </p>
+          <p>Choose your keystore file and enter the wallet password to unlock your wallet.</p>
           <Alert
             type={ALERT_TYPE_INFO}
             text="Your keystore file won't be sent anywhere, it will only stay in your web browser session"
-            className="mb-4"
+            className="mt-4"
           />
 
           <fieldset disabled={isLoading}>

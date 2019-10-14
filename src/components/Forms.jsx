@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export function InputGroup({ children, ...props }) {
   return (
-    <div className="mb-4" {...props}>
+    <div className="mt-4" {...props}>
       {children}
     </div>
   );

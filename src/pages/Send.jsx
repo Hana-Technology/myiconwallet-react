@@ -58,9 +58,8 @@ function SendPage() {
           type={ALERT_TYPE_SUCCESS}
           title="Sent ICX"
           text={`Successfully sent ${amount} ICX to ${address}`}
-          className="break-all mb-4"
         />
-        <p className="break-all">
+        <p className="break-all mt-4">
           Transaction:
           <br />
           {transactionHash}
@@ -120,7 +119,7 @@ function SendPage() {
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p className="mb-4">
+            <p>
               Choose an amount in ICX and a destination address. You will be prompted to confirm
               before the transaction is completed.
             </p>
@@ -129,7 +128,7 @@ function SendPage() {
                 type={ALERT_TYPE_INFO}
                 title={`${formatNumber(balance)} ICX`}
                 text="Available balance"
-                className="mb-4"
+                className="mt-4"
               />
             )}
 

@@ -10,7 +10,7 @@ import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
-import { Input, InputGroup } from 'components/Forms';
+import { InputGroup } from 'components/Forms';
 import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
@@ -112,9 +112,8 @@ function VotePage() {
           type={ALERT_TYPE_SUCCESS}
           title="Delegate votes"
           text={`Successfully set vote delegations`}
-          className="break-all mb-4"
         />
-        <p className="break-all">
+        <p className="break-all mt-4">
           Transaction:
           <br />
           {transactionHash}
@@ -181,7 +180,7 @@ function VotePage() {
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p className="mb-8">
+            <p>
               Choose P-Rep candidates that you want to vote for from the dropdown list then set how
               much of your staked ICX to delegate to each. You will be prompted to confirm before
               the transaction is completed.
@@ -200,6 +199,7 @@ function VotePage() {
                       isClearable={false}
                       controlShouldRenderValue={false}
                       placeholder="Find P-Rep candidates..."
+                      className="text-lg"
                     />
                   </InputGroup>
 
@@ -217,12 +217,12 @@ function VotePage() {
                           <tr key={selectedDelegate.value}>
                             <td>{selectedDelegate.label}</td>
                             <td>
-                              <Input
+                              <input
                                 type="text"
                                 value={selectedDelegate.votes.toNumber()}
                                 onChange={createVotesChangeHandler(selectedDelegate)}
-                                className="text-right"
-                              ></Input>
+                                className="text-lg text-right w-full px-2 py-1 my-px rounded border bg-gray-100"
+                              />
                             </td>
                             <td>
                               <button
@@ -246,7 +246,7 @@ function VotePage() {
                       staked
                     )} votes`}
                     text="used / available (staked ICX)"
-                    className="mt-6 mb-4"
+                    className="mt-6"
                   />
 
                   <Button type="submit" disabled={tooManyVotes || isLoading}>

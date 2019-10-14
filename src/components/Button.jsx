@@ -17,7 +17,7 @@ function Button({ children, className, disabled, href, to, ...props }) {
     <TagName
       href={href}
       to={to}
-      className={`text-lg font-bold mt-2 px-4 py-2 rounded hover:shadow focus:shadow ${
+      className={`text-lg font-bold mt-6 px-4 py-2 rounded hover:shadow focus:shadow ${
         disabled
           ? 'bg-gray-500 text-gray-100'
           : 'bg-teal-500 hover:bg-teal-600 focus:bg-teal-600 text-teal-100'

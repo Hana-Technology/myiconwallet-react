@@ -13,6 +13,7 @@ import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import colors from 'utils/colors';
 import { formatNumber } from 'utils/formatNumber';
+import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
@@ -71,10 +72,13 @@ function ViewWallet() {
     setIsClaiming(true);
     const confirmation = await swal({
       content: (
-        <p>
-          Continue converting {formatNumber(iScore)} I-Score to an estimated{' '}
-          {formatNumber(estimatedICX)} ICX?
-        </p>
+        <Alert
+          type={ALERT_TYPE_INFO}
+          title="Convert I-Score"
+          text={`Continue converting ${formatNumber(iScore)} I-Score to an estimated ${formatNumber(
+            estimatedICX
+          )} ICX?`}
+        />
       ),
       buttons: ['Cancel', 'Continue'],
     });
@@ -83,8 +87,12 @@ function ViewWallet() {
     const transactionHash = await claimIScore(wallet);
     await swal(
       <div>
-        <p className="mb-4">Successfully converted I-Score to ICX</p>
-        <p className="break-all">
+        <Alert
+          type={ALERT_TYPE_SUCCESS}
+          title="Converted I-Score"
+          text={`Successfully converted ${formatNumber(iScore)} I-Score to ICX`}
+        />
+        <p className="break-all mt-4">
           Transaction:
           <br />
           {transactionHash}
@@ -105,7 +113,7 @@ function ViewWallet() {
   return (
     wallet && (
       <>
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between">
           <h2 className="text-2xl uppercase tracking-tight">Your wallet</h2>
           <button
             onClick={() => refreshWallet()}
@@ -117,7 +125,7 @@ function ViewWallet() {
           </button>
         </div>
 
-        <div>
+        <div className="mt-2">
           <div className="break-all text-lg">
             {wallet.getAddress()}{' '}
             <a
@@ -208,7 +216,7 @@ function ViewWallet() {
           </div>
         </div>
 
-        <div className="sm:flex justify-between mt-6">
+        <div className="sm:flex justify-between mt-2">
           <Button to="/send" className="text-center block sm:w-1/3 ">
             <FontAwesomeIcon icon={faShareSquare} className="mr-2" />
             Send ICX

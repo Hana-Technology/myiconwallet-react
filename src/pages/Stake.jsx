@@ -65,9 +65,8 @@ function StakePage() {
           type={ALERT_TYPE_SUCCESS}
           title="Set ICX"
           text={`Successfully set stake to ${newStake} ICX`}
-          className="break-all mb-4"
         />
-        <p className="break-all">
+        <p className="break-all mt-4">
           Transaction:
           <br />
           {transactionHash}
