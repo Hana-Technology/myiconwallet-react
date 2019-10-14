@@ -36,14 +36,14 @@ function VotePage() {
   const {
     delegations,
     refreshWallet,
-    stake: { stake },
+    stake: { staked },
     wallet,
   } = useWallet();
   const [selectedDelegates, setSelectedDelegates] = useState([]);
   const [pRepOptions, setPRepOptions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const tooManyVotes = stake && delegations ? sumVotes(selectedDelegates).gt(stake) : false;
+  const tooManyVotes = staked && delegations ? sumVotes(selectedDelegates).gt(staked) : false;
 
   useEffect(() => {
     getPReps().then(pReps => {
@@ -190,7 +190,7 @@ function VotePage() {
               much of your staked ICX to delegate to each. You will be prompted to confirm before
               the transaction is completed.
             </p>
-            {stake && delegations && pRepOptions ? (
+            {staked && delegations && pRepOptions ? (
               <>
                 <fieldset disabled={isLoading}>
                   <InputGroup>
@@ -247,7 +247,7 @@ function VotePage() {
                   <Alert
                     type={tooManyVotes ? ALERT_TYPE_DANGER : ALERT_TYPE_INFO}
                     title={`${formatNumber(sumVotes(selectedDelegates))} / ${formatNumber(
-                      stake
+                      staked
                     )} votes`}
                     text="used / available (staked ICX)"
                     className="mt-6 mb-4"

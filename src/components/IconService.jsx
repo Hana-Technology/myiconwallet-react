@@ -57,8 +57,10 @@ function IconService({ children }) {
     const result = await iconService.call(getStakeCall).execute();
 
     return {
-      stake: convertLoopToIcx(IconConverter.toBigNumber(result.stake)),
-      unstake: result.unstake ? convertLoopToIcx(IconConverter.toBigNumber(result.unstake)) : null,
+      staked: convertLoopToIcx(IconConverter.toBigNumber(result.stake)),
+      unstaking: result.unstake
+        ? convertLoopToIcx(IconConverter.toBigNumber(result.unstake))
+        : null,
       remainingBlocks: result.remainingBlocks
         ? IconConverter.toBigNumber(result.remainingBlocks)
         : null,
@@ -274,8 +276,8 @@ export default IconService;
  * @property {BigNumber} votingPower value as ICX
  *
  * @typedef {Object} StakeResult
- * @property {BigNumber} stake value as ICX
- * @property {BigNumber} [unstake] value as ICX
+ * @property {BigNumber} staked value as ICX
+ * @property {BigNumber} [unstaking] value as ICX
  * @property {BigNumber} [remainingBlocks] value as number
  *
  * @typedef {Object} IScoreResult

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   wallet: null,
   keystore: null,
   balance: null,
+  fullBalance: null,
   stake: {},
   iScore: {},
   delegations: null,
@@ -29,6 +30,7 @@ function Wallet({ children }) {
   const [wallet, setWallet] = useState(INITIAL_STATE.wallet);
   const [keystore, setKeystore] = useState(INITIAL_STATE.keystore);
   const [balance, setBalance] = useState(INITIAL_STATE.balance);
+  const [fullBalance, setFullBalance] = useState(INITIAL_STATE.fullBalance);
   const [stake, setStake] = useState(INITIAL_STATE.stake);
   const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
   const [delegations, setDelegations] = useState(INITIAL_STATE.delegations);
@@ -81,6 +83,11 @@ function Wallet({ children }) {
     setDelegations(delegations);
     setVotingPower(votingPower);
 
+    const { staked, unstaking } = stake;
+    const fullBalance = balance.plus(staked);
+    if (unstaking) fullBalance = fullBalance.plus(unstaking);
+    setFullBalance(fullBalance);
+
     setIsLoading(false);
   }
 
@@ -90,6 +97,7 @@ function Wallet({ children }) {
         wallet,
         keystore,
         balance,
+        fullBalance,
         stake,
         iScore,
         delegations,

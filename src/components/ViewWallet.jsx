@@ -35,7 +35,7 @@ function ViewWallet() {
   } = useIconService();
   const {
     balance,
-    stake: { stake, unstake },
+    stake: { staked, unstaking },
     iScore: { iScore, estimatedICX },
     wallet,
     isLoading,
@@ -46,25 +46,25 @@ function ViewWallet() {
   const [isClaiming, setIsClaiming] = useState(false);
 
   useEffect(() => {
-    if (!(balance && stake)) return void setChartData(null);
-    if (balance.isZero() && stake.isZero()) return void setIsEmpty(true);
+    if (!(balance && staked)) return void setChartData(null);
+    if (balance.isZero() && staked.isZero()) return void setIsEmpty(true);
 
     const chartLabels = ['Available', 'Staked'];
     const chartDataset = {
-      data: [balance.toNumber(), stake.toNumber()],
+      data: [balance.toNumber(), staked.toNumber()],
       backgroundColor: [colors.teal['500'], colors.blue['500']],
       hoverBackgroundColor: [colors.teal['600'], colors.blue['600']],
     };
-    if (unstake) {
+    if (unstaking) {
       chartLabels.push('Unstaking');
-      chartDataset.data.push(unstake.toNumber());
+      chartDataset.data.push(unstaking.toNumber());
       chartDataset.backgroundColor.push(colors.purple['500']);
       chartDataset.hoverBackgroundColor.push(colors.purple['600']);
     }
 
     setChartData({ labels: chartLabels, datasets: [chartDataset] });
     setIsEmpty(false);
-  }, [balance, stake, unstake]);
+  }, [balance, staked, unstaking]);
 
   async function handleClaimIScore() {
     setIsClaiming(true);
@@ -152,12 +152,12 @@ function ViewWallet() {
             </div>
             <div className="mb-2">
               <div className="text-4xl leading-tight">
-                {!stake && isLoading ? (
+                {!staked && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
-                  stake && (
+                  staked && (
                     <>
-                      {formatNumber(stake)}
+                      {formatNumber(staked)}
                       <span className="text-lg ml-2">ICX</span>
                     </>
                   )

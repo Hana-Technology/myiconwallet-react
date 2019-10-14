@@ -24,8 +24,8 @@ function StakePage() {
     setStake,
   } = useIconService();
   const {
-    balance,
-    stake: { stake, unstake },
+    fullBalance,
+    stake: { staked },
     wallet,
     refreshWallet,
   } = useWallet();
@@ -34,15 +34,10 @@ function StakePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!(balance && stake)) return void setMaxStakeable(null);
-    setNewStake(stake.toNumber());
-    setMaxStakeable(
-      balance
-        .plus(stake)
-        .plus(unstake || 0)
-        .minus(WITHHOLD_BALANCE)
-    );
-  }, [balance, stake, unstake]);
+    if (!(fullBalance && staked)) return void setMaxStakeable(null);
+    setNewStake(staked.toNumber());
+    setMaxStakeable(fullBalance.minus(WITHHOLD_BALANCE));
+  }, [fullBalance, staked]);
 
   async function handleOnSubmit(event) {
     event.preventDefault();
@@ -94,7 +89,7 @@ function StakePage() {
     setNewStake(value);
   }
 
-  const stakeAsInt = stake ? stake.integerValue().toNumber() : null;
+  const stakedAsInt = staked ? staked.integerValue().toNumber() : null;
   const maxStakeableAsInt = maxStakeable ? maxStakeable.integerValue().toNumber() : null;
 
   return (
@@ -114,11 +109,11 @@ function StakePage() {
               Use the slider to adjust your staked ICX. You will be prompted to confirm before the
               transaction is completed.
             </p>
-            {stake && maxStakeable ? (
+            {staked && maxStakeable ? (
               <>
                 <Alert
                   type={ALERT_TYPE_INFO}
-                  title={`${formatNumber(stake)} / ${maxStakeableAsInt} ICX`}
+                  title={`${formatNumber(staked)} / ${maxStakeableAsInt} ICX`}
                   text="Current / max stake"
                   className="mt-4"
                 />
@@ -138,7 +133,7 @@ function StakePage() {
                       <Slider
                         max={maxStakeableAsInt}
                         labels={{
-                          [stakeAsInt]: 'Current',
+                          [stakedAsInt]: 'Current',
                         }}
                         tooltip={false}
                         value={newStake}
