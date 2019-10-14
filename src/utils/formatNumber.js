@@ -1,5 +1,5 @@
 import { IconConverter } from 'icon-sdk-js';
-import { endsWith, trimEnd } from 'lodash';
+import { endsWith, trimEnd } from 'lodash-es';
 
 /**
  * @param {BigNumber} value
