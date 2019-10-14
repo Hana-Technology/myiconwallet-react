@@ -4,6 +4,7 @@ import { faExternalLink, faShareSquare, faSpinnerThird } from '@fortawesome/pro-
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
+import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
@@ -15,6 +16,8 @@ import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
 import transferMoneySvg from 'assets/transfer_money.svg';
+
+const TRANSACTION_FEE = convertLoopToIcx(Math.pow(10, 15));
 
 function SendPage() {
   const {
@@ -85,8 +88,8 @@ function SendPage() {
       errors.amount = 'Please enter an amount';
     } else if (parsedAmount.isNaN() || parsedAmount.isLessThanOrEqualTo(0)) {
       errors.amount = 'Please enter a valid ICX amount';
-    } else if (parsedAmount.isGreaterThan(balance)) {
-      errors.amount = 'You have entered an amount more than your available balance';
+    } else if (parsedAmount.isGreaterThan(balance.minus(TRANSACTION_FEE))) {
+      errors.amount = `You have entered an amount more than your available balance + ${TRANSACTION_FEE.toString()} transaction fee`;
     }
 
     if (!address) {
