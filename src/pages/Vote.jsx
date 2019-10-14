@@ -88,7 +88,6 @@ function VotePage() {
             text={`Are you sure you want to ${
               isClearingDelegations ? 'clear' : 'save'
             } your delegations?`}
-            className="break-all"
           />
           {!isClearingDelegations && (
             <table className="mt-6">

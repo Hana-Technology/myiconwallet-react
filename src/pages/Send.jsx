@@ -61,6 +61,7 @@ function SendPage() {
           type={ALERT_TYPE_SUCCESS}
           title="Sent ICX"
           text={`Successfully sent ${amount} ICX to ${address}`}
+          className="break-all"
         />
         <p className="break-all mt-4">
           Transaction:

@@ -50,7 +50,6 @@ function StakePage() {
           type={ALERT_TYPE_DANGER}
           title="This is your final confirmation"
           text={`Are you sure you want to change your stake to ${newStake} ICX?`}
-          className="break-all"
         />
       ),
       buttons: ['Cancel', 'Continue'],
