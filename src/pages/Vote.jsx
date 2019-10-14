@@ -115,7 +115,7 @@ function VotePage() {
     if (!confirmation) return setIsLoading(false);
 
     const transactionHash = await setDelegations(wallet, delegationsToSet);
-    setTimeout(() => refreshWallet(), 3000); // allow time for transaction before refreshing
+    setTimeout(() => refreshWallet(), 4000); // allow time for transaction before refreshing
     await swal(
       <div>
         <Alert
