@@ -35,6 +35,7 @@ function ViewWallet() {
   } = useIconService();
   const {
     balance,
+    fullBalance,
     stake: { staked, unstaking },
     iScore: { iScore, estimatedICX },
     wallet,
@@ -116,7 +117,7 @@ function ViewWallet() {
           </button>
         </div>
 
-        <div className="mb-2">
+        <div>
           <div className="break-all text-lg">
             {wallet.getAddress()}{' '}
             <a
@@ -131,41 +132,43 @@ function ViewWallet() {
           <div className="text-sm text-gray-600 uppercase tracking-tight">Address</div>
         </div>
 
-        <div className="sm:flex items-start justify-between">
+        <div className="sm:flex items-start justify-between mt-4">
           <div>
-            <div className="mb-2">
+            <div>
               <div className="text-4xl leading-tight">
-                {!balance && isLoading ? (
+                {!fullBalance && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
-                  balance && (
+                  fullBalance && (
                     <>
-                      {formatNumber(balance)}
+                      {formatNumber(fullBalance, 6)}
                       <span className="text-lg ml-2">ICX</span>
+                    </>
+                  )
+                )}
+              </div>
+              <div className="text-sm text-gray-600 uppercase tracking-tight">Full balance</div>
+            </div>
+            <div className="mt-2">
+              <div className="text-2xl">
+                {!(balance && staked) && isLoading ? (
+                  <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
+                ) : (
+                  balance &&
+                  staked && (
+                    <>
+                      {formatNumber(balance, 2)} · {formatNumber(staked, 2)}
+                      {unstaking && ` · ${formatNumber(unstaking, 2)}`}
+                      <span className="text-base ml-2">ICX</span>
                     </>
                   )
                 )}
               </div>
               <div className="text-sm text-gray-600 uppercase tracking-tight">
-                Available balance
+                Available · Staked{unstaking && ' · Unstaking'}
               </div>
             </div>
-            <div className="mb-2">
-              <div className="text-4xl leading-tight">
-                {!staked && isLoading ? (
-                  <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
-                ) : (
-                  staked && (
-                    <>
-                      {formatNumber(staked)}
-                      <span className="text-lg ml-2">ICX</span>
-                    </>
-                  )
-                )}
-              </div>
-              <div className="text-sm text-gray-600 uppercase tracking-tight">Staked</div>
-            </div>
-            <div>
+            <div className="mt-6">
               <div className="text-4xl leading-tight">
                 {!iScore && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
@@ -173,14 +176,14 @@ function ViewWallet() {
                   iScore && (
                     <>
                       {formatNumber(iScore)}
-                      <span className="text-lg ml-2">~{formatNumber(estimatedICX)} ICX</span>
+                      <span className="text-lg ml-4">~{formatNumber(estimatedICX)} ICX</span>
                     </>
                   )
                 )}
               </div>
               <div className="text-sm text-gray-600 uppercase tracking-tight">
                 I-Score
-                {iScore && !iScore.isZero() && (
+                {iScore && iScore.isGreaterThan('0.00001') && (
                   <button
                     onClick={handleClaimIScore}
                     disabled={isClaiming}
