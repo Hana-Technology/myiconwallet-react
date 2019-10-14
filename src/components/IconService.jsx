@@ -14,6 +14,8 @@ const INITIAL_STATE = {
   iconService: null,
   getBalance: null,
   getStake: null,
+  getDelegations: null,
+  setDelegations: null,
   getIScore: null,
   claimIScore: null,
   sendIcx: null,
@@ -42,12 +44,6 @@ function IconService({ children }) {
   }
 
   /**
-   * @typedef {Object} StakeResult
-   * @property {BigNumber} stake value as ICX
-   * @property {BigNumber} [unstake] value as ICX
-   * @property {BigNumber} [remainingBlocks] value as number
-   *
-   * @function
    * @param {string} address a wallet address
    * @returns {StakeResult}
    */
@@ -70,11 +66,53 @@ function IconService({ children }) {
   }
 
   /**
-   * @typedef {Object} IScoreResult
-   * @property {BigNumber} iScore value as ICX
-   * @property {BigNumber} estimatedICX value as ICX
-   *
-   * @function
+   * @param {string} address a wallet address
+   * @returns {Promise<Delegation[]>}
+   */
+  async function getDelegations(address) {
+    const builder = new IconBuilder.CallBuilder();
+    const getDelegationCall = builder
+      .to(SCORE_INSTALL_ADDRESS)
+      .method('getDelegation')
+      .params({ address })
+      .build();
+    const result = await iconService.call(getDelegationCall).execute();
+
+    return {
+      delegations: result.delegations.map(({ address, value }) => ({
+        address,
+        value: convertLoopToIcx(IconConverter.toBigNumber(value)),
+      })),
+      votingPower: convertLoopToIcx(IconConverter.toBigNumber(result.votingPower)),
+    };
+  }
+
+  /**
+   * @param {Wallet} wallet
+   * @param {Delegation[]} delegations
+   * @returns {Promise<string>} transaction hash
+   */
+  async function setDelegations(wallet, delegations) {
+    const delegationsToSend = delegations.map(({ address, value }) => ({
+      address,
+      value: IconConverter.toHex(convertIcxToLoop(value)),
+    }));
+    const builder = new IconBuilder.CallTransactionBuilder();
+    const setDelegationCall = builder
+      .nid(network.nid)
+      .from(wallet.getAddress())
+      .to(SCORE_INSTALL_ADDRESS)
+      .method('setDelegation')
+      .params({ delegations: delegationsToSend })
+      .stepLimit(IconConverter.toBigNumber(1000000))
+      .version(API_VERSION)
+      .timestamp(Date.now() * 1000)
+      .build();
+    const signedTransaction = new SignedTransaction(setDelegationCall, wallet);
+    return iconService.sendTransaction(signedTransaction).execute();
+  }
+
+  /**
    * @param {string} address a wallet address
    * @returns {IScoreResult}
    */
@@ -94,11 +132,8 @@ function IconService({ children }) {
   }
 
   /**
-   * @typedef {Object} Wallet
-   *
-   * @function
    * @param {Wallet} wallet
-   * @returns {Promise<string>}
+   * @returns {Promise<string>} transaction hash
    */
   function claimIScore(wallet) {
     const builder = new IconBuilder.CallTransactionBuilder();
@@ -118,9 +153,9 @@ function IconService({ children }) {
 
   /**
    * @param {Wallet} wallet
-   * @param {string} amount
-   * @param {string} destinationAddress
-   * @returns {Promise<string>}
+   * @param {string} amount value as ICX
+   * @param {string} destinationAddress a wallet address
+   * @returns {Promise<string>} transaction hash
    */
   async function sendIcx(wallet, amount, destinationAddress) {
     const stepLimit = await getDefaultStepCost();
@@ -140,8 +175,8 @@ function IconService({ children }) {
 
   /**
    * @param {Wallet} wallet
-   * @param {number} newStake
-   * @returns {Promise<string>}
+   * @param {number} newStake value as ICX
+   * @returns {Promise<string>} transaction hash
    */
   function setStake(wallet, newStake) {
     const builder = new IconBuilder.CallTransactionBuilder();
@@ -160,14 +195,7 @@ function IconService({ children }) {
   }
 
   /**
-   * @typedef PRep
-   * @property {string} address
-   * @property {string} name
-   * @property {string} city
-   * @property {string} country
-   *
-   * @function
-   * @returns {Promise<[PRep]>}
+   * @returns {Promise<PRep[]>}
    */
   async function getPReps() {
     const builder = new IconBuilder.CallBuilder();
@@ -208,6 +236,8 @@ function IconService({ children }) {
         iconService,
         getBalance,
         getStake,
+        getDelegations,
+        setDelegations,
         getIScore,
         claimIScore,
         sendIcx,
@@ -225,3 +255,30 @@ IconService.propTypes = {
 };
 
 export default IconService;
+
+/**
+ * @typedef {Object} Wallet
+ *
+ * @typedef {Object} PRep
+ * @property {string} address a wallet address
+ * @property {string} name
+ * @property {string} city
+ * @property {string} country
+ *
+ * @typedef {Object} Delegation
+ * @property {string} address a P-Rep address
+ * @property {BigNumber} value vote amount in ICX
+ *
+ * @typedef {Object} DelegationsResult
+ * @property {Delegation[]} delegations
+ * @property {BigNumber} votingPower value as ICX
+ *
+ * @typedef {Object} StakeResult
+ * @property {BigNumber} stake value as ICX
+ * @property {BigNumber} [unstake] value as ICX
+ * @property {BigNumber} [remainingBlocks] value as number
+ *
+ * @typedef {Object} IScoreResult
+ * @property {BigNumber} iScore value as ICX
+ * @property {BigNumber} estimatedICX value as ICX
+ */

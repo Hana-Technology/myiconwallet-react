@@ -26,6 +26,7 @@
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.10.2",
     "react-rangeslider": "^2.2.0",
+    "react-select": "^3.0.8",
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {

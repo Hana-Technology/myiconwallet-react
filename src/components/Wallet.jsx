@@ -9,6 +9,8 @@ const INITIAL_STATE = {
   balance: null,
   stake: {},
   iScore: {},
+  delegations: null,
+  votingPower: null, // Is this required?
   createWallet: null,
   unlockWallet: null,
   unloadWallet: null,
@@ -23,12 +25,14 @@ export function useWallet() {
 }
 
 function Wallet({ children }) {
-  const { getBalance, getIScore, getStake } = useIconService();
+  const { getBalance, getDelegations, getIScore, getStake } = useIconService();
   const [wallet, setWallet] = useState(INITIAL_STATE.wallet);
   const [keystore, setKeystore] = useState(INITIAL_STATE.keystore);
   const [balance, setBalance] = useState(INITIAL_STATE.balance);
   const [stake, setStake] = useState(INITIAL_STATE.stake);
   const [iScore, setIScore] = useState(INITIAL_STATE.iScore);
+  const [delegations, setDelegations] = useState(INITIAL_STATE.delegations);
+  const [votingPower, setVotingPower] = useState(INITIAL_STATE.votingPower);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
 
   function createWallet(password) {
@@ -57,20 +61,25 @@ function Wallet({ children }) {
     setBalance(INITIAL_STATE.balance);
     setIScore(INITIAL_STATE.iScore);
     setStake(INITIAL_STATE.stake);
+    setDelegations(INITIAL_STATE.delegations);
+    setVotingPower(INITIAL_STATE.votingPower);
   }
 
   async function refreshWallet(providedWallet) {
     setIsLoading(true);
     const address = (providedWallet || wallet).getAddress();
 
-    const balance = await getBalance(address);
+    const [balance, stake, iScore, { delegations, votingPower }] = await Promise.all([
+      getBalance(address),
+      getStake(address),
+      getIScore(address),
+      getDelegations(address),
+    ]);
     setBalance(balance);
-
-    const stake = await getStake(address);
     setStake(stake);
-
-    const iScore = await getIScore(address);
     setIScore(iScore);
+    setDelegations(delegations);
+    setVotingPower(votingPower);
 
     setIsLoading(false);
   }
@@ -83,6 +92,8 @@ function Wallet({ children }) {
         balance,
         stake,
         iScore,
+        delegations,
+        votingPower,
         createWallet,
         unlockWallet,
         unloadWallet,

@@ -190,7 +190,7 @@ function SendPage() {
             <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
               unlocked a wallet
             </Link>{' '}
-            before you can Send ICX.
+            before you can send ICX.
           </p>
         )}
       </div>

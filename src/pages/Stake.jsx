@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLink, faSignIn, faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons';
+import { faExternalLink, faFlag, faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
@@ -149,7 +149,7 @@ function StakePage() {
 
                   <Button type="submit" disabled={isLoading} className="mt-6">
                     <FontAwesomeIcon
-                      icon={isLoading ? faSpinnerThird : faSignIn}
+                      icon={isLoading ? faSpinnerThird : faFlag}
                       spin={isLoading}
                       fixedWidth
                       className="mr-1"
@@ -170,7 +170,7 @@ function StakePage() {
             <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
               unlocked a wallet
             </Link>{' '}
-            before you can Stake ICX.
+            before you can stake ICX.
           </p>
         )}
       </div>

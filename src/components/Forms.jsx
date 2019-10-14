@@ -23,19 +23,20 @@ Label.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function RawInput({ hasError, ...props }, ref) {
+function RawInput({ className, hasError, ...props }, ref) {
   return (
     <input
       ref={ref}
       className={`text-lg w-full p-2 rounded border ${
         hasError ? 'bg-red-100 border-red-700' : 'bg-gray-100'
-      }`}
+      } ${className || ''}`}
       {...props}
     />
   );
 }
 export const Input = forwardRef(RawInput);
 Input.propTypes = {
+  className: PropTypes.string,
   hasError: PropTypes.bool,
 };
 

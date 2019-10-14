@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExchange,
   faExternalLink,
+  faFlag,
   faSpinnerThird,
   faShareSquare,
-  faSignIn,
   faSync,
   faVoteYea,
 } from '@fortawesome/pro-duotone-svg-icons';
@@ -211,7 +211,7 @@ function ViewWallet() {
             Send ICX
           </Button>
           <Button to="/stake" className="text-center block sm:w-1/3 sm:ml-2 text-center">
-            <FontAwesomeIcon icon={faSignIn} className="mr-2" />
+            <FontAwesomeIcon icon={faFlag} className="mr-2" />
             Stake ICX
           </Button>
           <Button to="/vote" className="text-center block sm:w-1/3 sm:ml-2 text-center">
