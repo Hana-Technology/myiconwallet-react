@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faExternalLink,
-  faSpinnerThird,
-  faTimes,
-  faVoteYea,
-} from '@fortawesome/pro-duotone-svg-icons';
+import { faExternalLink, faSpinnerThird, faVoteYea } from '@fortawesome/pro-duotone-svg-icons';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
@@ -233,7 +229,7 @@ function VotePage() {
                                 type="button"
                                 onClick={createRemoveDelegateHandler(selectedDelegate)}
                                 title="Remove delegation"
-                                className="text-lg ml-2 -mr-3"
+                                className="text-gray-700 hover:text-gray-800 focus:text-gray-800 ml-2 -mr-1"
                               >
                                 <FontAwesomeIcon icon={faTimes} />
                               </button>
