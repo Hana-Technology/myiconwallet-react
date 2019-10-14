@@ -69,42 +69,52 @@ function VotePage() {
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
+    // If clearing delegations, get the current delegations and set their values to ZERO
+    // Passing an empty array of delegations _should_ work, but doesn't seem to
+    const isClearingDelegations = selectedDelegates.length === 0;
+    const delegationsToSet = isClearingDelegations
+      ? delegations.map(({ address }) => ({ address, value: ZERO }))
+      : selectedDelegates.map(({ value, votes }) => ({
+          address: value,
+          value: votes,
+        }));
+
     const confirmation = await swal({
       content: (
         <div>
           <Alert
             type={ALERT_TYPE_DANGER}
             title="This is your final confirmation"
-            text={`Are you sure you want to save your delegations?`}
+            text={`Are you sure you want to ${
+              isClearingDelegations ? 'clear' : 'save'
+            } your delegations?`}
             className="break-all"
           />
-          <table className="mt-6">
-            <thead>
-              <tr className="text-gray-600 text-sm uppercase tracking-tight">
-                <th className="text-left font-normal">P-Rep candidate</th>
-                <th className="text-right font-normal w-24">Votes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedDelegates.map(selectedDelegate => (
-                <tr key={selectedDelegate.value}>
-                  <td>{selectedDelegate.label}</td>
-                  <td className="text-right">{selectedDelegate.votes.toNumber()}</td>
+          {!isClearingDelegations && (
+            <table className="mt-6">
+              <thead>
+                <tr className="text-gray-600 text-sm uppercase tracking-tight">
+                  <th className="text-left font-normal">P-Rep candidate</th>
+                  <th className="text-right font-normal w-24">Votes</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {selectedDelegates.map(selectedDelegate => (
+                  <tr key={selectedDelegate.value}>
+                    <td>{selectedDelegate.label}</td>
+                    <td className="text-right">{selectedDelegate.votes.toNumber()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       ),
       buttons: ['Cancel', 'Continue'],
     });
     if (!confirmation) return setIsLoading(false);
 
-    const delegations = selectedDelegates.map(({ value, votes }) => ({
-      address: value,
-      value: votes,
-    }));
-    const transactionHash = await setDelegations(wallet, delegations);
+    const transactionHash = await setDelegations(wallet, delegationsToSet);
     setTimeout(() => refreshWallet(), 3000); // allow time for transaction before refreshing
     await swal(
       <div>
