@@ -8,7 +8,7 @@ import Logo from 'components/Logo';
 import { useWallet } from 'components/Wallet';
 
 const navLinkBaseClasses =
-  'flex h-full text-center hover:text-gray-100 focus:text-gray-100 items-center px-3 py-1 sm:p-1 mx-2 sm:mx-2 my-1 sm:my-0 border-l-2 sm:border-b-2';
+  'flex h-full text-center hover:text-gray-100 focus:text-gray-100 items-center px-3 py-1 sm:p-1 mx-2 sm:mx-2 my-1 sm:my-0 border-l-2 sm:border-l-0 sm:border-b-2';
 
 function NavLink({ children, to }) {
   return (
