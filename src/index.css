@@ -3,6 +3,17 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Mobile menu slide down */
+@media (max-width: 639px) {
+  .slide-down {
+    transform: translateY(-105%);
+    transition: transform 0.3s;
+  }
+  .slide-down.slide-down-in {
+    transform: translateY(0);
+  }
+}
+
 /* SweetAlert overrides */
 .swal-modal {
   @apply text-left;
