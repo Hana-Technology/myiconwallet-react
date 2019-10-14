@@ -84,13 +84,9 @@ function VotePage() {
           />
           <table className="mt-6">
             <thead>
-              <tr>
-                <th className="text-left text-sm font-normal uppercase tracking-tight">
-                  P-Rep candidate
-                </th>
-                <th className="text-right text-sm font-normal uppercase tracking-tight w-24">
-                  Votes
-                </th>
+              <tr className="text-gray-600 text-sm uppercase tracking-tight">
+                <th className="text-left font-normal">P-Rep candidate</th>
+                <th className="text-right font-normal w-24">Votes</th>
               </tr>
             </thead>
             <tbody>
@@ -214,13 +210,9 @@ function VotePage() {
                   <InputGroup>
                     <table className="w-full">
                       <thead>
-                        <tr>
-                          <th className="text-left text-sm font-normal uppercase tracking-tight">
-                            P-Rep candidate
-                          </th>
-                          <th className="text-right text-sm font-normal uppercase tracking-tight w-24">
-                            Votes
-                          </th>
+                        <tr className="text-gray-600 text-sm uppercase tracking-tight">
+                          <th className="text-left font-normal">P-Rep candidate</th>
+                          <th className="text-right font-normal w-24">Votes</th>
                           <th>&nbsp;</th>
                         </tr>
                       </thead>
