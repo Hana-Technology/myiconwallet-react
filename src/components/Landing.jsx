@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import { Link } from '@reach/router';
-import Logo from 'components/Logo';
 import connectedWorldSvg from 'assets/connected_world.svg';
 
 function MegaButton({ to, title, description, cta, icon, className }) {
