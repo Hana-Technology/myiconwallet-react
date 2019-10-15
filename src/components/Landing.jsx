@@ -38,9 +38,10 @@ function Landing() {
             [LOCK_ICON] MyIconWallet is safe, your private key never leaves your browser.
           </p>
           <p className="text-lg">
-            Use your existing wallet from IconEx or create a new one. All wallets are compatible with IconEx.
-            MyIconWallet allows you to send and receive ICX, stake, unstake and vote for your favourite P-Reps.
-          </p> 
+            Use your existing wallet from IconEx or create a new one. All wallets are compatible
+            with IconEx. MyIconWallet allows you to send and receive ICX, stake, unstake and vote
+            for your favourite P-Reps.
+          </p>
         </div>
         <img
           src={connectedWorldSvg}

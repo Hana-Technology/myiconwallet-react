@@ -33,7 +33,8 @@ function CreatedWallet() {
         </div>
 
         <p className="mt-6">
-          Download your keystore file now and keep it somewhere safe. You will need your keystore file to access your wallet, but if anyone else finds it you can loose your funds.
+          Download your keystore file now and keep it somewhere safe. You will need your keystore
+          file to access your wallet, but if anyone else finds it you can loose your funds.
         </p>
         <Alert
           type={ALERT_TYPE_WARN}
