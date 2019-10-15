@@ -28,6 +28,7 @@ function VotePage() {
     getPReps,
     network: { trackerUrl },
     setDelegations,
+    waitForTransaction,
   } = useIconService();
   const {
     delegations,
@@ -115,7 +116,10 @@ function VotePage() {
     if (!confirmation) return setIsLoading(false);
 
     const transactionHash = await setDelegations(wallet, delegationsToSet);
-    setTimeout(() => refreshWallet(), 4000); // allow time for transaction before refreshing
+    waitForTransaction(transactionHash)
+      .catch(error => console.warn(error))
+      .then(() => refreshWallet());
+
     await swal(
       <div>
         <Alert
