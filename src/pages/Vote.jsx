@@ -195,6 +195,7 @@ function VotePage() {
               <a
                 href="https://icon.community/iconsensus/candidates/"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-teal-600 hover:text-teal-800 focus:text-teal-800"
               >
                 P-Rep proposals
@@ -203,6 +204,7 @@ function VotePage() {
               <a
                 href="https://twitter.com/TheIconistNews"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-teal-600 hover:text-teal-800 focus:text-teal-800"
               >
                 The Iconist
