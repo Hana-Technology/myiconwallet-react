@@ -190,7 +190,19 @@ function VotePage() {
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
             <p>
-              Choose P-Rep candidates that you want to vote for from the dropdown list then set how
+              Delegated votes on Icon are what keeps the network secure and community development funded.
+              To find out what P-Reps are contributing to Icon you can read their {' '}
+              <a href="https://icon.community/iconsensus/candidates/" target="_blank" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
+                P-Rep proposals
+              </a>{' '}
+              and follow{' '}
+              <a href="https://twitter.com/TheIconistNews" target="_blank" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
+                The Iconist
+              </a>{' '}
+              for the latest updates.
+            </p>
+            <p className="mb-8">              
+              To vote, choose (up to 10) P-Rep candidates from the dropdown list then set how
               much of your staked ICX to delegate to each. You will be prompted to confirm before
               the transaction is completed.
             </p>

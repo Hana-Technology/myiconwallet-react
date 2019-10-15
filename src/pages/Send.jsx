@@ -125,7 +125,7 @@ function SendPage() {
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
             <p>
               Choose an amount in ICX and a destination address. You will be prompted to confirm
-              before the transaction is completed.
+              before the transaction is finalised.
             </p>
             {balance && (
               <Alert
