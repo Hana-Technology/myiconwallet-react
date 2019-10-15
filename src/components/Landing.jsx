@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
+import { faLockAlt, faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import { Link } from '@reach/router';
 import connectedWorldSvg from 'assets/connected_world.svg';
@@ -33,10 +33,11 @@ function Landing() {
           <h2 className="text-3xl leading-tight">
             A web wallet for Icon, by the community for the community.
           </h2>
-          <p className="text-lg">
-            [LOCK_ICON] MyIconWallet is safe, your private key never leaves your browser.
+          <p className="text-lg mt-2">
+            <FontAwesomeIcon icon={faLockAlt} /> MyIconWallet is safe, your private key never leaves
+            your browser.
           </p>
-          <p className="text-lg">
+          <p className="text-lg mt-2">
             Use your existing wallet from IconEx or create a new one. All wallets are compatible
             with IconEx. MyIconWallet allows you to send and receive ICX, stake, unstake and vote
             for your favourite P-Reps.
