@@ -94,7 +94,7 @@ function IconService({ children }) {
    * @param {Delegation[]} delegations
    * @returns {Promise<string>} transaction hash
    */
-  async function setDelegations(wallet, delegations) {
+  function setDelegations(wallet, delegations) {
     const delegationsToSend = delegations.map(({ address, value }) => ({
       address,
       value: IconConverter.toHex(convertIcxToLoop(value)),
