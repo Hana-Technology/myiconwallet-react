@@ -17,6 +17,7 @@ import financeSvg from 'assets/finance.svg';
 import 'react-rangeslider/lib/index.css';
 
 const WITHHOLD_BALANCE = IconConverter.toBigNumber(3);
+const ZERO = IconConverter.toBigNumber(0);
 
 function StakePage() {
   const {
@@ -24,10 +25,11 @@ function StakePage() {
     setStake,
   } = useIconService();
   const {
+    delegations,
     fullBalance,
+    refreshWallet,
     stake: { staked },
     wallet,
-    refreshWallet,
   } = useWallet();
   const [maxStakeable, setMaxStakeable] = useState(null);
   const [newStake, setNewStake] = useState(0);
@@ -39,8 +41,14 @@ function StakePage() {
     setMaxStakeable(fullBalance.minus(WITHHOLD_BALANCE));
   }, [fullBalance, staked]);
 
+  const delegatedVotes = delegations
+    ? delegations.reduce((sum, { value }) => sum.plus(value), ZERO)
+    : ZERO;
+  const moreVotesThanStake = delegatedVotes.isGreaterThan(newStake);
+
   async function handleOnSubmit(event) {
     event.preventDefault();
+    if (moreVotesThanStake) return;
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
@@ -140,7 +148,18 @@ function StakePage() {
                     </div>
                   </div>
 
-                  <Button type="submit" disabled={isLoading} className="mt-6">
+                  {moreVotesThanStake && (
+                    <Alert
+                      type={ALERT_TYPE_DANGER}
+                      title="Unstake ICX with delegated votes"
+                      text={`You currently have ${formatNumber(
+                        delegatedVotes
+                      )} ICX with delegated votes. You need to remove the votes before unstaking.`}
+                      className="mt-6"
+                    />
+                  )}
+
+                  <Button type="submit" disabled={moreVotesThanStake || isLoading} className="mt-6">
                     <FontAwesomeIcon
                       icon={isLoading ? faSpinnerThird : faFlag}
                       spin={isLoading}
