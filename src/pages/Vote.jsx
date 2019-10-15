@@ -211,86 +211,84 @@ function VotePage() {
               </a>{' '}
               for the latest updates.
             </p>
-            <p className="mb-8">
+            <p className="mt-4">
               To vote, choose (up to 10) P-Rep candidates from the dropdown list then set how much
               of your staked ICX to delegate to each. You will be prompted to confirm before the
-              transaction is completed.
+              transaction is finalised.
             </p>
             {staked && delegations && pRepOptions ? (
-              <>
-                <fieldset disabled={isLoading}>
-                  <InputGroup>
-                    <Select
-                      id="selectedDelegates"
-                      name="selectedDelegates"
-                      options={pRepOptions}
-                      value={selectedDelegates}
-                      onChange={handleSelectDelegates}
-                      isMulti
-                      isClearable={false}
-                      controlShouldRenderValue={false}
-                      placeholder="Find P-Rep candidates..."
-                      className="text-lg"
-                    />
-                  </InputGroup>
-
-                  <InputGroup>
-                    <table className="w-full">
-                      <thead>
-                        <tr className="text-gray-600 text-sm uppercase tracking-tight">
-                          <th className="text-left font-normal">P-Rep candidate</th>
-                          <th className="text-right font-normal w-24">Votes</th>
-                          <th>&nbsp;</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedDelegates.map(selectedDelegate => (
-                          <tr key={selectedDelegate.value}>
-                            <td>{selectedDelegate.label}</td>
-                            <td>
-                              <input
-                                type="text"
-                                value={selectedDelegate.votes.toNumber()}
-                                onChange={createVotesChangeHandler(selectedDelegate)}
-                                className="text-lg text-right w-full px-2 py-1 my-px rounded border bg-gray-100"
-                              />
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                onClick={createRemoveDelegateHandler(selectedDelegate)}
-                                title="Remove delegation"
-                                className="text-gray-700 hover:text-gray-800 focus:text-gray-800 ml-2 -mr-1"
-                              >
-                                <FontAwesomeIcon icon={faTimes} />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </InputGroup>
-
-                  <Alert
-                    type={tooManyVotes ? ALERT_TYPE_DANGER : ALERT_TYPE_INFO}
-                    title={`${formatNumber(sumVotes(selectedDelegates))} / ${formatNumber(
-                      staked
-                    )} votes`}
-                    text="used / available (staked ICX)"
-                    className="mt-6"
+              <fieldset disabled={isLoading} className="mt-4">
+                <InputGroup>
+                  <Select
+                    id="selectedDelegates"
+                    name="selectedDelegates"
+                    options={pRepOptions}
+                    value={selectedDelegates}
+                    onChange={handleSelectDelegates}
+                    isMulti
+                    isClearable={false}
+                    controlShouldRenderValue={false}
+                    placeholder="Find P-Rep candidates..."
+                    className="text-lg"
                   />
+                </InputGroup>
 
-                  <Button type="submit" disabled={tooManyVotes || isLoading}>
-                    <FontAwesomeIcon
-                      icon={isLoading ? faSpinnerThird : faVoteYea}
-                      spin={isLoading}
-                      fixedWidth
-                      className="mr-2"
-                    />
-                    Sav{isLoading ? 'ing' : 'e'} votes
-                  </Button>
-                </fieldset>
-              </>
+                <InputGroup>
+                  <table className="w-full">
+                    <thead>
+                      <tr className="text-gray-600 text-sm uppercase tracking-tight">
+                        <th className="text-left font-normal">P-Rep candidate</th>
+                        <th className="text-right font-normal w-24">Votes</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedDelegates.map(selectedDelegate => (
+                        <tr key={selectedDelegate.value}>
+                          <td>{selectedDelegate.label}</td>
+                          <td>
+                            <input
+                              type="text"
+                              value={selectedDelegate.votes.toNumber()}
+                              onChange={createVotesChangeHandler(selectedDelegate)}
+                              className="text-lg text-right w-full px-2 py-1 my-px rounded border bg-gray-100"
+                            />
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={createRemoveDelegateHandler(selectedDelegate)}
+                              title="Remove delegation"
+                              className="text-gray-700 hover:text-gray-800 focus:text-gray-800 ml-2 -mr-1"
+                            >
+                              <FontAwesomeIcon icon={faTimes} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </InputGroup>
+
+                <Alert
+                  type={tooManyVotes ? ALERT_TYPE_DANGER : ALERT_TYPE_INFO}
+                  title={`${formatNumber(sumVotes(selectedDelegates))} / ${formatNumber(
+                    staked
+                  )} votes`}
+                  text="used / available (staked ICX)"
+                  className="mt-6"
+                />
+
+                <Button type="submit" disabled={tooManyVotes || isLoading}>
+                  <FontAwesomeIcon
+                    icon={isLoading ? faSpinnerThird : faVoteYea}
+                    spin={isLoading}
+                    fixedWidth
+                    className="mr-2"
+                  />
+                  Sav{isLoading ? 'ing' : 'e'} votes
+                </Button>
+              </fieldset>
             ) : (
               <div className="text-center text-3xl">
                 <FontAwesomeIcon icon={faSpinnerThird} spin />
