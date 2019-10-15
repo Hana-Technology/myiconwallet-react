@@ -34,8 +34,8 @@ function Landing() {
             A web wallet for Icon, by the community for the community.
           </h2>
           <p className="text-lg mt-2">
-            <FontAwesomeIcon icon={faLockAlt} /> MyIconWallet is safe, your private key never leaves
-            your browser.
+            <FontAwesomeIcon icon={faLockAlt} className="mr-1" /> MyIconWallet is safe, your private
+            key never leaves your browser.
           </p>
           <p className="text-lg mt-2">
             Use your existing wallet from IconEx or create a new one. All wallets are compatible
