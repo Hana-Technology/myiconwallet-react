@@ -22,7 +22,6 @@ function UnlockWalletPage() {
   const [keystoreFile, setKeystoreFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   async function handleOnSubmit(event) {
     event.preventDefault();
@@ -67,13 +66,6 @@ function UnlockWalletPage() {
     return !errors.password && !errors.keystoreFile;
   }
 
-  function handleRefFocus(element) {
-    if (element && !hasFocusedInput) {
-      element.focus();
-      setHasFocusedInput(true);
-    }
-  }
-
   return (
     <Layout title="Unlock Existing Wallet">
       <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
@@ -106,7 +98,6 @@ function UnlockWalletPage() {
                   setKeystoreFile(event.target.files[0]);
                 }}
                 hasError={!!errors.keystoreFile}
-                ref={handleRefFocus}
               />
               {errors.keystoreFile && <ErrorMessage>{errors.keystoreFile}</ErrorMessage>}
             </InputGroup>

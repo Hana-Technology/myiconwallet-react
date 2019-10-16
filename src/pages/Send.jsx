@@ -31,7 +31,6 @@ function SendPage() {
   const [useFullBalance, setUseFullBalance] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   async function handleOnSubmit(event) {
     event.preventDefault();
@@ -116,13 +115,6 @@ function SendPage() {
     amountInput.onChange({ currentTarget: { value } });
   }
 
-  function handleRefFocus(element) {
-    if (element && !hasFocusedInput) {
-      element.focus();
-      setHasFocusedInput(true);
-    }
-  }
-
   return (
     <Layout title="Send ICX">
       <WalletHeader />
@@ -178,7 +170,6 @@ function SendPage() {
                   }}
                   placeholder="eg. 42"
                   hasError={!!errors.amount}
-                  ref={handleRefFocus}
                   disabled={useFullBalance}
                 />
                 {errors.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
