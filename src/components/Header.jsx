@@ -43,6 +43,7 @@ function Header() {
 
   function handleUnloadWallet(event) {
     event.preventDefault();
+    setMenuIsOpen(false);
     navigate('/');
     unloadWallet();
   }
