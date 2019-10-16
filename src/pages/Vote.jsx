@@ -267,8 +267,8 @@ function VotePage() {
                             <input
                               type="text"
                               value={selectedDelegate.votes}
-                              onChange={createVotesChangeHandler(selectedDelegate, true)}
-                              onBlur={createVotesChangeHandler(selectedDelegate, false)}
+                              onChange={createVotesChangeHandler(selectedDelegate, false)}
+                              onBlur={createVotesChangeHandler(selectedDelegate, true)}
                               className="text-lg text-right w-full px-2 py-1 my-px rounded border bg-gray-100"
                             />
                           </td>
