@@ -47,7 +47,7 @@ function SendPage() {
         <Alert
           type={ALERT_TYPE_DANGER}
           title="This is your final confirmation"
-          text={`Are you sure you want to send ${amount} ICX to ${address}?`}
+          text={`Are you sure you want to send ${amountInput.value} ICX to ${address}?`}
           className="break-all"
         />
       ),
@@ -65,7 +65,7 @@ function SendPage() {
         <Alert
           type={ALERT_TYPE_SUCCESS}
           title="Sent ICX"
-          text={`Successfully sent ${amount} ICX to ${address}`}
+          text={`Successfully sent ${amountInput.value} ICX to ${address}`}
           className="break-all"
         />
         <p className="break-all mt-4">
@@ -112,7 +112,7 @@ function SendPage() {
     const { checked } = event.target;
     setUseFullBalance(checked);
 
-    let value = checked ? formatNumber(balance.minus(TRANSACTION_FEE)) : '';
+    let value = checked ? formatNumber(balance) : '';
     amountInput.onChange({ currentTarget: { value } });
   }
 
