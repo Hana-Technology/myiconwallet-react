@@ -5,7 +5,7 @@ import Header from 'components/Header';
 
 function Layout({ children, styleMain = true, title }) {
   useEffect(() => {
-    document.title = `${title ? `${title} | ` : ''}My ICON Wallet`;
+    document.title = `${title ? `${title} | ` : ''}MyIconWallet`;
   }, [title]);
 
   return (
