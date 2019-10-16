@@ -20,7 +20,10 @@ import votingSvg from 'assets/voting.svg';
 const ZERO = IconConverter.toBigNumber(0);
 
 function sumVotes(delegates) {
-  return delegates.reduce((sum, delegate) => sum.plus(delegate.votes), ZERO);
+  return delegates.reduce((sum, delegate) => {
+    const votes = IconConverter.toBigNumber(delegate.votes);
+    return sum.plus(votes.isNaN() ? ZERO : votes);
+  }, ZERO);
 }
 
 function VotePage() {
@@ -154,10 +157,14 @@ function VotePage() {
     setSelectedDelegates(selectedDelegates);
   }
 
-  function createVotesChangeHandler(selectedDelegate) {
+  function createVotesChangeHandler(selectedDelegate, parseValue) {
     return event => {
-      const votesValue = IconConverter.toBigNumber(event.target.value);
-      selectedDelegate.votes = votesValue.isNaN() ? ZERO : votesValue;
+      let votesValue = event.target.value;
+      if (parseValue) {
+        votesValue = IconConverter.toBigNumber(event.target.value);
+      }
+      selectedDelegate.votes = parseValue && votesValue.isNaN() ? ZERO : votesValue;
+
       const index = selectedDelegates.findIndex(
         delegate => delegate.value === selectedDelegate.value
       );
@@ -259,8 +266,9 @@ function VotePage() {
                           <td>
                             <input
                               type="text"
-                              value={selectedDelegate.votes.toNumber()}
-                              onChange={createVotesChangeHandler(selectedDelegate)}
+                              value={selectedDelegate.votes}
+                              onChange={createVotesChangeHandler(selectedDelegate, true)}
+                              onBlur={createVotesChangeHandler(selectedDelegate, false)}
                               className="text-lg text-right w-full px-2 py-1 my-px rounded border bg-gray-100"
                             />
                           </td>
