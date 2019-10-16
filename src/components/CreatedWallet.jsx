@@ -12,6 +12,17 @@ function CreatedWallet() {
   const keystoreData = encodeURIComponent(JSON.stringify(keystore));
   const keystoreFileUri = `data:application/json;charset=utf-8,${keystoreData}`;
 
+  function handleFileDownloadClick(event) {
+    setHasDownloaded(true);
+    // IE and Edge won't download the data: URL, need to use this IE/Edge-specific method
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      event.preventDefault();
+      const json = JSON.stringify(keystore);
+      const blob = new Blob([json], { type: 'application/json' });
+      window.navigator.msSaveOrOpenBlob(blob, 'iconwallet.keystore');
+    }
+  }
+
   return (
     keystore && (
       <>
@@ -48,7 +59,7 @@ function CreatedWallet() {
             href={keystoreFileUri}
             download="iconwallet.keystore"
             className="block sm:inline-block"
-            onClick={() => setHasDownloaded(true)}
+            onClick={handleFileDownloadClick}
           >
             <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
             Download keystore
