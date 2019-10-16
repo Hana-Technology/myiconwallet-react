@@ -162,7 +162,7 @@ function ViewWallet() {
                 )}
               </div>
               <div className="text-sm text-gray-600 uppercase tracking-tight">Available</div>
-              </div>
+            </div>
             <div className="mt-6">
               <div className="text-2xl leading-tight">
                 {!iScore && isLoading ? (
