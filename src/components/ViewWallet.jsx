@@ -6,7 +6,6 @@ import {
   faFlag,
   faSpinnerThird,
   faShareSquare,
-  faSync,
   faVoteYea,
 } from '@fortawesome/pro-duotone-svg-icons';
 import swal from '@sweetalert/with-react';
@@ -17,6 +16,7 @@ import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
+import WalletHeader from 'components/WalletHeader';
 
 const EMPTY_CHART_DATA = {
   datasets: [
@@ -113,17 +113,8 @@ function ViewWallet() {
   return (
     wallet && (
       <>
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl uppercase tracking-tight">Your wallet</h2>
-          <button
-            onClick={() => refreshWallet()}
-            disabled={isLoading}
-            className="bg-gray-100 border border-gray-300 text-gray-700 text-sm uppercase tracking-tight px-2 py-1 rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow flex-none"
-          >
-            <FontAwesomeIcon icon={faSync} spin={isLoading} className="mr-2" />
-            refresh
-          </button>
-        </div>
+        <WalletHeader />
+        <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Your wallet</h2>
 
         <div className="mt-2">
           <div className="break-all text-lg">
