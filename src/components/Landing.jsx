@@ -38,8 +38,8 @@ function Landing() {
             key never leaves your browser.
           </p>
           <p className="text-lg mt-2">
-            Use your existing wallet from IconEx or create a new one. All wallets are compatible
-            with IconEx. MyIconWallet allows you to send and receive ICX, stake, unstake and vote
+            Use your existing wallet from ICONex or create a new one. All wallets are compatible
+            with ICONex. MyIconWallet allows you to send and receive ICX, stake, unstake and vote
             for your favourite P-Reps.
           </p>
         </div>
