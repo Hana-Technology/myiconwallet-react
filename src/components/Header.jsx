@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlag, faShareSquare, faVoteYea } from '@fortawesome/pro-duotone-svg-icons';
-import { faHamburger } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faFlag,
+  faShareSquare,
+  faSignOut,
+  faUnlockAlt,
+  faVoteYea,
+  faWallet,
+} from '@fortawesome/pro-duotone-svg-icons';
+import { faBars } from '@fortawesome/pro-solid-svg-icons';
 
 import { Link, navigate } from '@reach/router';
 import Logo from 'components/Logo';
@@ -55,7 +62,7 @@ function Header() {
             onClick={toggleMenu}
             className="block sm:hidden text-gray-200 hover:text-white focus:text-white p-2"
           >
-            <FontAwesomeIcon icon={faHamburger} fixedWidth />
+            <FontAwesomeIcon icon={faBars} fixedWidth />
           </button>
           <ul
             className={`absolute sm:static left-0 right-0 bg-gray-800 sm:flex sm:items-stretch sm:justify-start shadow-lg sm:shadow-none pb-3 sm:p-0 slide-down ${
@@ -88,6 +95,7 @@ function Header() {
                     onClick={handleUnloadWallet}
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
+                    <FontAwesomeIcon icon={faSignOut} fixedWidth className="mr-1" />
                     Unload Wallet
                   </button>
                 </li>
@@ -95,10 +103,16 @@ function Header() {
             ) : (
               <>
                 <li>
-                  <NavLink to="/create">Create Wallet</NavLink>
+                  <NavLink to="/create">
+                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1" />
+                    Create Wallet
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/unlock">Unlock</NavLink>
+                  <NavLink to="/unlock">
+                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+                    Unlock
+                  </NavLink>
                 </li>
               </>
             )}
