@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/pro-duotone-svg-icons';
-import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
+import { faDownload, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
 import Alert, { ALERT_TYPE_SUCCESS, ALERT_TYPE_WARN } from 'components/Alert';
 import Button from 'components/Button';
 import { useWallet } from 'components/Wallet';
 import buildingBlocksSvg from 'assets/building_blocks.svg';
 
 function CreatedWallet() {
-  const { keystore, wallet } = useWallet();
+  const { keystore } = useWallet();
+  const [hasDownloaded, setHasDownloaded] = useState(false);
   const keystoreData = encodeURIComponent(JSON.stringify(keystore));
   const keystoreFileUri = `data:application/json;charset=utf-8,${keystoreData}`;
 
   return (
-    wallet && (
+    keystore && (
       <>
         <div className="sm:flex items-start justify-between">
           <div className="sm:pr-5">
             <p>Your new wallet has been created with address:</p>
             <Alert
               type={ALERT_TYPE_SUCCESS}
-              text={wallet.getAddress()}
+              text={keystore.address}
               showIcon={false}
               className="break-all mt-2"
             />
@@ -48,13 +48,21 @@ function CreatedWallet() {
             href={keystoreFileUri}
             download="iconwallet.keystore"
             className="block sm:inline-block"
+            onClick={() => setHasDownloaded(true)}
           >
             <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
             Download keystore
           </Button>
-          <Button to="/" className="block sm:inline-block text-right sm:ml-2">
-            View your wallet
-            <FontAwesomeIcon icon={faLongArrowRight} fixedWidth className="text-sm ml-2" />
+          <Button
+            to="/unlock"
+            className="block sm:inline-block text-right sm:ml-2"
+            disabled={!hasDownloaded}
+            onClick={event => {
+              if (!hasDownloaded) event.preventDefault();
+            }}
+          >
+            <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+            Unlock your wallet
           </Button>
         </div>
       </>

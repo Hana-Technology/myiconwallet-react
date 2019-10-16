@@ -40,9 +40,7 @@ function Wallet({ children }) {
   function createWallet(password) {
     const wallet = IconWallet.create();
     const keystore = wallet.store(password);
-    setWallet(wallet);
     setKeystore(keystore);
-    refreshWallet(wallet);
   }
 
   function unlockWallet(keystore, password) {
