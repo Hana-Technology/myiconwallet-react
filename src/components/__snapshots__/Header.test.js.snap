@@ -3,6 +3,7 @@
 exports[`renders the logo 1`] = `
 <a
   aria-current="page"
+  class="select-none"
   href="/"
 >
   my
