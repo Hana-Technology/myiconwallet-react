@@ -150,23 +150,19 @@ function ViewWallet() {
             </div>
             <div className="mt-2">
               <div className="text-2xl">
-                {!(balance && staked) && isLoading ? (
+                {!balance && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
-                  balance &&
-                  staked && (
+                  balance && (
                     <>
-                      {formatNumber(balance, 2)} · {formatNumber(staked, 2)}
-                      {unstaking && ` · ${formatNumber(unstaking, 2)}`}
+                      {formatNumber(balance, 2)}
                       <span className="text-base ml-2">ICX</span>
                     </>
                   )
                 )}
               </div>
-              <div className="text-sm text-gray-600 uppercase tracking-tight">
-                Available · Staked{unstaking && ' · Unstaking'}
+              <div className="text-sm text-gray-600 uppercase tracking-tight">Available</div>
               </div>
-            </div>
             <div className="mt-6">
               <div className="text-4xl leading-tight">
                 {!iScore && isLoading ? (
