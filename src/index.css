@@ -26,6 +26,9 @@
 #root .rangeslider-horizontal .rangeslider__fill {
   @apply bg-teal-600;
 }
+#root .rangeslider-horizontal.disabled .rangeslider__fill {
+  @apply bg-gray-400;
+}
 #root .rangeslider-horizontal .rangeslider__handle {
   @apply z-10;
 }

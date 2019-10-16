@@ -32,12 +32,13 @@ function StakePage() {
     wallet,
   } = useWallet();
   const [maxStakeable, setMaxStakeable] = useState(null);
+  const [useMax, setUseMax] = useState(false);
   const [newStake, setNewStake] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!(fullBalance && staked)) return void setMaxStakeable(null);
-    setNewStake(staked.toNumber());
+    setNewStake(parseFloat(formatNumber(staked, 2)));
     setMaxStakeable(fullBalance.minus(WITHHOLD_BALANCE));
   }, [fullBalance, staked]);
 
@@ -52,26 +53,28 @@ function StakePage() {
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
+    const stakeAmount = useMax ? maxStakeable : newStake;
+
     const confirmation = await swal({
       content: (
         <Alert
           type={ALERT_TYPE_DANGER}
           title="This is your final confirmation"
-          text={`Are you sure you want to change your stake to ${newStake} ICX?`}
+          text={`Are you sure you want to change your stake to ${stakeAmount} ICX?`}
         />
       ),
       buttons: ['Cancel', 'Continue'],
     });
     if (!confirmation) return setIsLoading(false);
 
-    const transactionHash = await setStake(wallet, newStake);
+    const transactionHash = await setStake(wallet, stakeAmount);
     setTimeout(() => refreshWallet(), 4000); // allow time for transaction before refreshing
     await swal(
       <div>
         <Alert
           type={ALERT_TYPE_SUCCESS}
           title="Set ICX"
-          text={`Successfully set stake to ${newStake} ICX`}
+          text={`Successfully set stake to ${stakeAmount} ICX`}
         />
         <p className="break-all mt-4">
           Transaction:
@@ -92,7 +95,16 @@ function StakePage() {
   }
 
   function handleNewStakeChange(value) {
+    if (useMax) return;
     setNewStake(value);
+  }
+
+  function handleUseMaxChange(event) {
+    const { checked } = event.target;
+    setUseMax(checked);
+
+    const newStake = checked ? maxStakeable : staked;
+    setNewStake(parseFloat(formatNumber(newStake, 2)));
   }
 
   const stakedAsInt = staked ? staked.integerValue().toNumber() : null;
@@ -124,8 +136,20 @@ function StakePage() {
                   className="mt-4"
                 />
 
-                <fieldset disabled={isLoading}>
-                  <div className="flex items-center justify-between mt-8">
+                <fieldset disabled={isLoading} className="mt-8">
+                  <label htmlFor="sendAll" className="flex items-center justify-end">
+                    <input
+                      type="checkbox"
+                      id="sendAll"
+                      name="sendAll"
+                      checked={useMax}
+                      onChange={handleUseMaxChange}
+                      className="mr-2"
+                    />
+                    <span className="text-sm">Stake maximum?</span>
+                  </label>
+
+                  <div className="flex items-center justify-between mt-2">
                     <div className="w-32 flex-none">
                       <div className="text-3xl leading-tight">
                         {newStake}
@@ -144,6 +168,7 @@ function StakePage() {
                         tooltip={false}
                         value={newStake}
                         onChange={handleNewStakeChange}
+                        className={useMax ? 'disabled' : ''}
                       />
                     </div>
                   </div>
