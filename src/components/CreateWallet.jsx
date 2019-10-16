@@ -9,6 +9,8 @@ import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import { useWallet } from 'components/Wallet';
 import securitySvg from 'assets/security.svg';
 
+const PASSWORD_COMPLEXITY_REGEXP = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[a-zA-Z\d#$@!%&*?]*/;
+
 function CreateWallet({ onCreateWallet }) {
   const { createWallet } = useWallet();
   const passwordInput = useTextInput('');
@@ -39,6 +41,9 @@ function CreateWallet({ onCreateWallet }) {
       errors.password = 'Please enter your password';
     } else if (password.length < 8) {
       errors.password = 'Please enter a password that is at least 8 characters long';
+    } else if (!PASSWORD_COMPLEXITY_REGEXP.test(password)) {
+      errors.password =
+        'Please enter a password containing uppercase and lowercase character(s), number(s) and special character(s)';
     }
 
     if (!confirmPassword) {
