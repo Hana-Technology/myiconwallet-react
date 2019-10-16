@@ -1,9 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
+import { faLockAlt, faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
 import { Link } from '@reach/router';
-import Logo from 'components/Logo';
 import connectedWorldSvg from 'assets/connected_world.svg';
 
 function MegaButton({ to, title, description, cta, icon, className }) {
@@ -32,23 +31,16 @@ function Landing() {
       <div className="sm:flex items-center justify-center max-w-4xl mx-auto">
         <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8">
           <h2 className="text-3xl leading-tight">
-            Welcome to{' '}
-            <span className="whitespace-no-wrap">
-              my
-              <Logo className="text-teal-600 mx-px" />
-              wallet
-            </span>
+            A web wallet for Icon, by the community for the community.
           </h2>
-          <p className="text-lg mt-3">
-            You'll need to{' '}
-            <Link to="/create" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
-              create a new wallet
-            </Link>{' '}
-            or{' '}
-            <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
-              unlock an existing wallet
-            </Link>{' '}
-            before you can continue.
+          <p className="text-lg mt-2">
+            <FontAwesomeIcon icon={faLockAlt} className="mr-1" /> MyIconWallet is safe, your private
+            key never leaves your browser.
+          </p>
+          <p className="text-lg mt-2">
+            Use your existing wallet from IconEx or create a new one. All wallets are compatible
+            with IconEx. MyIconWallet allows you to send and receive ICX, stake, unstake and vote
+            for your favourite P-Reps.
           </p>
         </div>
         <img
@@ -61,7 +53,7 @@ function Landing() {
         <MegaButton
           to="/create"
           title="Create a wallet"
-          description="Enter a password to create a new wallet then download the keystore to access it next time"
+          description="Enter a password to create a new wallet and download the keystore to access it next time"
           cta="Get started"
           icon={faWallet}
           className="bg-teal-500 hover:bg-teal-600 text-teal-100"
