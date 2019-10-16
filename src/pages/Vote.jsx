@@ -40,6 +40,7 @@ function VotePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const tooManyVotes = staked && delegations ? sumVotes(selectedDelegates).gt(staked) : false;
+  const selectedMaxDelegates = selectedDelegates.length === 10;
 
   useEffect(() => {
     getPReps().then(pReps => {
@@ -228,7 +229,12 @@ function VotePage() {
                     isMulti
                     isClearable={false}
                     controlShouldRenderValue={false}
-                    placeholder="Find P-Rep candidates..."
+                    placeholder={
+                      selectedMaxDelegates
+                        ? 'Selected 10 P-Rep candidates'
+                        : 'Find P-Rep candidates…'
+                    }
+                    isDisabled={selectedMaxDelegates}
                     className="text-lg"
                   />
                 </InputGroup>
