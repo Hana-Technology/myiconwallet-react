@@ -149,7 +149,7 @@ function ViewWallet() {
               <div className="text-sm text-gray-600 uppercase tracking-tight">Full balance</div>
             </div>
             <div className="mt-2">
-              <div className="text-2xl">
+              <div className="text-2xl leading-tight">
                 {!balance && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
@@ -164,14 +164,14 @@ function ViewWallet() {
               <div className="text-sm text-gray-600 uppercase tracking-tight">Available</div>
               </div>
             <div className="mt-6">
-              <div className="text-4xl leading-tight">
+              <div className="text-2xl leading-tight">
                 {!iScore && isLoading ? (
                   <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
                 ) : (
                   iScore && (
                     <>
                       {formatNumber(iScore)}
-                      <span className="text-lg ml-4">~{formatNumber(estimatedICX)} ICX</span>
+                      <span className="text-base ml-4">~{formatNumber(estimatedICX)} ICX</span>
                     </>
                   )
                 )}
