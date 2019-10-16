@@ -11,9 +11,9 @@ function Layout({ children, styleMain = true, title }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 bg-gray-100 text-gray-800 px-4">
+      <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4">
         {styleMain ? (
-          <div className="w-full bg-white max-w-2xl mx-auto mb-4 sm:mb-6 p-6 lg:p-8 shadow-md">
+          <div className="w-full bg-white max-w-2xl mx-auto sm:mb-6 p-6 lg:p-8 shadow-md">
             {children}
           </div>
         ) : (
