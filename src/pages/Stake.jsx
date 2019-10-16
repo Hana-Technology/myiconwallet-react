@@ -23,6 +23,7 @@ function StakePage() {
   const {
     network: { trackerUrl },
     setStake,
+    waitForTransaction,
   } = useIconService();
   const {
     delegations,
@@ -68,7 +69,10 @@ function StakePage() {
     if (!confirmation) return setIsLoading(false);
 
     const transactionHash = await setStake(wallet, stakeAmount);
-    setTimeout(() => refreshWallet(), 4000); // allow time for transaction before refreshing
+    waitForTransaction(transactionHash)
+      .catch(error => console.warn(error))
+      .then(() => refreshWallet());
+
     await swal(
       <div>
         <Alert
