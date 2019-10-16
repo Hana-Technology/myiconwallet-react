@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
 import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
 import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
+import { wait } from 'utils/wait';
 
 const API_VERSION = IconConverter.toBigNumber(3);
 const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000001';
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   sendIcx: null,
   setStake: null,
   getPReps: null,
+  waitForTransaction: null,
 };
 
 export const IconServiceContext = createContext(INITIAL_STATE);
@@ -219,6 +221,26 @@ function IconService({ children }) {
     return defaultStepCost;
   }
 
+  async function waitForTransaction(txHash) {
+    const MAX_ATTEMPTS = 10;
+    const MS_BETWEEN_ATTEMPS = 600;
+
+    let count = 0;
+    let done = false;
+    while (!done) {
+      try {
+        await iconService.getTransactionResult(txHash).execute();
+        done = true;
+      } catch (error) {
+        count++;
+        if (count === MAX_ATTEMPTS)
+          throw new Error(`Gave up waiting for transaction ${txHash}, last error: ${error}`);
+
+        await wait(MS_BETWEEN_ATTEMPS);
+      }
+    }
+  }
+
   function toggleNetwork() {
     const newNetworkRef =
       network.ref === NETWORK_REF_TESTNET ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET;
@@ -245,6 +267,7 @@ function IconService({ children }) {
         sendIcx,
         setStake,
         getPReps,
+        waitForTransaction,
       }}
     >
       {children}
