@@ -1,6 +1,6 @@
 {
-  "short_name": "ICON Wallet",
-  "name": "My ICON Wallet",
+  "short_name": "MyIconWallet",
+  "name": "MyIconWallet",
   "icons": [
     {
       "src": "favicon.ico",
