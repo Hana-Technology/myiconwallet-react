@@ -95,7 +95,7 @@ function VotePage() {
             } your delegations?`}
           />
           {!isClearingDelegations && (
-            <table className="mt-6">
+            <table className="my-6 mx-auto">
               <thead>
                 <tr className="text-gray-600 text-sm uppercase tracking-tight">
                   <th className="text-left font-normal">P-Rep candidate</th>
@@ -130,19 +130,20 @@ function VotePage() {
           title="Delegate votes"
           text={`Successfully set vote delegations`}
         />
-        <p className="break-all mt-4">
-          Transaction:
-          <br />
-          {transactionHash}
-          <a
-            href={`${trackerUrl}/transaction/${transactionHash}`}
-            title="View on ICON tracker"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-          </a>
-        </p>
+        <div className="mt-4">
+          <div className="break-all">
+            {transactionHash}
+            <a
+              href={`${trackerUrl}/transaction/${transactionHash}`}
+              title="View on ICON tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+            </a>
+          </div>
+          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
+        </div>
       </div>
     );
     navigate('/');

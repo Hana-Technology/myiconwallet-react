@@ -61,7 +61,11 @@ function StakePage() {
         <Alert
           type={ALERT_TYPE_DANGER}
           title="This is your final confirmation"
-          text={`Are you sure you want to change your stake to ${stakeAmount} ICX?`}
+          text={
+            <>
+              Are you sure you want to change your stake to <b>{stakeAmount} ICX</b>?
+            </>
+          }
         />
       ),
       buttons: ['Cancel', 'Continue'],
@@ -78,21 +82,26 @@ function StakePage() {
         <Alert
           type={ALERT_TYPE_SUCCESS}
           title="Set ICX"
-          text={`Successfully set stake to ${stakeAmount} ICX`}
+          text={
+            <>
+              Successfully set stake to <b>{stakeAmount} ICX</b>
+            </>
+          }
         />
-        <p className="break-all mt-4">
-          Transaction:
-          <br />
-          {transactionHash}
-          <a
-            href={`${trackerUrl}/transaction/${transactionHash}`}
-            title="View on ICON tracker"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-          </a>
-        </p>
+        <div className="mt-4">
+          <div className="break-all">
+            {transactionHash}
+            <a
+              href={`${trackerUrl}/transaction/${transactionHash}`}
+              title="View on ICON tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+            </a>
+          </div>
+          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
+        </div>
       </div>
     );
     navigate('/');

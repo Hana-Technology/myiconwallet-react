@@ -52,8 +52,8 @@ function Alert({ type, text, title, className, showIcon = true }) {
           </div>
         )}
         <div>
-          {title && <p className="font-bold leading-tight">{title}</p>}
-          {text && <p className="leading-tight">{text}</p>}
+          {title && <div className="font-bold leading-tight">{title}</div>}
+          {text && <div className="leading-tight">{text}</div>}
         </div>
       </div>
     </div>
@@ -62,8 +62,8 @@ function Alert({ type, text, title, className, showIcon = true }) {
 
 Alert.propTypes = {
   type: PropTypes.oneOf(ALERT_TYPES).isRequired,
-  text: PropTypes.string,
-  title: PropTypes.string,
+  text: PropTypes.node,
+  title: PropTypes.node,
   className: PropTypes.string,
   showIcon: PropTypes.bool,
 };

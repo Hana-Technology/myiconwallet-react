@@ -75,9 +75,12 @@ function ViewWallet() {
         <Alert
           type={ALERT_TYPE_INFO}
           title="Convert I-Score"
-          text={`Continue converting ${formatNumber(iScore)} I-Score to an estimated ${formatNumber(
-            estimatedICX
-          )} ICX?`}
+          text={
+            <>
+              Continue converting <b>{formatNumber(iScore)} I-Score</b> to an estimated{' '}
+              <b>{formatNumber(estimatedICX)} ICX</b>?
+            </>
+          }
         />
       ),
       buttons: ['Cancel', 'Continue'],
@@ -90,21 +93,26 @@ function ViewWallet() {
         <Alert
           type={ALERT_TYPE_SUCCESS}
           title="Converted I-Score"
-          text={`Successfully converted ${formatNumber(iScore)} I-Score to ICX`}
+          text={
+            <>
+              Successfully converted <b>{formatNumber(iScore)} I-Score</b> to ICX
+            </>
+          }
         />
-        <p className="break-all mt-4">
-          Transaction:
-          <br />
-          {transactionHash}
-          <a
-            href={`${trackerUrl}/transaction/${transactionHash}`}
-            title="View on ICON tracker"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-          </a>
-        </p>
+        <div className="mt-4">
+          <div className="break-all">
+            {transactionHash}
+            <a
+              href={`${trackerUrl}/transaction/${transactionHash}`}
+              title="View on ICON tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+            </a>
+          </div>
+          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
+        </div>
       </div>
     );
     refreshWallet();
