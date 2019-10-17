@@ -204,15 +204,15 @@ function ViewWallet() {
         </div>
 
         <div className="sm:flex justify-between mt-8">
-          <Button to="/send" className="text-center block sm:w-1/3 ">
+          <Button to="/send" className="block text-center sm:w-1/3 ">
             <FontAwesomeIcon icon={faShareSquare} className="mr-2" />
             Send ICX
           </Button>
-          <Button to="/stake" className="text-center block sm:w-1/3 sm:ml-2 text-center">
+          <Button to="/stake" className="block text-center sm:w-1/3 mt-3 sm:mt-0 sm:ml-2">
             <FontAwesomeIcon icon={faFlag} className="mr-2" />
             Stake ICX
           </Button>
-          <Button to="/vote" className="text-center block sm:w-1/3 sm:ml-2 text-center">
+          <Button to="/vote" className="block text-center sm:w-1/3 mt-3 sm:mt-0 sm:ml-2">
             <FontAwesomeIcon icon={faVoteYea} className="mr-2" />
             Voting
           </Button>

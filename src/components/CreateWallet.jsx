@@ -109,7 +109,7 @@ function CreateWallet({ onCreateWallet }) {
             {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
           </InputGroup>
 
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading} className="mt-6">
             <FontAwesomeIcon
               icon={isLoading ? faSpinnerThird : faWallet}
               spin={isLoading}

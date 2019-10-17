@@ -194,7 +194,7 @@ function SendPage() {
                 {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
               </InputGroup>
 
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isLoading} className="mt-6">
                 <FontAwesomeIcon
                   icon={isLoading ? faSpinnerThird : faShareSquare}
                   spin={isLoading}

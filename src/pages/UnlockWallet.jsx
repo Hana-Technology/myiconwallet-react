@@ -121,7 +121,7 @@ function UnlockWalletPage() {
               {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </InputGroup>
 
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="mt-6">
               <FontAwesomeIcon
                 icon={isLoading ? faSpinnerThird : faUnlockAlt}
                 spin={isLoading}

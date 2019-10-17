@@ -58,7 +58,7 @@ function CreatedWallet() {
           <Button
             href={keystoreFileUri}
             download="iconwallet.keystore"
-            className="block sm:inline-block"
+            className="block text-center sm:text-left"
             onClick={handleFileDownloadClick}
           >
             <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
@@ -66,7 +66,7 @@ function CreatedWallet() {
           </Button>
           <Button
             to="/unlock"
-            className="block sm:inline-block text-right sm:ml-2"
+            className="block text-center sm:text-right mt-3 sm:mt-0 sm:ml-3"
             disabled={!hasDownloaded}
             onClick={event => {
               if (!hasDownloaded) event.preventDefault();

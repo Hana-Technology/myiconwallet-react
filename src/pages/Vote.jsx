@@ -297,7 +297,7 @@ function VotePage() {
                   className="mt-6"
                 />
 
-                <Button type="submit" disabled={tooManyVotes || isLoading}>
+                <Button type="submit" disabled={tooManyVotes || isLoading} className="mt-6">
                   <FontAwesomeIcon
                     icon={isLoading ? faSpinnerThird : faVoteYea}
                     spin={isLoading}
