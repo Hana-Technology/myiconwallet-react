@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync, faWallet } from '@fortawesome/pro-duotone-svg-icons';
 import ReactTooltip from 'react-tooltip';
+import { copyToClipboard } from 'utils/copyToClipboard';
 import { formatNumber } from 'utils/formatNumber';
 import { useWallet } from 'components/Wallet';
 
@@ -16,15 +17,18 @@ function WalletHeader() {
   const [copyTooltip, setCopyTooltip] = useState(COPY_TOOLTIPS.INITIAL);
 
   function copyAddressToClipboard() {
+    const address = wallet.getAddress();
     if (navigator && navigator.clipboard) {
-      navigator.clipboard.writeText(wallet.getAddress());
-
-      // Update and re-show the tooltip
-      ReactTooltip.hide(copyTooltipRef.current);
-      setCopyTooltip(COPY_TOOLTIPS.COPIED);
-      setTimeout(() => ReactTooltip.show(copyTooltipRef.current), 50);
-      setTimeout(() => setCopyTooltip(COPY_TOOLTIPS.INITIAL), 2000);
+      navigator.clipboard.writeText(address);
+    } else {
+      copyToClipboard(address);
     }
+
+    // Update and re-show the tooltip
+    ReactTooltip.hide(copyTooltipRef.current);
+    setCopyTooltip(COPY_TOOLTIPS.COPIED);
+    setTimeout(() => ReactTooltip.show(copyTooltipRef.current));
+    setTimeout(() => setCopyTooltip(COPY_TOOLTIPS.INITIAL), 2000);
   }
 
   return (
