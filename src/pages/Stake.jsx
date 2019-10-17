@@ -141,20 +141,8 @@ function StakePage() {
                 />
 
                 <fieldset disabled={isLoading} className="mt-8">
-                  <label htmlFor="sendAll" className="flex items-center justify-end">
-                    <input
-                      type="checkbox"
-                      id="sendAll"
-                      name="sendAll"
-                      checked={useMax}
-                      onChange={handleUseMaxChange}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">Stake maximum?</span>
-                  </label>
-
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="w-32 flex-none">
+                  <div className="flex items-end justify-between">
+                    <div className="">
                       <div className="text-3xl leading-tight">
                         {newStake}
                         <span className="text-base ml-2">ICX</span>
@@ -163,18 +151,30 @@ function StakePage() {
                         New stake
                       </div>
                     </div>
-                    <div className="w-full">
-                      <Slider
-                        max={maxStakeableAsInt}
-                        labels={{
-                          [stakedAsInt]: 'Current',
-                        }}
-                        tooltip={false}
-                        value={newStake}
-                        onChange={handleNewStakeChange}
-                        className={useMax ? 'disabled' : ''}
+                    <label htmlFor="sendAll" className="flex items-center justify-end">
+                      <input
+                        type="checkbox"
+                        id="sendAll"
+                        name="sendAll"
+                        checked={useMax}
+                        onChange={handleUseMaxChange}
+                        className="mr-2"
                       />
-                    </div>
+                      <span className="text-sm">Stake maximum?</span>
+                    </label>
+                  </div>
+
+                  <div className="mt-6">
+                    <Slider
+                      max={maxStakeableAsInt}
+                      labels={{
+                        [stakedAsInt]: 'Current',
+                      }}
+                      tooltip={false}
+                      value={newStake}
+                      onChange={handleNewStakeChange}
+                      className={useMax ? 'disabled' : ''}
+                    />
                   </div>
 
                   {moreVotesThanStake && (
