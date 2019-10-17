@@ -131,7 +131,7 @@ function ViewWallet() {
           <div className="text-sm text-gray-600 uppercase tracking-tight">Address</div>
         </div>
 
-        <div className="sm:flex items-start justify-between mt-4">
+        <div className="sm:flex items-start justify-between mt-6">
           <div>
             <div>
               <div className="text-4xl leading-tight">
@@ -203,7 +203,7 @@ function ViewWallet() {
           </div>
         </div>
 
-        <div className="sm:flex justify-between mt-2">
+        <div className="sm:flex justify-between mt-8">
           <Button to="/send" className="text-center block sm:w-1/3 ">
             <FontAwesomeIcon icon={faShareSquare} className="mr-2" />
             Send ICX
