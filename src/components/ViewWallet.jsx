@@ -33,6 +33,7 @@ function ViewWallet() {
   const {
     claimIScore,
     network: { trackerUrl },
+    waitForTransaction,
   } = useIconService();
   const {
     balance,
@@ -89,7 +90,11 @@ function ViewWallet() {
 
     try {
       const transactionHash = await claimIScore(wallet);
-      await swal(
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
+
+      swal(
         <div>
           <Alert
             type={ALERT_TYPE_SUCCESS}
@@ -116,11 +121,10 @@ function ViewWallet() {
           </div>
         </div>
       );
-      refreshWallet();
     } catch (error) {
-      setIsClaiming(false);
       swal(<Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error} />);
     }
+    setIsClaiming(false);
   }
 
   return (
