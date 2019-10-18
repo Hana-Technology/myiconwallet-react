@@ -13,7 +13,7 @@ function Layout({ children, styleMain = true, title }) {
       <Header />
       <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4">
         {styleMain ? (
-          <div className="w-full bg-white max-w-2xl mx-auto sm:mb-6 p-6 lg:p-8 shadow-md">
+          <div className="w-full bg-white max-w-4xl mx-auto sm:mb-6 p-6 lg:p-8 shadow-2xl sm:mt-0 md:mt-20 rounded">
             {children}
           </div>
         ) : (
