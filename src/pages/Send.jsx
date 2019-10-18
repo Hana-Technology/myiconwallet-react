@@ -58,40 +58,45 @@ function SendPage() {
     });
     if (!confirmation) return setIsLoading(false);
 
-    const transactionHash = await sendIcx(wallet, amount, address);
-    waitForTransaction(transactionHash)
-      .catch(error => console.warn(error))
-      .then(() => refreshWallet());
+    try {
+      const transactionHash = await sendIcx(wallet, amount, address);
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
 
-    await swal(
-      <div>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title="Sent ICX"
-          text={
-            <>
-              Successfully sent <b>{amountInput.value} ICX</b> to{' '}
-              <b className="break-all">{address}</b>
-            </>
-          }
-        />
-        <div className="mt-4">
-          <div className="break-all">
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
+      await swal(
+        <div>
+          <Alert
+            type={ALERT_TYPE_SUCCESS}
+            title="Sent ICX"
+            text={
+              <>
+                Successfully sent <b>{amountInput.value} ICX</b> to{' '}
+                <b className="break-all">{address}</b>
+              </>
+            }
+          />
+          <div className="mt-4">
+            <div className="break-all">
+              {transactionHash}
+              <a
+                href={`${trackerUrl}/transaction/${transactionHash}`}
+                title="View on ICON tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              </a>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
           </div>
-          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
         </div>
-      </div>
-    );
-    navigate('/');
+      );
+      navigate('/');
+    } catch (error) {
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error} />);
+      setIsLoading(false);
+    }
   }
 
   function validate(amount, address) {
@@ -141,78 +146,84 @@ function SendPage() {
               Choose an amount in ICX and a destination address. You will be prompted to confirm
               before the transaction is finalised.
             </p>
-            {balance && (
-              <Alert
-                type={ALERT_TYPE_INFO}
-                title={`${formatNumber(balance)} ICX`}
-                text="Available balance"
-                className="mt-4"
-              />
-            )}
+            {balance ? (
+              <>
+                <Alert
+                  type={ALERT_TYPE_INFO}
+                  title={`${formatNumber(balance)} ICX`}
+                  text="Available balance"
+                  className="mt-4"
+                />
 
-            <fieldset disabled={isLoading}>
-              <InputGroup>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="amount">Amount in ICX</Label>
-                  <label htmlFor="sendAll" className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="sendAll"
-                      name="sendAll"
-                      checked={useFullBalance}
-                      onChange={handleUseFullBalanceChange}
-                      className="mr-2"
+                <fieldset disabled={isLoading}>
+                  <InputGroup>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="amount">Amount in ICX</Label>
+                      <label htmlFor="sendAll" className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id="sendAll"
+                          name="sendAll"
+                          checked={useFullBalance}
+                          onChange={handleUseFullBalanceChange}
+                          className="mr-2"
+                        />
+                        <span className="text-sm">Send full balance?</span>
+                      </label>
+                    </div>
+                    <Input
+                      type="text"
+                      id="amount"
+                      name="amount"
+                      value={amountInput.value}
+                      onChange={(...args) => {
+                        if (errors.amount) {
+                          setErrors({ ...errors, amount: null });
+                        }
+                        amountInput.onChange(...args);
+                      }}
+                      placeholder="eg. 42"
+                      hasError={!!errors.amount}
+                      disabled={useFullBalance}
                     />
-                    <span className="text-sm">Send full balance?</span>
-                  </label>
-                </div>
-                <Input
-                  type="text"
-                  id="amount"
-                  name="amount"
-                  value={amountInput.value}
-                  onChange={(...args) => {
-                    if (errors.amount) {
-                      setErrors({ ...errors, amount: null });
-                    }
-                    amountInput.onChange(...args);
-                  }}
-                  placeholder="eg. 42"
-                  hasError={!!errors.amount}
-                  disabled={useFullBalance}
-                />
-                {errors.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
-              </InputGroup>
+                    {errors.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
+                  </InputGroup>
 
-              <InputGroup>
-                <Label htmlFor="address">Destination address</Label>
-                <Input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={addressInput.value}
-                  onChange={(...args) => {
-                    if (errors.address) {
-                      setErrors({ ...errors, address: null });
-                    }
-                    addressInput.onChange(...args);
-                  }}
-                  placeholder="eg. hx9d8a8376e7db9f00478feb9a46f44f0d051aab57"
-                  hasError={!!errors.address}
-                />
-                {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
-              </InputGroup>
+                  <InputGroup>
+                    <Label htmlFor="address">Destination address</Label>
+                    <Input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={addressInput.value}
+                      onChange={(...args) => {
+                        if (errors.address) {
+                          setErrors({ ...errors, address: null });
+                        }
+                        addressInput.onChange(...args);
+                      }}
+                      placeholder="eg. hx9d8a8376e7db9f00478feb9a46f44f0d051aab57"
+                      hasError={!!errors.address}
+                    />
+                    {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
+                  </InputGroup>
 
-              <Button type="submit" disabled={isLoading} className="mt-6">
-                <FontAwesomeIcon
-                  icon={isLoading ? faSpinnerThird : faShareSquare}
-                  spin={isLoading}
-                  fixedWidth
-                  className="mr-1"
-                />
-                Send{isLoading ? 'ing' : ''} ICX
-              </Button>
-            </fieldset>
+                  <Button type="submit" disabled={isLoading} className="mt-6">
+                    <FontAwesomeIcon
+                      icon={isLoading ? faSpinnerThird : faShareSquare}
+                      spin={isLoading}
+                      fixedWidth
+                      className="mr-1"
+                    />
+                    Send{isLoading ? 'ing' : ''} ICX
+                  </Button>
+                </fieldset>
+              </>
+            ) : (
+              <div className="text-center text-3xl mt-4">
+                <FontAwesomeIcon icon={faSpinnerThird} spin />
+              </div>
+            )}
           </form>
         ) : (
           <p className="sm:order-1 sm:flex-1">
