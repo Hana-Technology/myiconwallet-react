@@ -55,7 +55,7 @@ function Header() {
           <Link to="/" className="select-none">
             my
             <Logo className="text-cyan mx-1" />
-            wallet
+            wallet <span class="text-sm ml-1">BETA testnet</span>
           </Link>
         </h1>
         <nav>
