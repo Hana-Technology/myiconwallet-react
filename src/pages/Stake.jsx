@@ -72,39 +72,44 @@ function StakePage() {
     });
     if (!confirmation) return setIsLoading(false);
 
-    const transactionHash = await setStake(wallet, stakeAmount);
-    waitForTransaction(transactionHash)
-      .catch(error => console.warn(error))
-      .then(() => refreshWallet());
+    try {
+      const transactionHash = await setStake(wallet, stakeAmount);
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
 
-    await swal(
-      <div>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title="Set ICX"
-          text={
-            <>
-              Successfully set stake to <b>{stakeAmount} ICX</b>
-            </>
-          }
-        />
-        <div className="mt-4">
-          <div className="break-all">
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
+      await swal(
+        <div>
+          <Alert
+            type={ALERT_TYPE_SUCCESS}
+            title="Set ICX"
+            text={
+              <>
+                Successfully set stake to <b>{stakeAmount} ICX</b>
+              </>
+            }
+          />
+          <div className="mt-4">
+            <div className="break-all">
+              {transactionHash}
+              <a
+                href={`${trackerUrl}/transaction/${transactionHash}`}
+                title="View on ICON tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              </a>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
           </div>
-          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
         </div>
-      </div>
-    );
-    navigate('/');
+      );
+      navigate('/');
+    } catch (error) {
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed setting staked ICX" text={error} />);
+      setIsLoading(false);
+    }
   }
 
   function handleNewStakeChange(value) {
@@ -209,7 +214,7 @@ function StakePage() {
                 </fieldset>
               </>
             ) : (
-              <div className="text-center text-3xl">
+              <div className="text-center text-3xl mt-4">
                 <FontAwesomeIcon icon={faSpinnerThird} spin />
               </div>
             )}
