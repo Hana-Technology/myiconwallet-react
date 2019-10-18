@@ -58,40 +58,45 @@ function SendPage() {
     });
     if (!confirmation) return setIsLoading(false);
 
-    const transactionHash = await sendIcx(wallet, amount, address);
-    waitForTransaction(transactionHash)
-      .catch(error => console.warn(error))
-      .then(() => refreshWallet());
+    try {
+      const transactionHash = await sendIcx(wallet, amount, address);
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
 
-    await swal(
-      <div>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title="Sent ICX"
-          text={
-            <>
-              Successfully sent <b>{amountInput.value} ICX</b> to{' '}
-              <b className="break-all">{address}</b>
-            </>
-          }
-        />
-        <div className="mt-4">
-          <div className="break-all">
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
+      await swal(
+        <div>
+          <Alert
+            type={ALERT_TYPE_SUCCESS}
+            title="Sent ICX"
+            text={
+              <>
+                Successfully sent <b>{amountInput.value} ICX</b> to{' '}
+                <b className="break-all">{address}</b>
+              </>
+            }
+          />
+          <div className="mt-4">
+            <div className="break-all">
+              {transactionHash}
+              <a
+                href={`${trackerUrl}/transaction/${transactionHash}`}
+                title="View on ICON tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              </a>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
           </div>
-          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
         </div>
-      </div>
-    );
-    navigate('/');
+      );
+      navigate('/');
+    } catch (error) {
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error} />);
+      setIsLoading(false);
+    }
   }
 
   function validate(amount, address) {
