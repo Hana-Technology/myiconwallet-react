@@ -54,8 +54,6 @@ function StakePage() {
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
-    const stakeAmount = useMax ? maxStakeable : newStake;
-
     const confirmation = await swal({
       content: (
         <Alert
@@ -63,7 +61,7 @@ function StakePage() {
           title="This is your final confirmation"
           text={
             <>
-              Are you sure you want to change your stake to <b>{stakeAmount} ICX</b>?
+              Are you sure you want to change your stake to <b>{newStake} ICX</b>?
             </>
           }
         />
@@ -73,6 +71,7 @@ function StakePage() {
     if (!confirmation) return setIsLoading(false);
 
     try {
+      const stakeAmount = useMax ? maxStakeable : newStake;
       const transactionHash = await setStake(wallet, stakeAmount);
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))
@@ -85,7 +84,7 @@ function StakePage() {
             title="Set ICX"
             text={
               <>
-                Successfully set stake to <b>{stakeAmount} ICX</b>
+                Successfully set stake to <b>{newStake} ICX</b>
               </>
             }
           />
