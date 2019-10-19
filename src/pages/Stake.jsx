@@ -81,7 +81,7 @@ function StakePage() {
         <div>
           <Alert
             type={ALERT_TYPE_SUCCESS}
-            title="Set ICX"
+            title="Staked ICX"
             text={
               <>
                 Successfully set stake to <b>{newStake} ICX</b>
