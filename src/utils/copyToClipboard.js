@@ -1,5 +1,14 @@
-// source: https://gist.github.com/rproenca/64781c6a1329b48a455b645d361a9aa3
+/**
+ * inspiration: https://gist.github.com/rproenca/64781c6a1329b48a455b645d361a9aa3
+ *
+ * @param {string} text
+ * @returns {void}
+ */
 export function copyToClipboard(text) {
+  if (navigator && navigator.clipboard) {
+    return void navigator.clipboard.writeText(text);
+  }
+
   const IS_IOS = navigator.userAgent.match(/ipad|iphone/i);
 
   // create a textarea

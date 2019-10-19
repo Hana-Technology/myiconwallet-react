@@ -51,13 +51,16 @@ function Header() {
   return (
     <header className="bg-gray-800 shadow-lg z-10 relative">
       <div className="container mx-auto p-4 pt-3 bg-gray-800 text-gray-100 flex items-center justify-between">
-        <h1 className="text-2xl lg:text-3xl whitespace-no-wrap" aria-label="my icon wallet">
-          <Link to="/" className="select-none">
-            my
-            <Logo className="text-cyan mx-1" />
-            wallet
-          </Link>
-        </h1>
+        <div className="flex items-baseline">
+          <h1 className="text-2xl lg:text-3xl whitespace-no-wrap" aria-label="my icon wallet">
+            <Link to="/" className="select-none">
+              my
+              <Logo className="text-cyan mx-1" />
+              wallet
+            </Link>
+          </h1>
+          <span className="text-gray-400 text-sm ml-3">BETA testnet</span>
+        </div>
         <nav>
           <button
             onClick={toggleMenu}

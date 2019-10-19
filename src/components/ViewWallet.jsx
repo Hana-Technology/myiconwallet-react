@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExchange,
@@ -10,7 +10,9 @@ import {
 } from '@fortawesome/pro-duotone-svg-icons';
 import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
+import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
+import { copyToClipboard } from 'utils/copyToClipboard';
 import { formatNumber } from 'utils/formatNumber';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
@@ -29,6 +31,11 @@ const EMPTY_CHART_DATA = {
 };
 const EMPTY_CHART_OPTIONS = { events: [] };
 
+const COPY_TOOLTIPS = {
+  INITIAL: 'Copy address',
+  COPIED: 'Address copied',
+};
+
 function ViewWallet() {
   const {
     claimIScore,
@@ -44,13 +51,15 @@ function ViewWallet() {
     isLoading,
     refreshWallet,
   } = useWallet();
+  const [copyTooltip, setCopyTooltip] = useState(COPY_TOOLTIPS.INITIAL);
   const [chartData, setChartData] = useState(null);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [isChartEmpty, setIsChartEmpty] = useState(false);
   const [isClaiming, setIsClaiming] = useState(false);
+  const copyTooltipRef = useRef(null);
 
   useEffect(() => {
     if (!(balance && staked)) return void setChartData(null);
-    if (balance.isZero() && staked.isZero()) return void setIsEmpty(true);
+    if (balance.isZero() && staked.isZero()) return void setIsChartEmpty(true);
 
     const chartLabels = ['Available', 'Staked'];
     const chartDataset = {
@@ -66,7 +75,7 @@ function ViewWallet() {
     }
 
     setChartData({ labels: chartLabels, datasets: [chartDataset] });
-    setIsEmpty(false);
+    setIsChartEmpty(false);
   }, [balance, staked, unstaking]);
 
   async function handleClaimIScore() {
@@ -127,6 +136,17 @@ function ViewWallet() {
     setIsClaiming(false);
   }
 
+  function copyAddressToClipboard() {
+    const address = wallet.getAddress();
+    copyToClipboard(address);
+
+    // Update and re-show the tooltip
+    ReactTooltip.hide(copyTooltipRef.current);
+    setCopyTooltip(COPY_TOOLTIPS.COPIED);
+    setTimeout(() => ReactTooltip.show(copyTooltipRef.current));
+    setTimeout(() => setCopyTooltip(COPY_TOOLTIPS.INITIAL), 2000);
+  }
+
   return (
     wallet && (
       <>
@@ -135,12 +155,21 @@ function ViewWallet() {
 
         <div className="mt-2">
           <div className="break-all text-lg">
-            {wallet.getAddress()}{' '}
+            <button
+              onClick={copyAddressToClipboard}
+              data-tip={copyTooltip}
+              ref={copyTooltipRef}
+              className="hover:text-black"
+            >
+              {wallet.getAddress()}
+              <ReactTooltip place="right" effect="solid" />
+            </button>
             <a
               href={`${trackerUrl}/address/${wallet.getAddress()}`}
               title="View on ICON tracker"
               target="_blank"
               rel="noopener noreferrer"
+              className="ml-2"
             >
               <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
             </a>
@@ -209,11 +238,11 @@ function ViewWallet() {
             </div>
           </div>
           <div className="flex-none mx-auto mt-6 sm:m-0">
-            {(isEmpty || chartData) && (
+            {(isChartEmpty || chartData) && (
               <Pie
-                data={isEmpty ? EMPTY_CHART_DATA : chartData}
+                data={isChartEmpty ? EMPTY_CHART_DATA : chartData}
                 legend={{ position: 'bottom' }}
-                options={isEmpty ? EMPTY_CHART_OPTIONS : {}}
+                options={isChartEmpty ? EMPTY_CHART_OPTIONS : {}}
                 height={200}
               />
             )}
