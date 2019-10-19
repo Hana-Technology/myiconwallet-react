@@ -12,7 +12,7 @@ import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import colors from 'utils/colors';
 import { formatNumber } from 'utils/formatNumber';
-import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
+import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
@@ -33,6 +33,7 @@ function ViewWallet() {
   const {
     claimIScore,
     network: { trackerUrl },
+    waitForTransaction,
   } = useIconService();
   const {
     balance,
@@ -87,35 +88,43 @@ function ViewWallet() {
     });
     if (!confirmation) return setIsClaiming(false);
 
-    const transactionHash = await claimIScore(wallet);
-    await swal(
-      <div>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title="Converted I-Score"
-          text={
-            <>
-              Successfully converted <b>{formatNumber(iScore)} I-Score</b> to ICX
-            </>
-          }
-        />
-        <div className="mt-4">
-          <div className="break-all">
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
+    try {
+      const transactionHash = await claimIScore(wallet);
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
+
+      swal(
+        <div>
+          <Alert
+            type={ALERT_TYPE_SUCCESS}
+            title="Converted I-Score"
+            text={
+              <>
+                Successfully converted <b>{formatNumber(iScore)} I-Score</b> to ICX
+              </>
+            }
+          />
+          <div className="mt-4">
+            <div className="break-all">
+              {transactionHash}
+              <a
+                href={`${trackerUrl}/transaction/${transactionHash}`}
+                title="View on ICON tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              </a>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
           </div>
-          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
         </div>
-      </div>
-    );
-    refreshWallet();
+      );
+    } catch (error) {
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error} />);
+    }
+    setIsClaiming(false);
   }
 
   return (

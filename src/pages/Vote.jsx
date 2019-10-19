@@ -118,35 +118,40 @@ function VotePage() {
     });
     if (!confirmation) return setIsLoading(false);
 
-    const transactionHash = await setDelegations(wallet, delegationsToSet);
-    waitForTransaction(transactionHash)
-      .catch(error => console.warn(error))
-      .then(() => refreshWallet());
+    try {
+      const transactionHash = await setDelegations(wallet, delegationsToSet);
+      waitForTransaction(transactionHash)
+        .catch(error => console.warn(error))
+        .then(() => refreshWallet());
 
-    await swal(
-      <div>
-        <Alert
-          type={ALERT_TYPE_SUCCESS}
-          title="Delegate votes"
-          text={`Successfully set vote delegations`}
-        />
-        <div className="mt-4">
-          <div className="break-all">
-            {transactionHash}
-            <a
-              href={`${trackerUrl}/transaction/${transactionHash}`}
-              title="View on ICON tracker"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
-            </a>
+      await swal(
+        <div>
+          <Alert
+            type={ALERT_TYPE_SUCCESS}
+            title="Delegate votes"
+            text={`Successfully set vote delegations`}
+          />
+          <div className="mt-4">
+            <div className="break-all">
+              {transactionHash}
+              <a
+                href={`${trackerUrl}/transaction/${transactionHash}`}
+                title="View on ICON tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              </a>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
           </div>
-          <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
         </div>
-      </div>
-    );
-    navigate('/');
+      );
+      navigate('/');
+    } catch (error) {
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed delegating votes" text={error} />);
+      setIsLoading(false);
+    }
   }
 
   function handleSelectDelegates(selectedPReps) {
@@ -309,7 +314,7 @@ function VotePage() {
                 </Button>
               </fieldset>
             ) : (
-              <div className="text-center text-3xl">
+              <div className="text-center text-3xl mt-4">
                 <FontAwesomeIcon icon={faSpinnerThird} spin />
               </div>
             )}
