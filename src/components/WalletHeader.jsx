@@ -13,16 +13,12 @@ const COPY_TOOLTIPS = {
 
 function WalletHeader() {
   const { fullBalance, isLoading, refreshWallet, wallet } = useWallet();
-  const copyTooltipRef = useRef(null);
   const [copyTooltip, setCopyTooltip] = useState(COPY_TOOLTIPS.INITIAL);
+  const copyTooltipRef = useRef(null);
 
   function copyAddressToClipboard() {
     const address = wallet.getAddress();
-    if (navigator && navigator.clipboard) {
-      navigator.clipboard.writeText(address);
-    } else {
-      copyToClipboard(address);
-    }
+    copyToClipboard(address);
 
     // Update and re-show the tooltip
     ReactTooltip.hide(copyTooltipRef.current);
