@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinnerThird, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faQuestionCircle } from '@fortawesome/pro-solid-svg-icons';
 import { navigate } from '@reach/router';
+import Switch from 'react-switch';
+import ReactTooltip from 'react-tooltip';
+import colors from 'utils/colors';
 import {
   ERROR_FAILED_READING_FILE,
   ERROR_INVALID_KEYSTORE,
@@ -20,6 +24,7 @@ function UnlockWalletPage() {
   const { unlockWallet } = useWallet();
   const passwordInput = useTextInput('');
   const [keystoreFile, setKeystoreFile] = useState(null);
+  const [network, setNetwork] = useState(true);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -121,15 +126,38 @@ function UnlockWalletPage() {
               {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </InputGroup>
 
-            <Button type="submit" disabled={isLoading} className="mt-6">
-              <FontAwesomeIcon
-                icon={isLoading ? faSpinnerThird : faUnlockAlt}
-                spin={isLoading}
-                fixedWidth
-                className="mr-1"
-              />
-              Unlock{isLoading ? 'ing' : ''} wallet
-            </Button>
+            <div className="flex items-center justify-between mt-6">
+              <Button type="submit" disabled={isLoading}>
+                <FontAwesomeIcon
+                  icon={isLoading ? faSpinnerThird : faUnlockAlt}
+                  spin={isLoading}
+                  fixedWidth
+                  className="mr-1"
+                />
+                Unlock{isLoading ? 'ing' : ''} wallet
+              </Button>
+              <label className="text-right">
+                <div className="text-xs">
+                  Mainnet
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    data-tip="Use this to enable mainnet"
+                    className="text-gray-500 ml-1"
+                  />
+                  <ReactTooltip place="right" effect="solid" />
+                </div>
+                <Switch
+                  checked={network}
+                  onChange={() => setNetwork(!network)}
+                  onColor={colors.green['600']}
+                  offColor={colors.gray['400']}
+                  height={20}
+                  width={45}
+                  checkedIcon={false}
+                  uncheckedIcon={false}
+                ></Switch>
+              </label>
+            </div>
           </fieldset>
         </form>
       </div>
