@@ -34,7 +34,7 @@
   @apply bg-gray-100 px-4 py-3 m-0;
 }
 .swal-button {
-  @apply bg-teal-500 text-teal-100 text-lg font-bold px-4 py-2 rounded;
+  @apply bg-teal-500 text-white text-lg font-bold px-4 py-2 rounded;
 }
 .swal-button:not([disabled]):hover {
   @apply bg-teal-600 shadow;
