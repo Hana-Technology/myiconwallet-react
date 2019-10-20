@@ -73,7 +73,7 @@ function UnlockWalletPage() {
         <img
           src={authenticationSvg}
           alt="person entering secure website"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-2/5 max-w-full flex-none sm:ml-6 sm:-mt-8"
         />
 
         <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">

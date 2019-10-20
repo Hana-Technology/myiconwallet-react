@@ -137,7 +137,7 @@ function SendPage() {
         <img
           src={transferMoneySvg}
           alt="person sending money online"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-"
         />
 
         {wallet ? (

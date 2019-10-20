@@ -100,7 +100,7 @@ function Header() {
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
                     <FontAwesomeIcon icon={faSignOut} fixedWidth className="mr-1" />
-                    Unload Wallet
+                    Lock Wallet
                   </button>
                 </li>
               </>

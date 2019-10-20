@@ -9,11 +9,11 @@ function Layout({ children, styleMain = true, title }) {
   }, [title]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen font-sans font-light">
       <Header />
-      <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4">
+      <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4 sm:flex flex-row items-center">
         {styleMain ? (
-          <div className="w-full bg-white max-w-2xl mx-auto sm:mb-6 p-6 lg:p-8 shadow-md">
+          <div className="w-full bg-white max-w-4xl mx-auto mb-6 sm:my-6 p-6 lg:p-8 shadow-2xl rounded">
             {children}
           </div>
         ) : (
