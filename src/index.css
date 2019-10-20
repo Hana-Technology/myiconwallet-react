@@ -14,6 +14,15 @@
   }
 }
 
+/* Landing mega buttons raising */
+.mega-button {
+  transform: translateY(0);
+  transition: box-shadow 0.4s, transform 0.3s;
+}
+.mega-button:hover {
+  transform: translateY(-0.25rem);
+}
+
 /* SweetAlert overrides */
 .swal-modal {
   @apply bg-white text-gray-900 text-left rounded;
