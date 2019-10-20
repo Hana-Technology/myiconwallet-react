@@ -9,7 +9,7 @@ function MegaButton({ to, title, description, cta, icon, className }) {
   return (
     <Link
       to={to}
-      className={`block sm:inline-block sm:w-1/2 px-8 py-6 rounded-lg shadow-xl hover:shadow-2xl hover:-mt-2 ${className ||
+      className={`block sm:inline-block sm:w-1/2 px-8 py-6 rounded-lg shadow-xl hover:shadow-2xl ${className ||
         ''} mega-button`}
     >
       <h3 className="text-xl uppercase tracking-tight">
@@ -35,9 +35,8 @@ function Landing() {
             <span className="text-teal-500">community</span>, for the community.
           </h2>
           <p className="text-lg mt-10">
-            <FontAwesomeIcon icon={faLockAlt} className="mr-1" />{' '}
-            <span class="font-bold">MyIconWallet</span> is safe. Your private key never leaves the
-            browser.
+            <FontAwesomeIcon icon={faLockAlt} className="mr-1" /> <b>MyIconWallet</b> is safe. Your
+            private key never leaves the browser.
           </p>
           <p className="text-lg mt-2">
             Use your existing wallet from ICONex or create a new one. All wallets are compatible

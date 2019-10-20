@@ -56,7 +56,7 @@ function CreateWallet({ onCreateWallet }) {
   }
 
   return (
-    <div className="sm:flex items-start justify-between pt-4">
+    <div className="sm:flex items-start justify-between">
       <img
         src={securitySvg}
         alt="website security with guard"
