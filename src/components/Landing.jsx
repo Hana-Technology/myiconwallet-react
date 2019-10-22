@@ -27,7 +27,7 @@ function MegaButton({ to, title, description, cta, icon, className }) {
 
 function Landing() {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto pt-8 pb-12">
       <div className="sm:flex items-center justify-center max-w-6xl mx-auto">
         <div className="p-4 pt-0 sm:p-6 sm:pt-4 lg:pr-8">
           <h2 className="text-3xl md:text-4xl lg:text-5xl leading-tight">
@@ -49,7 +49,7 @@ function Landing() {
           className="hidden sm:block w-0 md:w-1/2 max-w-full flex-none pr-6"
         />
       </div>
-      <div className="sm:flex justify-between max-w-4xl mx-auto mt-8 px-4 sm:px-6">
+      <div className="sm:flex justify-between max-w-4xl mx-auto mt-8 sm:mt-12 px-4 sm:px-6">
         <MegaButton
           to="/create"
           title="Create a wallet"
