@@ -40,7 +40,7 @@ function WalletHeader() {
               onClick={copyAddressToClipboard}
               data-tip={copyTooltip}
               ref={copyTooltipRef}
-              className="whitespace-no-wrap hover:text-white focus:text-white ml-4"
+              className="whitespace-no-wrap hover:text-white focus:text-white ml-4 sm:ml-6"
             >
               <FontAwesomeIcon icon={faWallet} className="mr-2" />
               {wallet.getAddress().substr(0, 6)}&hellip;{wallet.getAddress().substr(-8)}
