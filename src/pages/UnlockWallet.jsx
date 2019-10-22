@@ -6,6 +6,7 @@ import { navigate } from '@reach/router';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
+import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import {
   ERROR_FAILED_READING_FILE,
   ERROR_INVALID_KEYSTORE,
@@ -16,15 +17,16 @@ import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
+import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import authenticationSvg from 'assets/authentication.svg';
 
 function UnlockWalletPage() {
+  const { changeNetwork, network } = useIconService();
   const { unlockWallet } = useWallet();
   const passwordInput = useTextInput('');
   const [keystoreFile, setKeystoreFile] = useState(null);
-  const [network, setNetwork] = useState(true);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,6 +71,10 @@ function UnlockWalletPage() {
 
     setErrors(errors);
     return !errors.password && !errors.keystoreFile;
+  }
+
+  function handleChangeNetwork(checked) {
+    changeNetwork(checked ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET);
   }
 
   return (
@@ -136,22 +142,32 @@ function UnlockWalletPage() {
                 />
                 Unlock{isLoading ? 'ing' : ''} wallet
               </Button>
+
               <label className="text-right">
                 <div className="text-xs">
                   Mainnet
-                  <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    data-tip="Use this to enable mainnet"
+                  <button
+                    type="button"
+                    data-tip="Switch on to connect to mainnet, off connects to testnet"
                     className="text-gray-500 ml-1"
+                  >
+                    <FontAwesomeIcon icon={faQuestionCircle} />
+                  </button>
+                  <ReactTooltip
+                    place="top"
+                    effect="solid"
+                    multiline={true}
+                    event="click mouseenter"
+                    eventOff="click mouseleave"
+                    clickable={true}
                   />
-                  <ReactTooltip place="right" effect="solid" />
                 </div>
                 <Switch
-                  checked={network}
-                  onChange={() => setNetwork(!network)}
+                  checked={network.ref === NETWORK_REF_MAINNET}
+                  onChange={handleChangeNetwork}
                   onColor={colors.green['600']}
                   offColor={colors.gray['400']}
-                  height={20}
+                  height={24}
                   width={45}
                   checkedIcon={false}
                   uncheckedIcon={false}

@@ -11,7 +11,7 @@ const SCORE_INSTALL_ADDRESS = 'cx0000000000000000000000000000000000000000';
 
 const INITIAL_STATE = {
   network: getNetwork(NETWORK_REF_TESTNET),
-  toggleNetwork: null,
+  changeNetwork: null,
   iconService: null,
   getBalance: null,
   getStake: null,
@@ -241,10 +241,13 @@ function IconService({ children }) {
     }
   }
 
-  function toggleNetwork() {
-    const newNetworkRef =
-      network.ref === NETWORK_REF_TESTNET ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET;
-    const newNetwork = getNetwork(newNetworkRef);
+  /**
+   * @param {('mainnet'|'testnet')} networkRef
+   */
+  function changeNetwork(networkRef) {
+    if (networkRef === network.ref) return;
+
+    const newNetwork = getNetwork(networkRef);
     const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
     const newIconService = new IconSDK(iconProvider);
     setNetwork(newNetwork);
@@ -256,7 +259,7 @@ function IconService({ children }) {
     <IconServiceContext.Provider
       value={{
         network,
-        toggleNetwork,
+        changeNetwork,
         iconService,
         getBalance,
         getStake,
