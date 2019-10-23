@@ -249,7 +249,7 @@ function IconService({ children }) {
 
     const newNetwork = getNetwork(networkRef);
     const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
-    const newIconService = new IconSDK(iconProvider);
+    const newIconService = new IconSDK(newIconProvider);
     setNetwork(newNetwork);
     setIconProvider(newIconProvider);
     setIconService(newIconService);
