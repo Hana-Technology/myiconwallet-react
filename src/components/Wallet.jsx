@@ -59,6 +59,7 @@ function Wallet({ children }) {
     setWallet(null);
     setKeystore(null);
     setBalance(INITIAL_STATE.balance);
+    setFullBalance(INITIAL_STATE.fullBalance);
     setIScore(INITIAL_STATE.iScore);
     setStake(INITIAL_STATE.stake);
     setDelegations(INITIAL_STATE.delegations);
