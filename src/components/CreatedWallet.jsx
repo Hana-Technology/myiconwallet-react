@@ -45,12 +45,12 @@ function CreatedWallet() {
 
         <p className="mt-6">
           Download your keystore file now and keep it somewhere safe. You will need your keystore
-          file to access your wallet, but if anyone else finds it you can loose your funds.
+          file to access your wallet, but if anyone else finds it you can lose your funds.
         </p>
         <Alert
           type={ALERT_TYPE_WARN}
           title="Don't forget your password"
-          text="There is no way to recover your wallet if you forget the password or if you loose your keystore file."
+          text="There is no way to recover your wallet if you forget the password or if you lose your keystore file."
           className="mt-6"
         />
 
