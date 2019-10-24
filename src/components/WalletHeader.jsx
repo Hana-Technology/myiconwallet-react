@@ -42,7 +42,7 @@ function WalletHeader() {
               ref={copyTooltipRef}
               className="whitespace-no-wrap hover:text-white focus:text-white ml-4 sm:ml-6"
             >
-              <FontAwesomeIcon icon={faWallet} className="mr-2 opacity-75" />
+              <FontAwesomeIcon icon={faWallet} className="mr-2" />
               {wallet.getAddress().substr(0, 6)}&hellip;{wallet.getAddress().substr(-8)}
               <ReactTooltip place="right" effect="solid" />
             </button>
@@ -53,7 +53,7 @@ function WalletHeader() {
             className="ml-4 sm:ml-6 whitespace-no-wrap hover:text-white focus:text-white"
           >
             {fullBalance && `${formatNumber(fullBalance, 2)} ICX`}
-            <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} className="ml-2 opacity-75" />
+            <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} className="ml-2" />
           </button>
         </div>
       </div>
