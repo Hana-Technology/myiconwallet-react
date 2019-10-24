@@ -24,7 +24,7 @@ Running tests by default will use the [Jest](https://jestjs.io/) interactive wat
 yarn test
 
 # Interactive watch mode on all files
-yarn test --all
+yarn test --watchAll
 
 # Single run of the full test suite
 yarn test --watchAll=false
