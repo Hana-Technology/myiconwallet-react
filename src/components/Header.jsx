@@ -61,10 +61,9 @@ function Header() {
               wallet
             </Link>
           </h1>
-          <span className="text-gray-400 text-sm ml-3">
-            BETA
-            {network.ref === NETWORK_REF_TESTNET && ' ' + network.ref}
-          </span>
+          {network.ref === NETWORK_REF_TESTNET && (
+            <span className="text-gray-400 text-sm ml-3">{network.ref}</span>
+          )}
         </div>
         <nav>
           <button
