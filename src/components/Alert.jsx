@@ -5,7 +5,7 @@ import {
   faExclamationCircle,
   faExclamationTriangle,
   faInfoCircle,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 export const ALERT_TYPE_INFO = 'info';

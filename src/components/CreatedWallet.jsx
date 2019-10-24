@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faDownload, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import Alert, { ALERT_TYPE_SUCCESS, ALERT_TYPE_WARN } from 'components/Alert';
 import Button from 'components/Button';
 import { useWallet } from 'components/Wallet';

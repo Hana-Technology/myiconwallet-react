@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLink, faFlag, faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons';
+import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
@@ -97,7 +97,7 @@ function StakePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1" />
               </a>
             </div>
             <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
@@ -203,7 +203,7 @@ function StakePage() {
 
                   <Button type="submit" disabled={moreVotesThanStake || isLoading} className="mt-6">
                     <FontAwesomeIcon
-                      icon={isLoading ? faSpinnerThird : faFlag}
+                      icon={isLoading ? faCircleNotch : faFlag}
                       spin={isLoading}
                       fixedWidth
                       className="mr-1"
@@ -214,7 +214,7 @@ function StakePage() {
               </>
             ) : (
               <div className="text-center text-3xl mt-4">
-                <FontAwesomeIcon icon={faSpinnerThird} spin />
+                <FontAwesomeIcon icon={faCircleNotch} spin />
               </div>
             )}
           </form>

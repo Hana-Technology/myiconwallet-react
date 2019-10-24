@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLink, faSpinnerThird, faVoteYea } from '@fortawesome/pro-duotone-svg-icons';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faCircleNotch,
+  faExternalLinkAlt,
+  faTimes,
+  faVoteYea,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
@@ -140,7 +144,7 @@ function VotePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1" />
               </a>
             </div>
             <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
@@ -305,7 +309,7 @@ function VotePage() {
 
                 <Button type="submit" disabled={tooManyVotes || isLoading} className="mt-6">
                   <FontAwesomeIcon
-                    icon={isLoading ? faSpinnerThird : faVoteYea}
+                    icon={isLoading ? faCircleNotch : faVoteYea}
                     spin={isLoading}
                     fixedWidth
                     className="mr-2"
@@ -315,7 +319,7 @@ function VotePage() {
               </fieldset>
             ) : (
               <div className="text-center text-3xl mt-4">
-                <FontAwesomeIcon icon={faSpinnerThird} spin />
+                <FontAwesomeIcon icon={faCircleNotch} spin />
               </div>
             )}
           </form>

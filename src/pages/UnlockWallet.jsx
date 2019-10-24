@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinnerThird, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { navigate } from '@reach/router';
 import {
   ERROR_FAILED_READING_FILE,
@@ -123,7 +123,7 @@ function UnlockWalletPage() {
 
             <Button type="submit" disabled={isLoading} className="mt-6">
               <FontAwesomeIcon
-                icon={isLoading ? faSpinnerThird : faUnlockAlt}
+                icon={isLoading ? faCircleNotch : faUnlockAlt}
                 spin={isLoading}
                 fixedWidth
                 className="mr-1"

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faBars,
   faFlag,
   faShareSquare,
-  faSignOut,
+  faSignOutAlt,
   faUnlockAlt,
   faVoteYea,
   faWallet,
-} from '@fortawesome/pro-duotone-svg-icons';
-import { faBars } from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 
 import { Link, navigate } from '@reach/router';
 import Logo from 'components/Logo';
@@ -99,7 +99,7 @@ function Header() {
                     onClick={handleUnloadWallet}
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
-                    <FontAwesomeIcon icon={faSignOut} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth className="mr-1" />
                     Lock Wallet
                   </button>
                 </li>

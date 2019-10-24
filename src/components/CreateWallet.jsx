@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinnerThird, faWallet } from '@fortawesome/pro-duotone-svg-icons';
+import { faCircleNotch, faWallet } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
@@ -110,7 +110,7 @@ function CreateWallet({ onCreateWallet }) {
 
           <Button type="submit" disabled={isLoading} className="mt-6">
             <FontAwesomeIcon
-              icon={isLoading ? faSpinnerThird : faWallet}
+              icon={isLoading ? faCircleNotch : faWallet}
               spin={isLoading}
               fixedWidth
               className="mr-1"
