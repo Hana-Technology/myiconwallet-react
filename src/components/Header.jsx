@@ -9,8 +9,9 @@ import {
   faWallet,
 } from '@fortawesome/pro-duotone-svg-icons';
 import { faBars } from '@fortawesome/pro-solid-svg-icons';
-
 import { Link, navigate } from '@reach/router';
+import { NETWORK_REF_TESTNET } from 'utils/network';
+import { useIconService } from 'components/IconService';
 import Logo from 'components/Logo';
 import { useWallet } from 'components/Wallet';
 
@@ -33,6 +34,7 @@ function NavLink({ children, to }) {
 }
 
 function Header() {
+  const { network } = useIconService();
   const { wallet, unloadWallet } = useWallet();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -59,7 +61,9 @@ function Header() {
               wallet
             </Link>
           </h1>
-          <span className="text-gray-400 text-sm ml-3">BETA testnet</span>
+          {network.ref === NETWORK_REF_TESTNET && (
+            <span className="text-gray-400 text-sm ml-3">{network.ref}</span>
+          )}
         </div>
         <nav>
           <button

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
 import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
-import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
+import { getNetwork, NETWORK_REF_MAINNET } from 'utils/network';
 import { wait } from 'utils/wait';
 
 const API_VERSION = IconConverter.toBigNumber(3);
@@ -10,8 +10,8 @@ const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000001';
 const SCORE_INSTALL_ADDRESS = 'cx0000000000000000000000000000000000000000';
 
 const INITIAL_STATE = {
-  network: getNetwork(NETWORK_REF_TESTNET),
-  toggleNetwork: null,
+  network: getNetwork(NETWORK_REF_MAINNET),
+  changeNetwork: null,
   iconService: null,
   getBalance: null,
   getStake: null,
@@ -241,12 +241,15 @@ function IconService({ children }) {
     }
   }
 
-  function toggleNetwork() {
-    const newNetworkRef =
-      network.ref === NETWORK_REF_TESTNET ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET;
-    const newNetwork = getNetwork(newNetworkRef);
+  /**
+   * @param {('mainnet'|'testnet')} networkRef
+   */
+  function changeNetwork(networkRef) {
+    if (networkRef === network.ref) return;
+
+    const newNetwork = getNetwork(networkRef);
     const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
-    const newIconService = new IconSDK(iconProvider);
+    const newIconService = new IconSDK(newIconProvider);
     setNetwork(newNetwork);
     setIconProvider(newIconProvider);
     setIconService(newIconService);
@@ -256,7 +259,7 @@ function IconService({ children }) {
     <IconServiceContext.Provider
       value={{
         network,
-        toggleNetwork,
+        changeNetwork,
         iconService,
         getBalance,
         getStake,
