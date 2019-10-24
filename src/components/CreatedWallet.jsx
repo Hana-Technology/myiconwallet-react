@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faDownload, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import Alert, { ALERT_TYPE_SUCCESS, ALERT_TYPE_WARN } from 'components/Alert';
 import Button from 'components/Button';
 import { useWallet } from 'components/Wallet';
@@ -61,7 +61,7 @@ function CreatedWallet() {
             className="block text-center sm:text-left"
             onClick={handleFileDownloadClick}
           >
-            <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1 opacity-75" />
             Download keystore
           </Button>
           <Button
@@ -72,7 +72,7 @@ function CreatedWallet() {
               if (!hasDownloaded) event.preventDefault();
             }}
           >
-            <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
             Unlock your wallet
           </Button>
         </div>

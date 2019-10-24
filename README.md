@@ -15,8 +15,6 @@ yarn
 yarn start
 ```
 
-**Note:** MyIconWallet currently uses [FontAwesome Pro](https://fontawesome.com/pro) icons which means that to install the dependencies with `yarn` you'll need to set an envionment variable `FA_NPM_TOKEN={YOUR_FONTAWESOME_PRO_TOKEN}`. We are considering options to remove this dependency.
-
 ### Testing
 
 Running tests by default will use the [Jest](https://jestjs.io/) interactive watch mode and only watch changed files.
@@ -26,7 +24,7 @@ Running tests by default will use the [Jest](https://jestjs.io/) interactive wat
 yarn test
 
 # Interactive watch mode on all files
-yarn test --all
+yarn test --watchAll
 
 # Single run of the full test suite
 yarn test --watchAll=false

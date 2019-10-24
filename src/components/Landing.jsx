@@ -1,7 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLockAlt, faUnlockAlt, faWallet } from '@fortawesome/pro-duotone-svg-icons';
-import { faLongArrowRight } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faLongArrowAltRight,
+  faShieldAlt,
+  faUnlockAlt,
+  faWallet,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@reach/router';
 import connectedWorldSvg from 'assets/connected_world.svg';
 
@@ -13,13 +17,13 @@ function MegaButton({ to, title, description, cta, icon, className }) {
         ''} mega-button`}
     >
       <h3 className="text-xl uppercase tracking-tight">
-        <FontAwesomeIcon icon={icon} className="mr-2" />
+        <FontAwesomeIcon icon={icon} className="mr-2 opacity-75" />
         {title}
       </h3>
       <p className="mt-3">{description}</p>
       <p className="text-lg font-bold mt-3">
         {cta}
-        <FontAwesomeIcon icon={faLongArrowRight} fixedWidth className="text-sm ml-2" />
+        <FontAwesomeIcon icon={faLongArrowAltRight} fixedWidth className="text-sm ml-2" />
       </p>
     </Link>
   );
@@ -35,8 +39,8 @@ function Landing() {
             <span className="text-teal-500">community</span>, for the community.
           </h2>
           <p className="text-lg mt-10">
-            <FontAwesomeIcon icon={faLockAlt} className="mr-1" /> <b>MyIconWallet</b> is safe. Your
-            private key never leaves the browser.
+            <FontAwesomeIcon icon={faShieldAlt} className="mr-1" /> <b>MyIconWallet</b> is safe.
+            Your private key never leaves the browser.
           </p>
           <p className="text-lg mt-2">
             Use your existing wallet from ICONex or create a new one. All wallets are compatible

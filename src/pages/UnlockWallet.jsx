@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinnerThird, faUnlockAlt } from '@fortawesome/pro-duotone-svg-icons';
-import { faQuestionCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faCircleNotch, faQuestionCircle, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { navigate } from '@reach/router';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
@@ -135,10 +134,10 @@ function UnlockWalletPage() {
             <div className="flex items-center justify-between mt-6">
               <Button type="submit" disabled={isLoading}>
                 <FontAwesomeIcon
-                  icon={isLoading ? faSpinnerThird : faUnlockAlt}
+                  icon={isLoading ? faCircleNotch : faUnlockAlt}
                   spin={isLoading}
                   fixedWidth
-                  className="mr-1"
+                  className="mr-1 opacity-75"
                 />
                 Unlock{isLoading ? 'ing' : ''} wallet
               </Button>

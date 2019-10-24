@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faBars,
   faFlag,
   faShareSquare,
-  faSignOut,
+  faSignOutAlt,
   faUnlockAlt,
   faVoteYea,
   faWallet,
-} from '@fortawesome/pro-duotone-svg-icons';
-import { faBars } from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import { NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
@@ -82,19 +82,19 @@ function Header() {
               <>
                 <li>
                   <NavLink to="/send">
-                    <FontAwesomeIcon icon={faShareSquare} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faShareSquare} fixedWidth className="mr-1 opacity-75" />
                     Send
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/stake">
-                    <FontAwesomeIcon icon={faFlag} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faFlag} fixedWidth className="mr-1 opacity-75" />
                     Stake
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/vote">
-                    <FontAwesomeIcon icon={faVoteYea} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faVoteYea} fixedWidth className="mr-1 opacity-75" />
                     Vote
                   </NavLink>
                 </li>
@@ -103,7 +103,7 @@ function Header() {
                     onClick={handleUnloadWallet}
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
-                    <FontAwesomeIcon icon={faSignOut} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth className="mr-1 opacity-75" />
                     Lock Wallet
                   </button>
                 </li>
@@ -112,13 +112,13 @@ function Header() {
               <>
                 <li>
                   <NavLink to="/create">
-                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1 opacity-75" />
                     Create Wallet
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/unlock">
-                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
                     Unlock
                   </NavLink>
                 </li>

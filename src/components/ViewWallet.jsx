@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faExchange,
-  faExternalLink,
+  faCircleNotch,
+  faExchangeAlt,
+  faExternalLinkAlt,
   faFlag,
-  faSpinnerThird,
   faShareSquare,
   faVoteYea,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import ReactTooltip from 'react-tooltip';
@@ -123,7 +123,7 @@ function ViewWallet() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1 opacity-75" />
               </a>
             </div>
             <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
@@ -171,7 +171,7 @@ function ViewWallet() {
               rel="noopener noreferrer"
               className="ml-2"
             >
-              <FontAwesomeIcon icon={faExternalLink} className="ml-1" />
+              <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1 opacity-75" />
             </a>
           </div>
           <div className="text-sm text-gray-600 uppercase tracking-tight">Address</div>
@@ -182,7 +182,7 @@ function ViewWallet() {
             <div>
               <div className="text-4xl leading-tight">
                 {!fullBalance && isLoading ? (
-                  <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
+                  <FontAwesomeIcon icon={faCircleNotch} spin className="ml-1" />
                 ) : (
                   fullBalance && (
                     <>
@@ -197,7 +197,7 @@ function ViewWallet() {
             <div className="mt-2">
               <div className="text-2xl leading-tight">
                 {!balance && isLoading ? (
-                  <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
+                  <FontAwesomeIcon icon={faCircleNotch} spin className="ml-1" />
                 ) : (
                   balance && (
                     <>
@@ -212,7 +212,7 @@ function ViewWallet() {
             <div className="mt-6">
               <div className="text-2xl leading-tight">
                 {!iScore && isLoading ? (
-                  <FontAwesomeIcon icon={faSpinnerThird} spin className="ml-1" />
+                  <FontAwesomeIcon icon={faCircleNotch} spin className="ml-1" />
                 ) : (
                   iScore && (
                     <>
@@ -230,7 +230,7 @@ function ViewWallet() {
                     disabled={isClaiming}
                     className="bg-gray-100 border border-gray-300 uppercase tracking-tight text-gray-700 px-2 py-px rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow ml-4"
                   >
-                    <FontAwesomeIcon icon={faExchange} className="mr-2" />
+                    <FontAwesomeIcon icon={faExchangeAlt} className="mr-2 opacity-75" />
                     Convert to ICX
                   </button>
                 )}
@@ -251,15 +251,15 @@ function ViewWallet() {
 
         <div className="sm:flex justify-between mt-8">
           <Button to="/send" className="block text-center sm:w-1/3 ">
-            <FontAwesomeIcon icon={faShareSquare} className="mr-2" />
+            <FontAwesomeIcon icon={faShareSquare} className="mr-2 opacity-75" />
             Send ICX
           </Button>
           <Button to="/stake" className="block text-center sm:w-1/3 mt-3 sm:mt-0 sm:ml-2">
-            <FontAwesomeIcon icon={faFlag} className="mr-2" />
+            <FontAwesomeIcon icon={faFlag} className="mr-2 opacity-75" />
             Stake ICX
           </Button>
           <Button to="/vote" className="block text-center sm:w-1/3 mt-3 sm:mt-0 sm:ml-2">
-            <FontAwesomeIcon icon={faVoteYea} className="mr-2" />
+            <FontAwesomeIcon icon={faVoteYea} className="mr-2 opacity-75" />
             Voting
           </Button>
         </div>

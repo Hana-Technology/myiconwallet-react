@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faSync, faWallet } from '@fortawesome/pro-duotone-svg-icons';
+import { faHome, faSyncAlt, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@reach/router';
 import ReactTooltip from 'react-tooltip';
 import { copyToClipboard } from 'utils/copyToClipboard';
@@ -34,7 +34,7 @@ function WalletHeader() {
         <div className="flex items-center justify-between">
           <div>
             <Link to="/" className="hover:text-white focus:text-white" title="Back to dashboard">
-              <FontAwesomeIcon icon={faHome} swapOpacity />
+              <FontAwesomeIcon icon={faHome} />
             </Link>
             <button
               onClick={copyAddressToClipboard}
@@ -53,7 +53,7 @@ function WalletHeader() {
             className="ml-4 sm:ml-6 whitespace-no-wrap hover:text-white focus:text-white"
           >
             {fullBalance && `${formatNumber(fullBalance, 2)} ICX`}
-            <FontAwesomeIcon icon={faSync} spin={isLoading} className="ml-2" />
+            <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} className="ml-2" />
           </button>
         </div>
       </div>
