@@ -126,7 +126,7 @@ function UnlockWalletPage() {
                 icon={isLoading ? faCircleNotch : faUnlockAlt}
                 spin={isLoading}
                 fixedWidth
-                className="mr-1"
+                className="mr-1 opacity-75"
               />
               Unlock{isLoading ? 'ing' : ''} wallet
             </Button>

@@ -10,7 +10,7 @@ function NotFoundPage() {
       <h2 className="text-2xl uppercase tracking-tight mb-2">Page not found</h2>
       <p>Sorry, we couldn't find the page you're looking for.</p>
       <Button to="/" className="mt-4">
-        <FontAwesomeIcon icon={faHome} className="mr-2" />
+        <FontAwesomeIcon icon={faHome} className="mr-2 opacity-75" />
         Back to home
       </Button>
     </Layout>

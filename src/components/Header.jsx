@@ -78,19 +78,19 @@ function Header() {
               <>
                 <li>
                   <NavLink to="/send">
-                    <FontAwesomeIcon icon={faShareSquare} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faShareSquare} fixedWidth className="mr-1 opacity-75" />
                     Send
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/stake">
-                    <FontAwesomeIcon icon={faFlag} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faFlag} fixedWidth className="mr-1 opacity-75" />
                     Stake
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/vote">
-                    <FontAwesomeIcon icon={faVoteYea} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faVoteYea} fixedWidth className="mr-1 opacity-75" />
                     Vote
                   </NavLink>
                 </li>
@@ -99,7 +99,7 @@ function Header() {
                     onClick={handleUnloadWallet}
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
-                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth className="mr-1 opacity-75" />
                     Lock Wallet
                   </button>
                 </li>
@@ -108,13 +108,13 @@ function Header() {
               <>
                 <li>
                   <NavLink to="/create">
-                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1 opacity-75" />
                     Create Wallet
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/unlock">
-                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
                     Unlock
                   </NavLink>
                 </li>

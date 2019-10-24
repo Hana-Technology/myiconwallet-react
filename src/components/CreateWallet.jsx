@@ -113,7 +113,7 @@ function CreateWallet({ onCreateWallet }) {
               icon={isLoading ? faCircleNotch : faWallet}
               spin={isLoading}
               fixedWidth
-              className="mr-1"
+              className="mr-1 opacity-75"
             />
             Creat{isLoading ? 'ing' : 'e'} wallet
           </Button>

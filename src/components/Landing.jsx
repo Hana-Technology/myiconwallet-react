@@ -17,7 +17,7 @@ function MegaButton({ to, title, description, cta, icon, className }) {
         ''} mega-button`}
     >
       <h3 className="text-xl uppercase tracking-tight">
-        <FontAwesomeIcon icon={icon} className="mr-2" />
+        <FontAwesomeIcon icon={icon} className="mr-2 opacity-75" />
         {title}
       </h3>
       <p className="mt-3">{description}</p>

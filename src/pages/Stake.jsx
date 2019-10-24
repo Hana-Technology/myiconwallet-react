@@ -97,7 +97,7 @@ function StakePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1 opacity-75" />
               </a>
             </div>
             <div className="text-sm text-gray-600 uppercase tracking-tight">Transaction hash</div>
@@ -206,7 +206,7 @@ function StakePage() {
                       icon={isLoading ? faCircleNotch : faFlag}
                       spin={isLoading}
                       fixedWidth
-                      className="mr-1"
+                      className="mr-1 opacity-75"
                     />
                     Set{isLoading ? 'ting' : ''} staked ICX
                   </Button>

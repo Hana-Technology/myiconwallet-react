@@ -61,7 +61,7 @@ function CreatedWallet() {
             className="block text-center sm:text-left"
             onClick={handleFileDownloadClick}
           >
-            <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faDownload} fixedWidth className="mr-1 opacity-75" />
             Download keystore
           </Button>
           <Button
@@ -72,7 +72,7 @@ function CreatedWallet() {
               if (!hasDownloaded) event.preventDefault();
             }}
           >
-            <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1" />
+            <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
             Unlock your wallet
           </Button>
         </div>
