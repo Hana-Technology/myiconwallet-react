@@ -10,6 +10,7 @@ import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
 import Select from 'react-select';
+import { shuffle } from 'lodash-es';
 import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
@@ -56,7 +57,7 @@ function VotePage() {
         value: pRep.address,
         label: `${pRep.name} (${pRep.country})`,
       }));
-      setPRepOptions(pRepOptions);
+      setPRepOptions(shuffle(pRepOptions));
     });
   }, [getPReps]);
 
