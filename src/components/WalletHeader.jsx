@@ -30,7 +30,7 @@ function WalletHeader() {
 
   return (
     wallet && (
-      <div className="bg-blue-600 text-blue-100 shadow-inner py-3 px-6 lg:px-8 -mt-6 -ml-6 -mr-6 lg:-mt-8 lg:-ml-8 lg:-mr-8">
+      <div className="bg-blue-600 text-blue-100 shadow-inner py-3 px-6 lg:px-8 -mt-6 -ml-6 -mr-6 lg:-mt-8 lg:-ml-8 lg:-mr-8 sm:rounded-t">
         <div className="flex items-center justify-between">
           <div>
             <Link to="/" className="hover:text-white focus:text-white" title="Back to dashboard">
