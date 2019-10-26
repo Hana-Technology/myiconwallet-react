@@ -228,7 +228,10 @@ function SendPage() {
         ) : (
           <p className="sm:order-1 sm:flex-1">
             You need to have{' '}
-            <Link to="/unlock" className="text-teal-600 hover:text-teal-800 focus:text-teal-800">
+            <Link
+              to="/unlock?redirectTo=/send"
+              className="text-teal-600 hover:text-teal-800 focus:text-teal-800"
+            >
               unlocked a wallet
             </Link>{' '}
             before you can send ICX.

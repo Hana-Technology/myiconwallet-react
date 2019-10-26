@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faQuestionCircle, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { navigate } from '@reach/router';
+import queryString from 'query-string';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
@@ -21,7 +22,7 @@ import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import authenticationSvg from 'assets/authentication.svg';
 
-function UnlockWalletPage() {
+function UnlockWalletPage({ location }) {
   const { changeNetwork, network } = useIconService();
   const { unlockWallet } = useWallet();
   const passwordInput = useTextInput('');
@@ -46,7 +47,8 @@ function UnlockWalletPage() {
 
     if (validate(keystore, password)) {
       if (unlockWallet(keystore, password)) {
-        navigate('/');
+        const queryParams = queryString.parse(location.search);
+        navigate(queryParams.redirectTo || '/');
       } else {
         setErrors({ password: 'Incorrect password for the provided keystore.' });
       }
