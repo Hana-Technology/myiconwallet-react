@@ -2,15 +2,17 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
 import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
-import { getNetwork, NETWORK_REF_MAINNET } from 'utils/network';
+import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { wait } from 'utils/wait';
 
 const API_VERSION = IconConverter.toBigNumber(3);
 const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000001';
 const SCORE_INSTALL_ADDRESS = 'cx0000000000000000000000000000000000000000';
+const NETWORK_REF =
+  process.env.NODE_ENV === 'production' ? NETWORK_REF_MAINNET : NETWORK_REF_TESTNET;
 
 const INITIAL_STATE = {
-  network: getNetwork(NETWORK_REF_MAINNET),
+  network: getNetwork(NETWORK_REF),
   changeNetwork: null,
   iconService: null,
   getBalance: null,
