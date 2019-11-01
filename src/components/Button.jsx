@@ -11,7 +11,7 @@ function hasDisplayClass(className = '') {
   );
 }
 
-function Button({ children, className, disabled, href, to, ...props }) {
+function Button({ className, disabled, href, to, ...props }) {
   const TagName = to ? Link : href ? 'a' : 'button';
   return (
     <TagName
@@ -23,9 +23,7 @@ function Button({ children, className, disabled, href, to, ...props }) {
           : 'bg-teal-500 hover:bg-teal-600 focus:bg-teal-600 text-white'
       } ${hasDisplayClass(className) ? '' : 'inline-block'} ${className || ''}`}
       {...props}
-    >
-      {children}
-    </TagName>
+    />
   );
 }
 
