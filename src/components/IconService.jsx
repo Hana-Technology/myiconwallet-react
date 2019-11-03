@@ -114,7 +114,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(setDelegationCall, wallet);
+    const signedTransaction = signTransaction(setDelegationCall, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -153,7 +153,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(claimIScoreTransaction, wallet);
+    const signedTransaction = signTransaction(claimIScoreTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -175,7 +175,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(sendIcxTransaction, wallet);
+    const signedTransaction = signTransaction(sendIcxTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -196,7 +196,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(stakeIcxTransaction, wallet);
+    const signedTransaction = signTransaction(stakeIcxTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -221,6 +221,15 @@ function IconService({ children }) {
       .build();
     const { default: defaultStepCost } = await iconService.call(getStepCostsCall).execute();
     return defaultStepCost;
+  }
+
+  function signTransaction(transaction, wallet) {
+    if (wallet.isLedgerWallet) {
+      // TODO: handle signing with Ledger
+      throw new Error('Ledger wallet signing not implemented');
+    } else {
+      return new SignedTransaction(transaction, wallet);
+    }
   }
 
   async function waitForTransaction(txHash) {
