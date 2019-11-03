@@ -4,6 +4,7 @@ import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
 import { formatNumber } from 'utils/formatNumber';
+import Alert, { ALERT_TYPE_DANGER } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
@@ -34,6 +35,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Setup transport and icx, attempt to connect to Ledger immediately
@@ -42,12 +44,13 @@ function UnlockWithLedger({ onUnlockWallet }) {
       transport.setDebugMode(false);
       const icx = new AppIcx(transport);
       setIcx(icx);
-      return connectToLedger(icx);
+      return connectToLedger(icx, true);
     });
   }, []); // eslint-disable-line
 
-  async function connectToLedger(icx) {
+  async function connectToLedger(icx, suppressError = false) {
     setIsConnecting(true);
+    setError(null);
     try {
       await icx.getAddress(`${BASE_PATH}/0'`, false, true);
       setIsConnected(true);
@@ -57,7 +60,8 @@ function UnlockWithLedger({ onUnlockWallet }) {
       setCurrentPage(currentPage);
       loadWallets(icx, currentPage);
     } catch (error) {
-      console.error('Failed connecting to Ledger.', error.message);
+      if (suppressError) console.warn('Failed connecting to Ledger.', error.message);
+      else setError(error);
       setIsConnected(false);
       setIsConnecting(false);
     }
@@ -188,6 +192,14 @@ function UnlockWithLedger({ onUnlockWallet }) {
           <Button type="button" onClick={() => connectToLedger(icx)} className="mt-4">
             Connect to Ledger
           </Button>
+          {error && (
+            <Alert
+              type={ALERT_TYPE_DANGER}
+              title="Failed connecting to Ledger"
+              text={error.message}
+              className="mt-6"
+            />
+          )}
         </>
       )}
     </>
