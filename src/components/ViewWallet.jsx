@@ -131,7 +131,9 @@ function ViewWallet() {
         </div>
       );
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error} />);
+      swal(
+        <Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error.message} />
+      );
     }
     setIsClaiming(false);
   }

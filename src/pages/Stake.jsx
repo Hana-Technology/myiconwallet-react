@@ -106,7 +106,9 @@ function StakePage() {
       );
       navigate('/');
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed setting staked ICX" text={error} />);
+      swal(
+        <Alert type={ALERT_TYPE_DANGER} title="Failed setting staked ICX" text={error.message} />
+      );
       setIsLoading(false);
     }
   }

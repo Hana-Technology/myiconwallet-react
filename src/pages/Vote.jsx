@@ -154,7 +154,7 @@ function VotePage() {
       );
       navigate('/');
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed delegating votes" text={error} />);
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed delegating votes" text={error.message} />);
       setIsLoading(false);
     }
   }

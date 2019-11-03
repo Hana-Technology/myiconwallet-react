@@ -94,7 +94,7 @@ function SendPage() {
       );
       navigate('/');
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error} />);
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error.message} />);
       setIsLoading(false);
     }
   }
