@@ -135,7 +135,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
                       </span>
                       <span className="hidden lg:inline">{wallet.address.substr(-24)}</span>
                     </td>
-                    <td className="text-right">{formatNumber(wallet.balance)} ICX</td>
+                    <td className="text-right">{formatNumber(wallet.balance, 2)} ICX</td>
                     <td className="text-right">
                       <button
                         type="button"
