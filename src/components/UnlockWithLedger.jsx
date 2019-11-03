@@ -26,7 +26,7 @@ function PaginationButton({ className, disabled, isActive, ...props }) {
 
 function UnlockWithLedger({ onUnlockWallet }) {
   const { getBalance } = useIconService();
-  const { unlockLedgerWallet } = useWallet();
+  const { accessLedgerWallet } = useWallet();
   const [icx, setIcx] = useState(null);
   const [pages, setPages] = useState([1, 2, 3, 4, 5]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +93,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
   }
 
   function onSelectWallet(wallet) {
-    unlockLedgerWallet(wallet);
+    accessLedgerWallet(wallet);
     onUnlockWallet();
   }
 

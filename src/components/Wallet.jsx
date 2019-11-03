@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   votingPower: null, // Is this required?
   createWallet: null,
   unlockWallet: null,
-  unlockLedgerWallet: null,
+  accessLedgerWallet: null,
   unloadWallet: null,
   refreshWallet: null,
   isLoading: false,
@@ -56,7 +56,7 @@ function Wallet({ children }) {
     }
   }
 
-  function unlockLedgerWallet(wallet) {
+  function accessLedgerWallet(wallet) {
     const newWallet = {
       getAddress: () => wallet.address,
       getPath: () => wallet.path,
@@ -114,7 +114,7 @@ function Wallet({ children }) {
         votingPower,
         createWallet,
         unlockWallet,
-        unlockLedgerWallet,
+        accessLedgerWallet,
         unloadWallet,
         refreshWallet,
         isLoading,
