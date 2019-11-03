@@ -182,7 +182,8 @@ function UnlockWithLedger({ onUnlockWallet }) {
       ) : (
         <>
           <p>
-            Connect your Ledger device and make sure the <b>ICON</b> app is running.
+            Connect your Ledger device and make sure it us unlocked with the <b>ICON</b> app is
+            running.
           </p>
           <Button type="button" onClick={() => connectToLedger(icx)} className="mt-4">
             Connect to Ledger

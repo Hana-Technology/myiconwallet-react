@@ -43,16 +43,32 @@ function SendPage() {
 
     const confirmation = await swal({
       content: (
-        <Alert
-          type={ALERT_TYPE_DANGER}
-          title="This is your final confirmation"
-          text={
-            <>
-              Are you sure you want to send <b>{amountInput.value} ICX</b> to{' '}
-              <b className="break-all">{address}</b>?
-            </>
-          }
-        />
+        <div>
+          <Alert
+            type={ALERT_TYPE_DANGER}
+            title={
+              wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'
+            }
+            text={
+              <>
+                Are you sure you want to send <b>{amountInput.value} ICX</b> to{' '}
+                <b className="break-all">{address}</b>?
+              </>
+            }
+          />
+          {wallet.isLedgerWallet && (
+            <Alert
+              type={ALERT_TYPE_INFO}
+              text={
+                <>
+                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                  running. You will need to confirm the transaction on your Ledger.
+                </>
+              }
+              className="mt-6"
+            />
+          )}
+        </div>
       ),
       buttons: ['Cancel', 'Continue'],
     });

@@ -94,13 +94,15 @@ function VotePage() {
         <div>
           <Alert
             type={ALERT_TYPE_DANGER}
-            title="This is your final confirmation"
+            title={
+              wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'
+            }
             text={`Are you sure you want to ${
               isClearingDelegations ? 'clear' : 'save'
             } your delegations?`}
           />
           {!isClearingDelegations && (
-            <table className="my-6 mx-auto">
+            <table className="w-full mt-6">
               <thead>
                 <tr className="text-gray-600 text-sm uppercase tracking-tight">
                   <th className="text-left font-normal">P-Rep candidate</th>
@@ -116,6 +118,18 @@ function VotePage() {
                 ))}
               </tbody>
             </table>
+          )}
+          {wallet.isLedgerWallet && (
+            <Alert
+              type={ALERT_TYPE_INFO}
+              text={
+                <>
+                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                  running. You will need to confirm the transaction on your Ledger.
+                </>
+              }
+              className="mt-6"
+            />
           )}
         </div>
       ),
