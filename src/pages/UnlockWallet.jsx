@@ -36,21 +36,21 @@ function UnlockWalletPage({ location }) {
 
   return (
     <Layout title="Unlock Existing Wallet">
-      <h2 className="text-2xl uppercase tracking-tight mb-2">Unlock existing wallet</h2>
+      <h2 className="text-2xl uppercase tracking-tight">Unlock existing wallet</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={authenticationSvg}
           alt="person entering secure website"
-          className="hidden sm:block sm:order-2 sm:w-2/5 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-2/5 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         <div className="sm:order-1 sm:flex-1">
-          <div>
+          <div className="mt-4">
             <TabButton
               onClick={() => setUnlockMethod(UNLOCK_METHODS.KEYSTORE)}
               isActive={unlockMethod === UNLOCK_METHODS.KEYSTORE}
             >
-              <FontAwesomeIcon icon={faKey} className="mr-2" />
+              <FontAwesomeIcon icon={faKey} className="mr-2 opacity-75" />
               With keystore
             </TabButton>
             <TabButton
@@ -58,12 +58,12 @@ function UnlockWalletPage({ location }) {
               isActive={unlockMethod === UNLOCK_METHODS.LEDGER}
               className="ml-2"
             >
-              <FontAwesomeIcon icon={faUsb} className="mr-2" />
+              <FontAwesomeIcon icon={faUsb} className="mr-2 opacity-75" />
               With Ledger
             </TabButton>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-6">
             {unlockMethod === UNLOCK_METHODS.KEYSTORE && (
               <UnlockWithKeystore onUnlockWallet={onUnlockWallet} />
             )}
