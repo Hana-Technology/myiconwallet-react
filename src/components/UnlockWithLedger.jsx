@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
-import Transport from '@ledgerhq/hw-transport-webauthn';
+import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
 import { formatNumber } from 'utils/formatNumber';
 import Button from 'components/Button';
