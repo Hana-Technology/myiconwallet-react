@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
+import swal from '@sweetalert/with-react';
 import { formatNumber } from 'utils/formatNumber';
-import Alert, { ALERT_TYPE_DANGER } from 'components/Alert';
+import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
@@ -34,7 +35,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
   const [wallets, setWallets] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [hasLedgerSupport, setHasLedgerSupport] = useState(null);
+  const [hasLedgerSupport, setHasLedgerSupport] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -46,7 +47,6 @@ function UnlockWithLedger({ onUnlockWallet }) {
         transport.setDebugMode(false);
         const icx = new AppIcx(transport);
         setIcx(icx);
-        setHasLedgerSupport(true);
         return connectToLedger(icx, true);
       })
       .catch(error => {
@@ -76,6 +76,24 @@ function UnlockWithLedger({ onUnlockWallet }) {
   }
 
   async function loadWallets(icx, page) {
+    swal({
+      content: (
+        <Alert
+          type={ALERT_TYPE_INFO}
+          title="Reading addresses from Ledger"
+          text={
+            <>
+              Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+              running. You might see multiple browser messages relating to reading a security key.
+            </>
+          }
+        />
+      ),
+      buttons: false,
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+    });
+
     setIsLoading(true);
     const offset = (page - 1) * ADDRESSES_PER_PAGE;
     const addresses = [];
@@ -88,6 +106,8 @@ function UnlockWithLedger({ onUnlockWallet }) {
     }
     setWallets(addresses);
     setIsLoading(false);
+
+    swal.close();
   }
 
   function onChangePage(newPage) {
@@ -111,7 +131,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
 
   return (
     <>
-      {(isConnecting || !isConnected) && (
+      {hasLedgerSupport && (isConnecting || !isConnected) && (
         <p>
           Connect your Ledger device and make sure it us unlocked with the <b>ICON</b> app running.
         </p>
