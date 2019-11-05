@@ -34,18 +34,26 @@ function UnlockWithLedger({ onUnlockWallet }) {
   const [wallets, setWallets] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [hasLedgerSupport, setHasLedgerSupport] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Setup transport and icx, attempt to connect to Ledger immediately
     setIsConnecting(true);
-    Transport.create().then(transport => {
-      transport.setDebugMode(false);
-      const icx = new AppIcx(transport);
-      setIcx(icx);
-      return connectToLedger(icx, true);
-    });
+    Transport.create()
+      .then(transport => {
+        transport.setDebugMode(false);
+        const icx = new AppIcx(transport);
+        setIcx(icx);
+        setHasLedgerSupport(true);
+        return connectToLedger(icx, true);
+      })
+      .catch(error => {
+        setError(error);
+        setHasLedgerSupport(false);
+        setIsConnecting(false);
+      });
   }, []); // eslint-disable-line
 
   async function connectToLedger(icx, suppressError = false) {
@@ -103,11 +111,16 @@ function UnlockWithLedger({ onUnlockWallet }) {
 
   return (
     <>
+      {(isConnecting || !isConnected) && (
+        <p>
+          Connect your Ledger device and make sure it us unlocked with the <b>ICON</b> app running.
+        </p>
+      )}
       {isConnecting ? (
-        <>
+        <p className="mt-6">
           <FontAwesomeIcon icon={faCircleNotch} spin className="text-xl align-middle mr-2" />
           Connecting to Ledger...
-        </>
+        </p>
       ) : isConnected ? (
         <>
           <p>
@@ -185,17 +198,15 @@ function UnlockWithLedger({ onUnlockWallet }) {
         </>
       ) : (
         <>
-          <p>
-            Connect your Ledger device and make sure it us unlocked with the <b>ICON</b> app is
-            running.
-          </p>
-          <Button type="button" onClick={() => connectToLedger(icx)} className="mt-4">
-            Connect to Ledger
-          </Button>
+          {hasLedgerSupport && (
+            <Button type="button" onClick={() => connectToLedger(icx)} className="mt-4">
+              Connect to Ledger
+            </Button>
+          )}
           {error && (
             <Alert
               type={ALERT_TYPE_DANGER}
-              title="Failed connecting to Ledger"
+              title={hasLedgerSupport ? 'Failed connecting to Ledger' : 'Browser not supported'}
               text={error.message}
               className="mt-6"
             />
