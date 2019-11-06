@@ -225,17 +225,17 @@ function VotePage() {
   return (
     <Layout title="Allocate Votes">
       <WalletHeader />
-      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Delegate votes</h2>
+      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Delegate votes</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={votingSvg}
           alt="people with giant voting ballots"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p>
+            <p className="mt-2">
               Delegated votes on Icon are what keeps the network secure and community development
               funded. To find out what P-Reps are contributing to Icon you can read their{' '}
               <a

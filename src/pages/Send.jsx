@@ -153,17 +153,17 @@ function SendPage() {
   return (
     <Layout title="Send ICX">
       <WalletHeader />
-      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Send ICX</h2>
+      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Send ICX</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={transferMoneySvg}
           alt="person sending money online"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p>
+            <p className="mt-2">
               Choose an amount in ICX and a destination address. You will be prompted to confirm
               before the transaction is finalised.
             </p>

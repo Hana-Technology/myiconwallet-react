@@ -153,17 +153,17 @@ function StakePage() {
   return (
     <Layout title="Stake ICX">
       <WalletHeader />
-      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Stake ICX</h2>
+      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Stake ICX</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={financeSvg}
           alt="person leaning on computer with charts"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p>
+            <p className="mt-2">
               Use the slider to adjust your staked ICX. You will be prompted to confirm before the
               transaction is completed.
             </p>

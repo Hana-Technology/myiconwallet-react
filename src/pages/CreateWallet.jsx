@@ -12,9 +12,7 @@ function CreateWalletPage() {
 
   return (
     <Layout title="Create a New Wallet">
-      <h2 className="text-2xl uppercase tracking-tight mb-2">
-        Create{isCreated && 'd'} a new wallet
-      </h2>
+      <h2 className="text-2xl uppercase tracking-tight">Create{isCreated && 'd'} a new wallet</h2>
       {isCreated ? <CreatedWallet /> : <CreateWallet onCreateWallet={handleOnCreateWallet} />}
     </Layout>
   );
