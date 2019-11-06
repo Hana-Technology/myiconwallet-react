@@ -98,7 +98,11 @@ function UnlockWalletPage({ location }) {
               With keystore
             </TabButton>
             <TabButton
-              onClick={() => setUnlockMethod(UNLOCK_METHODS.LEDGER)}
+              onClick={() => {
+                setUnlockMethod(UNLOCK_METHODS.LEDGER);
+                // TEMP: default to testnet with Ledger
+                changeNetwork(NETWORK_REF_TESTNET);
+              }}
               isActive={unlockMethod === UNLOCK_METHODS.LEDGER}
               className="ml-2"
             >
