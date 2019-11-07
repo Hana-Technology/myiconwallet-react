@@ -34,6 +34,7 @@ const INITIAL_STATE = {
   getPReps: null,
   waitForTransaction: null,
 };
+const INITIAL_ICON_PROVIDER = new HttpProvider(INITIAL_STATE.network.apiEndpoint);
 
 export const IconServiceContext = createContext(INITIAL_STATE);
 
@@ -43,8 +44,7 @@ export function useIconService() {
 
 function IconService({ children }) {
   const [network, setNetwork] = useState(INITIAL_STATE.network);
-  const [iconProvider, setIconProvider] = useState(new HttpProvider(network.apiEndpoint));
-  const [iconService, setIconService] = useState(new IconSDK(iconProvider));
+  const [iconService, setIconService] = useState(new IconSDK(INITIAL_ICON_PROVIDER));
 
   /**
    * @param {string} address a wallet address
@@ -275,11 +275,9 @@ function IconService({ children }) {
     if (networkRef === network.ref) return;
 
     const newNetwork = getNetwork(networkRef);
-    const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
-    const newIconService = new IconSDK(newIconProvider);
+    const iconProvider = new HttpProvider(newNetwork.apiEndpoint);
+    setIconService(new IconSDK(iconProvider));
     setNetwork(newNetwork);
-    setIconProvider(newIconProvider);
-    setIconService(newIconService);
   }
 
   return (

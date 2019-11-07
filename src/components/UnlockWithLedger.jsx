@@ -27,7 +27,7 @@ function PaginationButton({ className, disabled, isActive, ...props }) {
 }
 
 function UnlockWithLedger({ onUnlockWallet }) {
-  const { getBalance } = useIconService();
+  const { getBalance, network } = useIconService();
   const { accessLedgerWallet } = useWallet();
   const [icx, setIcx] = useState(null);
   const [pages, setPages] = useState([1, 2, 3, 4, 5]);
@@ -55,6 +55,28 @@ function UnlockWithLedger({ onUnlockWallet }) {
         setIsConnecting(false);
       });
   }, []); // eslint-disable-line
+
+  useEffect(() => {
+    // Reload Ledger wallets if wallets are loaded and network ref changes
+    if (wallets.length) {
+      setWallets(
+        wallets.map(wallet => ({
+          ...wallet,
+          isLoading: true,
+        }))
+      );
+
+      Promise.all(wallets.map(wallet => getBalance(wallet.address))).then(balances => {
+        setWallets(
+          wallets.map((wallet, index) => ({
+            ...wallet,
+            balance: balances[index],
+            isLoading: false,
+          }))
+        );
+      });
+    }
+  }, [network]); // eslint-disable-line
 
   async function connectToLedger(icx, suppressError = false) {
     setIsConnecting(true);
@@ -172,7 +194,13 @@ function UnlockWithLedger({ onUnlockWallet }) {
                       </span>
                       <span className="hidden lg:inline">{wallet.address.substr(-24)}</span>
                     </td>
-                    <td className="text-right">{formatNumber(wallet.balance, 2)} ICX</td>
+                    <td className="text-right">
+                      {wallet.isLoading ? (
+                        <FontAwesomeIcon icon={faCircleNotch} spin />
+                      ) : (
+                        <>{formatNumber(wallet.balance, 2)} ICX</>
+                      )}
+                    </td>
                     <td className="text-right">
                       <button
                         type="button"
