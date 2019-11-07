@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faKey, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { navigate } from '@reach/router';
 import queryString from 'query-string';
@@ -10,6 +9,7 @@ import colors from 'utils/colors';
 import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
+import LedgerIcon from 'components/LedgerIcon';
 import UnlockWithKeystore from 'components/UnlockWithKeystore';
 import UnlockWithLedger from 'components/UnlockWithLedger';
 import authenticationSvg from 'assets/authentication.svg';
@@ -106,7 +106,7 @@ function UnlockWalletPage({ location }) {
               isActive={unlockMethod === UNLOCK_METHODS.LEDGER}
               className="ml-2"
             >
-              <FontAwesomeIcon icon={faUsb} className="mr-2 opacity-75" />
+              <LedgerIcon className="mr-1 opacity-75" />
               With Ledger
             </TabButton>
           </div>

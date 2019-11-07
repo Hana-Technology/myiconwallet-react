@@ -8,6 +8,7 @@ import { formatNumber } from 'utils/formatNumber';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
+import LedgerIcon from 'components/LedgerIcon';
 import { useWallet } from 'components/Wallet';
 
 const BASE_PATH = `44'/4801368'/0'/0'`;
@@ -158,12 +159,7 @@ function UnlockWithLedger({ onUnlockWallet }) {
           Connect your Ledger device and make sure it us unlocked with the <b>ICON</b> app running.
         </p>
       )}
-      {isConnecting ? (
-        <p className="mt-6">
-          <FontAwesomeIcon icon={faCircleNotch} spin className="text-xl align-middle mr-2" />
-          Connecting to Ledger...
-        </p>
-      ) : isConnected ? (
+      {isConnected ? (
         <>
           <p>
             Connected to Ledger <b>{BASE_PATH}</b>
@@ -247,8 +243,18 @@ function UnlockWithLedger({ onUnlockWallet }) {
       ) : (
         <>
           {hasLedgerSupport && (
-            <Button type="button" onClick={() => connectToLedger(icx)} className="mt-4">
-              Connect to Ledger
+            <Button
+              type="button"
+              onClick={() => connectToLedger(icx)}
+              disabled={isConnecting}
+              className="mt-6"
+            >
+              {isConnecting ? (
+                <FontAwesomeIcon icon={faCircleNotch} spin className="mr-2 opacity-75" />
+              ) : (
+                <LedgerIcon className="mr-1 opacity-75" />
+              )}
+              Connect{isConnecting && 'ing'} to Ledger
             </Button>
           )}
           {error && (

@@ -116,7 +116,7 @@ function UnlockWithKeystore({ onUnlockWallet }) {
             fixedWidth
             className="mr-1 opacity-75"
           />
-          Unlock{isLoading ? 'ing' : ''} wallet
+          Unlock{isLoading && 'ing'} wallet
         </Button>
       </fieldset>
     </form>

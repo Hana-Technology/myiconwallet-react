@@ -236,7 +236,7 @@ function SendPage() {
                       fixedWidth
                       className="mr-1 opacity-75"
                     />
-                    Send{isLoading ? 'ing' : ''} ICX
+                    Send{isLoading && 'ing'} ICX
                   </Button>
                 </fieldset>
               </>

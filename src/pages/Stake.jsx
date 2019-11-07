@@ -231,7 +231,7 @@ function StakePage() {
                       fixedWidth
                       className="mr-1 opacity-75"
                     />
-                    Set{isLoading ? 'ting' : ''} staked ICX
+                    Set{isLoading && 'ting'} staked ICX
                   </Button>
                 </fieldset>
               </>
