@@ -154,12 +154,12 @@ function ViewWallet() {
         <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Your wallet</h2>
 
         <div className="mt-2">
-          <div className="break-all text-lg">
+          <div className="text-lg">
             <button
               onClick={copyAddressToClipboard}
               data-tip={copyTooltip}
               ref={copyTooltipRef}
-              className="hover:text-black"
+              className="break-all hover:text-black"
             >
               {wallet.getAddress()}
               <ReactTooltip place="right" effect="solid" />
@@ -171,7 +171,7 @@ function ViewWallet() {
               rel="noopener noreferrer"
               className="ml-2"
             >
-              <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-1 opacity-75" />
+              <FontAwesomeIcon icon={faExternalLinkAlt} className="opacity-75" />
             </a>
           </div>
           <div className="text-sm text-gray-600 uppercase tracking-tight">Address</div>

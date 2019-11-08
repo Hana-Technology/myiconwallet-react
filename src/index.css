@@ -25,7 +25,7 @@
 
 /* SweetAlert overrides */
 .swal-modal {
-  @apply bg-white text-gray-900 text-left rounded;
+  @apply bg-white font-sans font-light text-gray-900 text-left rounded;
 }
 .swal-content {
   @apply p-5 m-0;

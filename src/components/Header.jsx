@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
+  faCopy,
   faFlag,
+  faQrcode,
   faShareSquare,
   faSignOutAlt,
   faUnlockAlt,
@@ -10,6 +12,9 @@ import {
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
+import swal from '@sweetalert/with-react';
+import QRCode from 'qrcode.react';
+import { copyToClipboard } from 'utils/copyToClipboard';
 import { NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
 import Logo from 'components/Logo';
@@ -50,6 +55,39 @@ function Header() {
     unloadWallet();
   }
 
+  function showQrCode(event) {
+    event.preventDefault();
+    setMenuIsOpen(false);
+    swal({
+      content: (
+        <div>
+          <h2 className="text-2xl uppercase tracking-tight">Receive ICX</h2>
+
+          <QRCode
+            value={wallet.getAddress()}
+            renderAs="svg"
+            className="w-64 max-w-full h-auto mx-auto mt-4"
+          />
+
+          <div className="mt-6">
+            <div className="text-base">
+              <button
+                type="button"
+                onClick={() => copyToClipboard(wallet.getAddress())}
+                className="break-all hover:text-black"
+              >
+                {wallet.getAddress()}
+                <FontAwesomeIcon icon={faCopy} className="ml-2 opacity-75" />
+              </button>
+            </div>
+            <div className="text-sm text-gray-600 uppercase tracking-tight">Wallet address</div>
+          </div>
+        </div>
+      ),
+      buttons: { confirm: { text: 'Close' } },
+    });
+  }
+
   return (
     <header className="bg-gray-800 shadow-lg z-10 relative">
       <div className="container mx-auto p-4 pt-3 bg-gray-800 text-gray-100 flex items-center justify-between">
@@ -86,6 +124,16 @@ function Header() {
                     Send
                   </NavLink>
                 </li>
+                <li className="sm:hidden">
+                  <button
+                    type="button"
+                    onClick={showQrCode}
+                    className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
+                  >
+                    <FontAwesomeIcon icon={faQrcode} fixedWidth className="mr-1 opacity-75" />
+                    Receive
+                  </button>
+                </li>
                 <li>
                   <NavLink to="/stake">
                     <FontAwesomeIcon icon={faFlag} fixedWidth className="mr-1 opacity-75" />
@@ -100,6 +148,7 @@ function Header() {
                 </li>
                 <li>
                   <button
+                    type="button"
                     onClick={handleUnloadWallet}
                     className={`${navLinkBaseClasses} text-gray-400 border-gray-800`}
                   >
