@@ -28,6 +28,7 @@
     "react": "^16.10.2",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.10.2",
+    "react-qr-reader": "^2.2.1",
     "react-rangeslider": "^2.2.0",
     "react-select": "^3.0.8",
     "react-switch": "^5.0.1",

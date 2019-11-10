@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faExternalLinkAlt, faShareSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleNotch,
+  faExternalLinkAlt,
+  faQrcode,
+  faShareSquare,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
+import QrReader from 'react-qr-reader';
 import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
 import { useTextInput } from 'utils/useTextInput';
@@ -129,6 +135,29 @@ function SendPage() {
     amountInput.onChange({ currentTarget: { value } });
   }
 
+  function onReadQrCode(value) {
+    addressInput.onChange({ currentTarget: { value } });
+    swal.close();
+  }
+
+  function readQrCode(event) {
+    event.preventDefault();
+    swal({
+      content: (
+        <div>
+          <h2 className="text-2xl uppercase tracking-tight">Read QR code</h2>
+
+          <QrReader
+            onScan={onReadQrCode}
+            onError={error => console.error('ERROR!', error.message)}
+            className="w-full mt-4"
+          />
+        </div>
+      ),
+      buttons: { confirm: { text: 'Close' } },
+    });
+  }
+
   return (
     <Layout title="Send ICX">
       <WalletHeader />
@@ -191,20 +220,31 @@ function SendPage() {
 
                   <InputGroup>
                     <Label htmlFor="address">Destination address</Label>
-                    <Input
-                      type="text"
-                      id="address"
-                      name="address"
-                      value={addressInput.value}
-                      onChange={(...args) => {
-                        if (errors.address) {
-                          setErrors({ ...errors, address: null });
-                        }
-                        addressInput.onChange(...args);
-                      }}
-                      placeholder="eg. hx9d8a8376e7db9f00478feb9a46f44f0d051aab57"
-                      hasError={!!errors.address}
-                    />
+                    <div className="flex">
+                      <Input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value={addressInput.value}
+                        onChange={(...args) => {
+                          if (errors.address) {
+                            setErrors({ ...errors, address: null });
+                          }
+                          addressInput.onChange(...args);
+                        }}
+                        placeholder="eg. hx9d8a8376e7db9f00478feb9a46f44f0d051aab57"
+                        className="min-w-0"
+                        hasError={!!errors.address}
+                      />
+                      <button
+                        type="button"
+                        onClick={readQrCode}
+                        title="Read QR code"
+                        className="sm:hidden w-12 flex-shrink-0 text-xl text-white  p-2 ml-1 rounded bg-teal-500 hover:bg-teal-600 hover:shadow"
+                      >
+                        <FontAwesomeIcon icon={faQrcode} />
+                      </button>
+                    </div>
                     {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
                   </InputGroup>
 
