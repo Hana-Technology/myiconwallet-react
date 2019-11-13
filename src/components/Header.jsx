@@ -63,13 +63,7 @@ function Header() {
         <div>
           <h2 className="text-2xl uppercase tracking-tight">Receive ICX</h2>
 
-          <QRCode
-            value={wallet.getAddress()}
-            renderAs="svg"
-            className="w-64 max-w-full h-auto mx-auto mt-4"
-          />
-
-          <div className="mt-6">
+          <div className="mt-2">
             <div className="text-base">
               <button
                 type="button"
@@ -82,6 +76,12 @@ function Header() {
             </div>
             <div className="text-sm text-gray-600 uppercase tracking-tight">Wallet address</div>
           </div>
+
+          <QRCode
+            value={wallet.getAddress()}
+            renderAs="svg"
+            className="w-64 max-w-full h-auto mx-auto mt-6"
+          />
         </div>
       ),
       buttons: { confirm: { text: 'Close' } },
