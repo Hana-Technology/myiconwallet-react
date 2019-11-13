@@ -30,6 +30,9 @@
 .swal-content {
   @apply p-5 m-0;
 }
+.swal-content:last-child {
+  @apply m-0;
+}
 .swal-footer {
   @apply bg-gray-100 px-4 py-3 m-0;
 }

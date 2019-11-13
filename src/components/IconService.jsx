@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import IconSDK, { IconBuilder, IconConverter, HttpProvider, SignedTransaction } from 'icon-sdk-js';
+import Transport from '@ledgerhq/hw-transport-u2f';
+import AppIcx from '@ledgerhq/hw-app-icx';
+import IconSDK, {
+  IconBuilder,
+  IconConverter,
+  IconUtil,
+  HttpProvider,
+  SignedTransaction,
+} from 'icon-sdk-js';
 import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
 import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { wait } from 'utils/wait';
@@ -26,6 +34,7 @@ const INITIAL_STATE = {
   getPReps: null,
   waitForTransaction: null,
 };
+const INITIAL_ICON_PROVIDER = new HttpProvider(INITIAL_STATE.network.apiEndpoint);
 
 export const IconServiceContext = createContext(INITIAL_STATE);
 
@@ -35,8 +44,7 @@ export function useIconService() {
 
 function IconService({ children }) {
   const [network, setNetwork] = useState(INITIAL_STATE.network);
-  const [iconProvider, setIconProvider] = useState(new HttpProvider(network.apiEndpoint));
-  const [iconService, setIconService] = useState(new IconSDK(iconProvider));
+  const [iconService, setIconService] = useState(new IconSDK(INITIAL_ICON_PROVIDER));
 
   /**
    * @param {string} address a wallet address
@@ -98,7 +106,7 @@ function IconService({ children }) {
    * @param {Delegation[]} delegations
    * @returns {Promise<string>} transaction hash
    */
-  function setDelegations(wallet, delegations) {
+  async function setDelegations(wallet, delegations) {
     const delegationsToSend = delegations.map(({ address, value }) => ({
       address,
       value: IconConverter.toHex(convertIcxToLoop(value)),
@@ -114,7 +122,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(setDelegationCall, wallet);
+    const signedTransaction = await signTransaction(setDelegationCall, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -141,7 +149,7 @@ function IconService({ children }) {
    * @param {Wallet} wallet
    * @returns {Promise<string>} transaction hash
    */
-  function claimIScore(wallet) {
+  async function claimIScore(wallet) {
     const builder = new IconBuilder.CallTransactionBuilder();
     const claimIScoreTransaction = builder
       .nid(network.nid)
@@ -153,7 +161,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(claimIScoreTransaction, wallet);
+    const signedTransaction = await signTransaction(claimIScoreTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -175,7 +183,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(sendIcxTransaction, wallet);
+    const signedTransaction = await signTransaction(sendIcxTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -184,7 +192,7 @@ function IconService({ children }) {
    * @param {number} newStake value as ICX
    * @returns {Promise<string>} transaction hash
    */
-  function setStake(wallet, newStake) {
+  async function setStake(wallet, newStake) {
     const builder = new IconBuilder.CallTransactionBuilder();
     const stakeIcxTransaction = builder
       .nid(network.nid)
@@ -196,7 +204,7 @@ function IconService({ children }) {
       .version(API_VERSION)
       .timestamp(Date.now() * 1000)
       .build();
-    const signedTransaction = new SignedTransaction(stakeIcxTransaction, wallet);
+    const signedTransaction = await signTransaction(stakeIcxTransaction, wallet);
     return iconService.sendTransaction(signedTransaction).execute();
   }
 
@@ -221,6 +229,23 @@ function IconService({ children }) {
       .build();
     const { default: defaultStepCost } = await iconService.call(getStepCostsCall).execute();
     return defaultStepCost;
+  }
+
+  async function signTransaction(transaction, wallet) {
+    if (wallet.isLedgerWallet) {
+      const rawTransaction = IconConverter.toRawTransaction(transaction);
+      const hashKey = IconUtil.generateHashKey(rawTransaction);
+      const transport = await Transport.create();
+      const icx = new AppIcx(transport);
+      const { signedRawTxBase64 } = await icx.signTransaction(wallet.getPath(), hashKey);
+      rawTransaction.signature = signedRawTxBase64;
+      return {
+        getProperties: () => rawTransaction,
+        getSignature: () => signedRawTxBase64,
+      };
+    } else {
+      return new SignedTransaction(transaction, wallet);
+    }
   }
 
   async function waitForTransaction(txHash) {
@@ -250,11 +275,9 @@ function IconService({ children }) {
     if (networkRef === network.ref) return;
 
     const newNetwork = getNetwork(networkRef);
-    const newIconProvider = new HttpProvider(newNetwork.apiEndpoint);
-    const newIconService = new IconSDK(newIconProvider);
+    const iconProvider = new HttpProvider(newNetwork.apiEndpoint);
+    setIconService(new IconSDK(iconProvider));
     setNetwork(newNetwork);
-    setIconProvider(newIconProvider);
-    setIconService(newIconService);
   }
 
   return (
@@ -288,6 +311,9 @@ export default IconService;
 
 /**
  * @typedef {Object} Wallet
+ * @property {Function} getAddress
+ * @property {Function} [getPath]
+ * @property {boolean} [isLedgerWallet]
  *
  * @typedef {Object} PRep
  * @property {string} address a wallet address

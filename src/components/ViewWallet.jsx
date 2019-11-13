@@ -98,7 +98,28 @@ function ViewWallet() {
     if (!confirmation) return setIsClaiming(false);
 
     try {
+      if (wallet.isLedgerWallet) {
+        swal({
+          content: (
+            <Alert
+              type={ALERT_TYPE_INFO}
+              title="Confirm transaction on Ledger"
+              text={
+                <>
+                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                  running. You will need to confirm the transaction on your Ledger.
+                </>
+              }
+            />
+          ),
+          buttons: false,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+        });
+      }
       const transactionHash = await claimIScore(wallet);
+      if (wallet.isLedgerWallet) swal.close();
+
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))
         .then(() => refreshWallet());
@@ -131,7 +152,9 @@ function ViewWallet() {
         </div>
       );
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error} />);
+      swal(
+        <Alert type={ALERT_TYPE_DANGER} title="Failed converting I-Score" text={error.message} />
+      );
     }
     setIsClaiming(false);
   }

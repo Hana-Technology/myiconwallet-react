@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   votingPower: null, // Is this required?
   createWallet: null,
   unlockWallet: null,
+  accessLedgerWallet: null,
   unloadWallet: null,
   refreshWallet: null,
   isLoading: false,
@@ -53,6 +54,16 @@ function Wallet({ children }) {
     } catch (_error) {
       return false;
     }
+  }
+
+  function accessLedgerWallet(wallet) {
+    const newWallet = {
+      getAddress: () => wallet.address,
+      getPath: () => wallet.path,
+      isLedgerWallet: () => true,
+    };
+    setWallet(newWallet);
+    refreshWallet(newWallet);
   }
 
   function unloadWallet() {
@@ -103,6 +114,7 @@ function Wallet({ children }) {
         votingPower,
         createWallet,
         unlockWallet,
+        accessLedgerWallet,
         unloadWallet,
         refreshWallet,
         isLoading,
