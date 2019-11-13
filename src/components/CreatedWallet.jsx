@@ -27,7 +27,7 @@ function CreatedWallet() {
     keystore && (
       <>
         <div className="sm:flex items-start justify-between">
-          <div className="sm:pr-5">
+          <div className="mt-2">
             <p>Your new wallet has been created with address:</p>
             <Alert
               type={ALERT_TYPE_SUCCESS}
@@ -39,7 +39,7 @@ function CreatedWallet() {
           <img
             src={buildingBlocksSvg}
             alt="person building with blocks"
-            className="hidden sm:block w-1/4 max-w-full flex-none -mt-6 mr-1"
+            className="hidden sm:block w-1/4 max-w-full flex-none sm:ml-6 sm:-mt-6 mr-1"
           />
         </div>
 

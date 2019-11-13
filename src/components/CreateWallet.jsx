@@ -60,11 +60,11 @@ function CreateWallet({ onCreateWallet }) {
       <img
         src={securitySvg}
         alt="website security with guard"
-        className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+        className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
       />
 
       <form onSubmit={handleSubmit} className="sm:order-1 sm:flex-1">
-        <p>
+        <p className="mt-2">
           Enter and confirm a password for your wallet. After your wallet is created you will be
           prompted to download the keystore file for your new wallet.
         </p>

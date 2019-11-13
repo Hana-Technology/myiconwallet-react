@@ -94,13 +94,15 @@ function VotePage() {
         <div>
           <Alert
             type={ALERT_TYPE_DANGER}
-            title="This is your final confirmation"
+            title={
+              wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'
+            }
             text={`Are you sure you want to ${
               isClearingDelegations ? 'clear' : 'save'
             } your delegations?`}
           />
           {!isClearingDelegations && (
-            <table className="my-6 mx-auto">
+            <table className="w-full mt-6">
               <thead>
                 <tr className="text-gray-600 text-sm uppercase tracking-tight">
                   <th className="text-left font-normal">P-Rep candidate</th>
@@ -124,7 +126,28 @@ function VotePage() {
     if (!confirmation) return setIsLoading(false);
 
     try {
+      if (wallet.isLedgerWallet) {
+        swal({
+          content: (
+            <Alert
+              type={ALERT_TYPE_INFO}
+              title="Confirm transaction on Ledger"
+              text={
+                <>
+                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                  running. You will need to confirm the transaction on your Ledger.
+                </>
+              }
+            />
+          ),
+          buttons: false,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+        });
+      }
       const transactionHash = await setDelegations(wallet, delegationsToSet);
+      if (wallet.isLedgerWallet) swal.close();
+
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))
         .then(() => refreshWallet());
@@ -154,7 +177,7 @@ function VotePage() {
       );
       navigate('/');
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed delegating votes" text={error} />);
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed delegating votes" text={error.message} />);
       setIsLoading(false);
     }
   }
@@ -202,17 +225,17 @@ function VotePage() {
   return (
     <Layout title="Allocate Votes">
       <WalletHeader />
-      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Delegate votes</h2>
+      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Delegate votes</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={votingSvg}
           alt="people with giant voting ballots"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-8"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p>
+            <p className="mt-2">
               Delegated votes on Icon are what keeps the network secure and community development
               funded. To find out what P-Reps are contributing to Icon you can read their{' '}
               <a

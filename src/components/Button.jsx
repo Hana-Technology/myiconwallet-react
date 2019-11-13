@@ -11,21 +11,20 @@ function hasDisplayClass(className = '') {
   );
 }
 
-function Button({ children, className, disabled, href, to, ...props }) {
+function Button({ className, disabled, href, to, ...props }) {
   const TagName = to ? Link : href ? 'a' : 'button';
   return (
     <TagName
       href={href}
       to={to}
+      disabled={disabled}
       className={`text-lg font-bold px-4 py-3 rounded hover:shadow focus:shadow ${
         disabled
           ? 'bg-gray-500 text-gray-100'
           : 'bg-teal-500 hover:bg-teal-600 focus:bg-teal-600 text-white'
       } ${hasDisplayClass(className) ? '' : 'inline-block'} ${className || ''}`}
       {...props}
-    >
-      {children}
-    </TagName>
+    />
   );
 }
 

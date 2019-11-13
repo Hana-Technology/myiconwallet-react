@@ -45,7 +45,7 @@ function SendPage() {
       content: (
         <Alert
           type={ALERT_TYPE_DANGER}
-          title="This is your final confirmation"
+          title={wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'}
           text={
             <>
               Are you sure you want to send <b>{amountInput.value} ICX</b> to{' '}
@@ -59,7 +59,28 @@ function SendPage() {
     if (!confirmation) return setIsLoading(false);
 
     try {
+      if (wallet.isLedgerWallet) {
+        swal({
+          content: (
+            <Alert
+              type={ALERT_TYPE_INFO}
+              title="Confirm transaction on Ledger"
+              text={
+                <>
+                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                  running. You will need to confirm the transaction on your Ledger.
+                </>
+              }
+            />
+          ),
+          buttons: false,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+        });
+      }
       const transactionHash = await sendIcx(wallet, amount, address);
+      if (wallet.isLedgerWallet) swal.close();
+
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))
         .then(() => refreshWallet());
@@ -94,7 +115,7 @@ function SendPage() {
       );
       navigate('/');
     } catch (error) {
-      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error} />);
+      swal(<Alert type={ALERT_TYPE_DANGER} title="Failed sending ICX" text={error.message} />);
       setIsLoading(false);
     }
   }
@@ -132,17 +153,17 @@ function SendPage() {
   return (
     <Layout title="Send ICX">
       <WalletHeader />
-      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6 mb-2">Send ICX</h2>
+      <h2 className="text-2xl uppercase tracking-tight mt-4 lg:mt-6">Send ICX</h2>
       <div className="sm:flex items-start justify-between">
         <img
           src={transferMoneySvg}
           alt="person sending money online"
-          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-"
+          className="hidden sm:block sm:order-2 sm:w-1/3 max-w-full flex-none sm:ml-6 sm:-mt-6"
         />
 
         {wallet ? (
           <form onSubmit={handleOnSubmit} className="sm:order-1 sm:flex-1">
-            <p>
+            <p className="mt-2">
               Choose an amount in ICX and a destination address. You will be prompted to confirm
               before the transaction is finalised.
             </p>
@@ -215,7 +236,7 @@ function SendPage() {
                       fixedWidth
                       className="mr-1 opacity-75"
                     />
-                    Send{isLoading ? 'ing' : ''} ICX
+                    Send{isLoading && 'ing'} ICX
                   </Button>
                 </fieldset>
               </>

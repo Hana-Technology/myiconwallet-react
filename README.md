@@ -15,6 +15,14 @@ yarn
 yarn start
 ```
 
+#### SSL in Development
+
+If you want to use a Ledger hardware wallet during development, you will need to use https. You can set an environment variable `HTTPS=true` when you run `yarn start` to run the development server in https mode using a self-signed SSL certificate.
+
+```bash
+HTTPS=true yarn start
+```
+
 ### Testing
 
 Running tests by default will use the [Jest](https://jestjs.io/) interactive watch mode and only watch changed files.
