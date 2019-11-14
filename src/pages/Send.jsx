@@ -156,21 +156,25 @@ function SendPage() {
     amountInput.onChange({ currentTarget: { value } });
   }
 
-  function onReadQrCode(value) {
+  function onScanQrCode(value) {
+    if (!value) return;
     addressInput.onChange({ currentTarget: { value } });
     swal.close();
   }
 
-  function readQrCode(event) {
+  function showQrCodeScanner(event) {
     event.preventDefault();
     swal({
       content: (
         <div>
-          <h2 className="text-2xl uppercase tracking-tight">Read QR code</h2>
+          <h2 className="text-2xl uppercase tracking-tight">Scan QR code</h2>
 
           <QrReader
-            onScan={onReadQrCode}
-            onError={error => console.error('ERROR!', error.message)}
+            facingMode="environment"
+            showViewFinder={true}
+            delay={500}
+            onScan={onScanQrCode}
+            onError={error => console.error('Failed reading from camera.', error.message)}
             className="w-full mt-4"
           />
         </div>
@@ -259,7 +263,7 @@ function SendPage() {
                       />
                       <button
                         type="button"
-                        onClick={readQrCode}
+                        onClick={showQrCodeScanner}
                         title="Read QR code"
                         className="sm:hidden w-12 flex-shrink-0 text-xl text-white  p-2 ml-1 rounded bg-teal-500 hover:bg-teal-600 hover:shadow"
                       >
