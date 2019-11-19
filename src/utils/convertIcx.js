@@ -1,13 +1,13 @@
 import { IconAmount, IconConverter } from 'icon-sdk-js';
 
-export const ICX_LOOP_RATIO = Math.pow(10, 18);
-
 /**
  * @param {string|number|BigNumber} value value as loop
  * @returns {BigNumber} value as ICX
  */
 export function convertLoopToIcx(value) {
-  return IconConverter.toBigNumber(value).dividedBy(ICX_LOOP_RATIO);
+  return IconConverter.toBigNumber(
+    IconAmount.of(value, IconAmount.Unit.LOOP).convertUnit(IconAmount.Unit.ICX)
+  );
 }
 
 /**
