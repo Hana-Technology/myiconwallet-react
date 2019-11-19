@@ -79,15 +79,11 @@ function VotePage() {
     setIsLoading(true);
     await wait(); // wait to ensure loading state shows
 
-    // If clearing delegations, get the current delegations and set their values to ZERO
-    // Passing an empty array of delegations _should_ work, but doesn't seem to
     const isClearingDelegations = selectedDelegates.length === 0;
-    const delegationsToSet = isClearingDelegations
-      ? delegations.map(({ address }) => ({ address, value: ZERO }))
-      : selectedDelegates.map(({ value, votes }) => ({
-          address: value,
-          value: votes,
-        }));
+    const delegationsToSet = selectedDelegates.map(({ value, votes }) => ({
+      address: value,
+      value: votes,
+    }));
 
     const confirmation = await swal({
       content: (
