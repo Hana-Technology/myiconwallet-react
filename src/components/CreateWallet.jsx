@@ -9,7 +9,7 @@ import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import { useWallet } from 'components/Wallet';
 import securitySvg from 'assets/security.svg';
 
-const PASSWORD_COMPLEXITY_REGEXP = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[a-zA-Z\d#$@!%&*?]*/;
+const PASSWORD_COMPLEXITY_REGEXP = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[?!:;.,%+-/*=<>{}()[\]`"'~_^\\|@#$&]).{8,}$/;
 
 function CreateWallet({ onCreateWallet }) {
   const { createWallet } = useWallet();
