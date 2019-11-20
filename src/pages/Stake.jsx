@@ -40,7 +40,7 @@ function StakePage() {
 
   useEffect(() => {
     if (!(fullBalance && staked)) return void setMaxStakeable(null);
-    setNewStake(parseFloat(formatNumber(staked, 2)));
+    setNewStake(parseFloat(formatNumber(staked)));
     setMaxStakeable(BigNumber.maximum(0, fullBalance.minus(WITHHOLD_BALANCE)));
   }, [fullBalance, staked]);
 
@@ -144,8 +144,8 @@ function StakePage() {
     const { checked } = event.target;
     setUseMax(checked);
 
-    const newStake = checked ? maxStakeable : staked;
-    setNewStake(parseFloat(formatNumber(newStake, 2)));
+    const newStake = checked ? BigNumber.maximum(maxStakeable, staked) : staked;
+    setNewStake(parseFloat(formatNumber(newStake)));
   }
 
   const stakedAsInt = staked ? staked.integerValue().toNumber() : null;
