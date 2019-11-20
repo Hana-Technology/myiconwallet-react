@@ -28,7 +28,7 @@ function PaginationButton({ className, disabled, isActive, ...props }) {
 }
 
 function UnlockWithLedger({ onUnlockWallet }) {
-  const { getBalance, network } = useIconService();
+  const { getBalance, getStake, network } = useIconService();
   const { accessLedgerWallet } = useWallet();
   const [icx, setIcx] = useState(null);
   const [pages, setPages] = useState([1, 2, 3, 4, 5]);
@@ -67,14 +67,18 @@ function UnlockWithLedger({ onUnlockWallet }) {
         }))
       );
 
-      Promise.all(wallets.map(wallet => getBalance(wallet.address))).then(balances => {
-        setWallets(
-          wallets.map((wallet, index) => ({
-            ...wallet,
-            balance: balances[index],
+      Promise.all(
+        wallets.map(wallet => Promise.all([getBalance(wallet.address), getStake(wallet.address)]))
+      ).then(balances => {
+        let updatedWallets = balances.map(([availableBalance, { staked, unstaking }], index) => {
+          const balance = availableBalance.plus(staked).plus(unstaking || 0);
+          return {
+            ...wallets[index],
             isLoading: false,
-          }))
-        );
+            balance,
+          };
+        });
+        setWallets(updatedWallets);
       });
     }
   }, [network]); // eslint-disable-line
@@ -124,7 +128,11 @@ function UnlockWithLedger({ onUnlockWallet }) {
       const path = `${BASE_PATH}/${i}'`;
       let { address } = await icx.getAddress(path, false, true);
       address = address.toString();
-      const balance = await getBalance(address);
+
+      const availableBalance = await getBalance(address);
+      const { staked, unstaking } = await getStake(address);
+      const balance = availableBalance.plus(staked).plus(unstaking || 0);
+
       addresses.push({ address, balance, path });
     }
     setWallets(addresses);

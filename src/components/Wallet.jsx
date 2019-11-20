@@ -94,9 +94,7 @@ function Wallet({ children }) {
     setVotingPower(votingPower);
 
     const { staked, unstaking } = stake;
-    let fullBalance = balance.plus(staked);
-    if (unstaking) fullBalance = fullBalance.plus(unstaking);
-    setFullBalance(fullBalance);
+    setFullBalance(balance.plus(staked).plus(unstaking || 0));
 
     setIsLoading(false);
   }
