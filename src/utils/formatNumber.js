@@ -1,9 +1,10 @@
+import BigNumber from 'bignumber.js';
 import { IconConverter } from 'icon-sdk-js';
 import { endsWith, trimEnd } from 'lodash-es';
 
 // See BigNumber.js rounding modes
 // https://mikemcl.github.io/bignumber.js/#constructor-properties
-const ROUNDING_MODE = 1;
+const ROUNDING_MODE = BigNumber.ROUND_DOWN;
 
 /**
  * @param {BigNumber} value

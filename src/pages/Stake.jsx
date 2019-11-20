@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
+import BigNumber from 'bignumber.js';
 import { IconConverter } from 'icon-sdk-js';
 import Slider from 'react-rangeslider';
 import { formatNumber } from 'utils/formatNumber';
@@ -40,7 +41,7 @@ function StakePage() {
   useEffect(() => {
     if (!(fullBalance && staked)) return void setMaxStakeable(null);
     setNewStake(parseFloat(formatNumber(staked, 2)));
-    setMaxStakeable(fullBalance.minus(WITHHOLD_BALANCE));
+    setMaxStakeable(BigNumber.maximum(0, fullBalance.minus(WITHHOLD_BALANCE)));
   }, [fullBalance, staked]);
 
   const delegatedVotes = delegations

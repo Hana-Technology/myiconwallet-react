@@ -21,6 +21,7 @@
     "@ledgerhq/hw-transport-u2f": "^4.74.2",
     "@reach/router": "^1.2.1",
     "@sweetalert/with-react": "^0.1.1",
+    "bignumber.js": "^9.0.0",
     "chart.js": "^2.9.3",
     "icon-sdk-js": "^0.0.17",
     "lodash-es": "^4.17.15",
