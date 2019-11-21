@@ -10,6 +10,8 @@ import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import LedgerIcon from 'components/LedgerIcon';
+import IconLogo from 'components/Logo';
+import UnlockWithICONex from 'components/UnlockWithICONex';
 import UnlockWithKeystore from 'components/UnlockWithKeystore';
 import UnlockWithLedger from 'components/UnlockWithLedger';
 import authenticationSvg from 'assets/authentication.svg';
@@ -17,6 +19,7 @@ import authenticationSvg from 'assets/authentication.svg';
 const UNLOCK_METHODS = {
   KEYSTORE: 'keystore',
   LEDGER: 'ledger',
+  ICONEX: 'iconex',
 };
 
 function TabButton({ className, isActive, ...props }) {
@@ -95,7 +98,7 @@ function UnlockWalletPage({ location }) {
               isActive={unlockMethod === UNLOCK_METHODS.KEYSTORE}
             >
               <FontAwesomeIcon icon={faKey} className="mr-2 opacity-75" />
-              With keystore
+              Keystore
             </TabButton>
             <TabButton
               onClick={() => setUnlockMethod(UNLOCK_METHODS.LEDGER)}
@@ -103,7 +106,15 @@ function UnlockWalletPage({ location }) {
               className="ml-2"
             >
               <LedgerIcon className="mr-1 opacity-75" />
-              With Ledger
+              Ledger
+            </TabButton>
+            <TabButton
+              onClick={() => setUnlockMethod(UNLOCK_METHODS.ICONEX)}
+              isActive={unlockMethod === UNLOCK_METHODS.ICONEX}
+              className="ml-2"
+            >
+              <IconLogo iconOnly={true} className="mr-2 opacity-75" />
+              ICONex
             </TabButton>
           </div>
 
@@ -113,6 +124,9 @@ function UnlockWalletPage({ location }) {
             )}
             {unlockMethod === UNLOCK_METHODS.LEDGER && (
               <UnlockWithLedger onUnlockWallet={onUnlockWallet} />
+            )}
+            {unlockMethod === UNLOCK_METHODS.ICONEX && (
+              <UnlockWithICONex onUnlockWallet={onUnlockWallet} />
             )}
           </div>
         </div>
