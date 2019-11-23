@@ -4,8 +4,8 @@ import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-soli
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import BigNumber from 'bignumber.js';
-import { IconConverter } from 'icon-sdk-js';
 import Slider from 'react-rangeslider';
+import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from 'utils/constants';
 import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
@@ -16,9 +16,6 @@ import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
 import financeSvg from 'assets/finance.svg';
 import 'react-rangeslider/lib/index.css';
-
-const WITHHOLD_BALANCE = IconConverter.toBigNumber(3);
-const ZERO = IconConverter.toBigNumber(0);
 
 function StakePage() {
   const {
@@ -59,7 +56,11 @@ function StakePage() {
       content: (
         <Alert
           type={ALERT_TYPE_DANGER}
-          title={wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'}
+          title={
+            wallet.type === WALLET_TYPE.KEYSTORE
+              ? 'This is your final confirmation'
+              : 'Confirm transaction'
+          }
           text={
             <>
               Are you sure you want to change your stake to <b>{newStake} ICX</b>?
@@ -72,12 +73,14 @@ function StakePage() {
     if (!confirmation) return setIsLoading(false);
 
     try {
-      if (wallet.isLedgerWallet) {
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) {
         swal({
           content: (
             <Alert
               type={ALERT_TYPE_INFO}
-              title="Confirm transaction on Ledger"
+              title={`Confirm transaction ${
+                wallet.type === WALLET_TYPE.LEDGER ? 'on Ledger' : 'in ICONex'
+              }`}
               text={
                 <>
                   Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
@@ -93,7 +96,7 @@ function StakePage() {
       }
       const stakeAmount = useMax ? maxStakeable : newStake;
       const transactionHash = await setStake(wallet, stakeAmount);
-      if (wallet.isLedgerWallet) swal.close();
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) swal.close();
 
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))

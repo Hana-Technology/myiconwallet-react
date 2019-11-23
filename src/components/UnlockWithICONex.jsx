@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { ICONEX_RELAY } from 'utils/constants';
 import Alert, { ALERT_TYPE_DANGER } from 'components/Alert';
 import Button from 'components/Button';
 import IconLogo from 'components/Logo';
 import { useWallet } from 'components/Wallet';
-
-const ICONEX_RELAY_REQUEST = 'ICONEX_RELAY_REQUEST';
-const ICONEX_RELAY_RESPONSE = 'ICONEX_RELAY_RESPONSE';
 
 function UnlockWithICONex({ onUnlockWallet }) {
   const { accessICONexWallet } = useWallet();
@@ -30,15 +28,15 @@ function UnlockWithICONex({ onUnlockWallet }) {
   useEffect(() => {
     setIsChecking(true);
     setTimeout(() => setIsChecking(false), 2000);
-    window.addEventListener(ICONEX_RELAY_RESPONSE, relayEventHandler);
+    window.addEventListener(ICONEX_RELAY.RESPONSE, relayEventHandler);
 
     window.dispatchEvent(
-      new CustomEvent(ICONEX_RELAY_REQUEST, {
+      new CustomEvent(ICONEX_RELAY.REQUEST, {
         detail: { type: 'REQUEST_HAS_ACCOUNT' },
       })
     );
 
-    return () => void window.removeEventListener(ICONEX_RELAY_RESPONSE, relayEventHandler);
+    return () => void window.removeEventListener(ICONEX_RELAY.RESPONSE, relayEventHandler);
   }, []); // eslint-disable-line
 
   function handleResponseHasAccount({ hasAccount }) {
@@ -54,7 +52,7 @@ function UnlockWithICONex({ onUnlockWallet }) {
 
   function getICONexAddress() {
     window.dispatchEvent(
-      new CustomEvent(ICONEX_RELAY_REQUEST, {
+      new CustomEvent(ICONEX_RELAY.REQUEST, {
         detail: { type: 'REQUEST_ADDRESS' },
       })
     );

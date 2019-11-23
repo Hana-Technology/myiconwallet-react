@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { IconWallet } from 'icon-sdk-js';
-import { WALLET_TYPE } from 'utils/walletType';
+import { WALLET_TYPE } from 'utils/constants';
 import { useIconService } from 'components/IconService';
 
 const INITIAL_STATE = {
@@ -63,7 +63,7 @@ function Wallet({ children }) {
     const newWallet = {
       getAddress: () => wallet.address,
       getPath: () => wallet.path,
-      isLedgerWallet: () => true,
+      type: WALLET_TYPE.LEDGER,
     };
     setWallet(newWallet);
     refreshWallet(newWallet);

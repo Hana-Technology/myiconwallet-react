@@ -4,7 +4,7 @@ import { faCircleNotch, faExternalLinkAlt, faShareSquare } from '@fortawesome/fr
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
-import { convertLoopToIcx } from 'utils/convertIcx';
+import { TRANSACTION_FEE, WALLET_TYPE } from 'utils/constants';
 import { formatNumber } from 'utils/formatNumber';
 import { useTextInput } from 'utils/useTextInput';
 import { wait } from 'utils/wait';
@@ -16,8 +16,6 @@ import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
 import transferMoneySvg from 'assets/transfer_money.svg';
-
-const TRANSACTION_FEE = convertLoopToIcx(Math.pow(10, 15));
 
 function SendPage() {
   const {
@@ -45,7 +43,11 @@ function SendPage() {
       content: (
         <Alert
           type={ALERT_TYPE_DANGER}
-          title={wallet.isLedgerWallet ? 'Confirm transaction' : 'This is your final confirmation'}
+          title={
+            wallet.type === WALLET_TYPE.KEYSTORE
+              ? 'This is your final confirmation'
+              : 'Confirm transaction'
+          }
           text={
             <>
               Are you sure you want to send <b>{amountInput.value} ICX</b> to{' '}
@@ -59,12 +61,14 @@ function SendPage() {
     if (!confirmation) return setIsLoading(false);
 
     try {
-      if (wallet.isLedgerWallet) {
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) {
         swal({
           content: (
             <Alert
               type={ALERT_TYPE_INFO}
-              title="Confirm transaction on Ledger"
+              title={`Confirm transaction ${
+                wallet.type === WALLET_TYPE.LEDGER ? 'on Ledger' : 'in ICONex'
+              }`}
               text={
                 <>
                   Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
@@ -79,7 +83,7 @@ function SendPage() {
         });
       }
       const transactionHash = await sendIcx(wallet, amount, address);
-      if (wallet.isLedgerWallet) swal.close();
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) swal.close();
 
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))

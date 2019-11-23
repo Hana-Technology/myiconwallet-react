@@ -12,7 +12,8 @@ import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
-import { copyToClipboard } from 'utils/copyToClipboard';
+import { WALLET_TYPE } from 'utils/constants';
+import { COPY_TOOLTIPS, copyToClipboard } from 'utils/copyToClipboard';
 import { formatNumber } from 'utils/formatNumber';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
@@ -30,11 +31,6 @@ const EMPTY_CHART_DATA = {
   ],
 };
 const EMPTY_CHART_OPTIONS = { events: [] };
-
-const COPY_TOOLTIPS = {
-  INITIAL: 'Copy address',
-  COPIED: 'Address copied',
-};
 
 function ViewWallet() {
   const {
@@ -98,12 +94,14 @@ function ViewWallet() {
     if (!confirmation) return setIsClaiming(false);
 
     try {
-      if (wallet.isLedgerWallet) {
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) {
         swal({
           content: (
             <Alert
               type={ALERT_TYPE_INFO}
-              title="Confirm transaction on Ledger"
+              title={`Confirm transaction ${
+                wallet.type === WALLET_TYPE.LEDGER ? 'on Ledger' : 'in ICONex'
+              }`}
               text={
                 <>
                   Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
@@ -118,7 +116,7 @@ function ViewWallet() {
         });
       }
       const transactionHash = await claimIScore(wallet);
-      if (wallet.isLedgerWallet) swal.close();
+      if (wallet.type !== WALLET_TYPE.KEYSTORE) swal.close();
 
       waitForTransaction(transactionHash)
         .catch(error => console.warn(error))
