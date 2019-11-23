@@ -4,15 +4,16 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import Alert, { ALERT_TYPE_DANGER } from 'components/Alert';
 import Button from 'components/Button';
 import IconLogo from 'components/Logo';
+import { useWallet } from 'components/Wallet';
 
 const ICONEX_RELAY_REQUEST = 'ICONEX_RELAY_REQUEST';
 const ICONEX_RELAY_RESPONSE = 'ICONEX_RELAY_RESPONSE';
 
 function UnlockWithICONex({ onUnlockWallet }) {
+  const { accessICONexWallet } = useWallet();
   const [hasExtension, setHasExtension] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
 
   function relayEventHandler(event) {
     const { type, payload } = event.detail;
@@ -47,10 +48,8 @@ function UnlockWithICONex({ onUnlockWallet }) {
   }
 
   function handleResponseAddress(address) {
-    setIsLoading(true);
-    console.log('SELECTED WALLET', { address });
-    // TODO: call access wallet function, then onUnlockWallet
-    setTimeout(() => setIsLoading(false), 2000);
+    accessICONexWallet(address);
+    onUnlockWallet();
   }
 
   function getICONexAddress() {
@@ -61,36 +60,59 @@ function UnlockWithICONex({ onUnlockWallet }) {
     );
   }
 
-  return isChecking ? (
-    <p>
-      <FontAwesomeIcon icon={faCircleNotch} spin className="mr-2" />
-      Checking for ICONex extension...
-    </p>
-  ) : !hasExtension ? (
-    <Alert
-      type={ALERT_TYPE_DANGER}
-      title="Could not find ICONex"
-      text="You need to be using the Chrome browser and have the ICONex extension installed."
-      className="mt-6"
-    />
-  ) : !hasAccount ? (
-    <Alert
-      type={ALERT_TYPE_DANGER}
-      title="No ICONex account"
-      text="You need to add an account to the ICONex extension."
-      className="mt-6"
-    />
-  ) : (
+  return (
     <>
-      <p>Click the button then choose which wallet from ICONex you would like to use.</p>
-
-      <Button type="button" onClick={getICONexAddress} disabled={isLoading} className="mt-6">
-        {isLoading ? (
-          <FontAwesomeIcon icon={faCircleNotch} spin className="mr-2 opacity-75" />
-        ) : (
-          <IconLogo iconOnly={true} className="mr-2 opacity-75" />
-        )}
-        Get{isLoading && 'ting'} ICONex address
+      {isChecking ? (
+        <p>
+          <FontAwesomeIcon icon={faCircleNotch} spin className="mr-2" />
+          Checking for ICONex extension...
+        </p>
+      ) : !hasExtension ? (
+        <Alert
+          type={ALERT_TYPE_DANGER}
+          title="Could not find ICONex"
+          text={
+            <>
+              You need to be using the <b>Chrome</b> browser and have the{' '}
+              <a
+                href="https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel"
+                title="ICONex on Chrome Web Store"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-normal underline"
+              >
+                ICONex extension
+              </a>{' '}
+              installed.
+            </>
+          }
+          className="mt-6"
+        />
+      ) : !hasAccount ? (
+        <Alert
+          type={ALERT_TYPE_DANGER}
+          title="No ICONex account"
+          text={
+            <>
+              You need to add an account to the <b>ICONex extension</b>.
+            </>
+          }
+          className="mt-6"
+        />
+      ) : (
+        <p>
+          Click the <i>Get ICONex wallet</i> button then choose a wallet from the ICONex popup and
+          click the <i>Confirm</i> button.
+        </p>
+      )}
+      <Button
+        type="button"
+        onClick={getICONexAddress}
+        disabled={isChecking || !hasExtension || !hasAccount}
+        className="mt-6"
+      >
+        <IconLogo iconOnly={true} className="mr-2 opacity-75" />
+        Get ICONex wallet
       </Button>
     </>
   );
