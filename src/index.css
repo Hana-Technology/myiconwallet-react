@@ -3,6 +3,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Reach UI imports */
+@import '@reach/dialog/styles.css';
+
 /* Mobile menu slide down */
 @media (max-width: 639px) {
   .slide-down {
