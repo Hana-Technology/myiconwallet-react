@@ -6,6 +6,16 @@
 /* Reach UI imports */
 @import '@reach/dialog/styles.css';
 
+/* Reach UI - Dialog (Modal) overrides */
+[data-reach-dialog-content] {
+  @apply bg-white text-gray-900 rounded;
+}
+
+/* Base font styles */
+body {
+  @apply font-sans font-light;
+}
+
 /* Mobile menu slide down */
 @media (max-width: 639px) {
   .slide-down {
