@@ -257,6 +257,14 @@ function IconService({ children }) {
                 getProperties: () => rawTransaction,
                 getSignature: () => payload,
               });
+            } else if (type === 'CANCEL_SIGNING') {
+              reject(
+                new Error(
+                  'Transaction was rejected in ICONex. Either the Cancel button was clicked or the ICONex popup was closed.'
+                )
+              );
+            } else {
+              reject(new Error(`Received unknown ICONex event ${type}.`));
             }
           },
           { once: true }
