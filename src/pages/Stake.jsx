@@ -82,10 +82,17 @@ function StakePage() {
                 wallet.type === WALLET_TYPE.LEDGER ? 'on Ledger' : 'in ICONex'
               }`}
               text={
-                <>
-                  Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
-                  running. You will need to confirm the transaction on your Ledger.
-                </>
+                wallet.type === WALLET_TYPE.LEDGER ? (
+                  <>
+                    Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app
+                    running. You will need to confirm the transaction on your Ledger.
+                  </>
+                ) : (
+                  <>
+                    Enter your wallet password and click the <i>Confirm</i> button in the{' '}
+                    <b>ICONex</b> popup to confirm the transaction.
+                  </>
+                )
               }
             />
           ),

@@ -249,8 +249,7 @@ function IconService({ children }) {
       return new Promise((resolve, reject) => {
         window.addEventListener(
           ICONEX_RELAY.RESPONSE,
-          event => {
-            const { type, payload } = event.detail;
+          ({ detail: { type, payload } }) => {
             if (type === 'RESPONSE_SIGNING') {
               rawTransaction.signature = payload;
               resolve({
