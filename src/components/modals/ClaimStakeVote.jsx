@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExchangeAlt, faFlag, faVoteYea } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
 import BaseModal from 'components/modals/Base';
@@ -9,10 +10,13 @@ import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
+const ISCORE_CLAIMED_EVENT = 'IScoreClaimed(int,int)';
+
 const INITIAL_STATE = {
   isWorking: false,
   isFinished: false,
-  transaction: null,
+  transactionHash: null,
+  data: {},
   error: null,
 };
 
@@ -27,7 +31,8 @@ function reducer(state, action) {
     case ACTIONS.SET_WORKING:
       return { ...state, isWorking: true };
     case ACTIONS.SET_FINISHED:
-      return { ...state, isWorking: false, isFinished: true, transaction: action.payload };
+      const { data, transactionHash } = action.payload;
+      return { ...state, isWorking: false, isFinished: true, transactionHash, data };
     case ACTIONS.SET_ERROR:
       return { ...state, isWorking: false, error: action.payload };
     default:
@@ -41,7 +46,9 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     waitForTransaction,
   } = useIconService();
   const {
+    delegations,
     iScore: { iScore, estimatedICX },
+    stake: { staked },
     wallet,
   } = useWallet();
   const [hasStarted, setHasStarted] = useState(false);
@@ -58,13 +65,23 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
 
   async function handleClaim() {
     claimDispatch({ type: ACTIONS.SET_WORKING });
-    while (!claim.isFinished) {
+    let isFinished = false;
+    while (!isFinished) {
       try {
         const transactionHash = await claimIScore(wallet);
-        await waitForTransaction(transactionHash);
-        claimDispatch({ type: ACTIONS.SET_FINISHED, payload: transactionHash });
+        const transaction = await waitForTransaction(transactionHash);
+        const claimedICXAsLoop = transaction.eventLogs.find(({ indexed }) =>
+          indexed.includes(ISCORE_CLAIMED_EVENT)
+        ).data[1];
+        const claimedICX = convertLoopToIcx(claimedICXAsLoop);
+        claimDispatch({
+          type: ACTIONS.SET_FINISHED,
+          payload: { transactionHash, data: { claimedICX } },
+        });
+        isFinished = true;
       } catch (error) {
         claimDispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+        isFinished = true;
       }
       await wait();
     }
@@ -74,7 +91,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     stakeDispatch({ type: ACTIONS.SET_WORKING });
     return new Promise(resolve =>
       setTimeout(() => {
-        stakeDispatch({ type: ACTIONS.SET_FINISHED, payloud: 'abc123' });
+        stakeDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash: 'abc123' } });
         resolve();
       }, 2000)
     );
@@ -84,7 +101,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     voteDispatch({ type: ACTIONS.SET_WORKING });
     return new Promise(resolve =>
       setTimeout(() => {
-        voteDispatch({ type: ACTIONS.SET_FINISHED, payloud: 'abc123' });
+        voteDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash: 'abc123' } });
         resolve();
       }, 2000)
     );
@@ -94,10 +111,10 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     <BaseModal isOpen={isOpen} onClose={onClose} aria-label="Claim-Stake-Vote">
       <h3 className="text-xl uppercase tracking-tight">Claim-Stake-Vote</h3>
       <p className="mt-4">
-        This feature enables you to claim your current I-Score as ICX, immediately stake the claimed
-        ICX and then allocate the votes evenly to your current P-Rep delegations.
+        Use this feature to claim your current I-Score as ICX, immediately stake the claimed ICX and
+        then allocate the votes evenly to your current P-Rep delegations.
       </p>
-      {hasStarted ? (
+      {iScore && staked && delegations && (
         <div className="flex mt-6">
           <div
             className={`w-1/3 p-3 rounded-sm ${
@@ -105,7 +122,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             }`}
           >
             <h4 className="text-lg text-center uppercase tracking-tight">
-              Claim{claim.isWorking ? 'ing' : ''}
+              Claim{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
             </h4>
             <div className="text-center my-6">
               <FontAwesomeIcon
@@ -116,7 +133,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             </div>
             <p className="mt-4">
               Claim <b>{formatNumber(iScore)}&nbsp;I-Score</b> as an estimated{' '}
-              <b>{formatNumber(estimatedICX)}&nbsp;ICX</b>
+              <b>{formatNumber(claim.data.claimedICX || estimatedICX)}&nbsp;ICX</b>
             </p>
           </div>
           <div
@@ -125,7 +142,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             }`}
           >
             <h4 className="text-lg text-center uppercase tracking-tight">
-              Stak{stake.isWorking ? 'ing' : 'e'}
+              Stak{stake.isWorking ? 'ing' : stake.isFinished ? 'ed' : 'e'}
             </h4>
             <div className="text-center my-6">
               <FontAwesomeIcon
@@ -134,7 +151,9 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
                 spin={stake.isWorking}
               />
             </div>
-            <p className="mt-4">Stake claimed ICX</p>
+            <p className="mt-4">
+              Increase stake to <b>{formatNumber(staked.plus(estimatedICX))}&nbsp;ICX</b>
+            </p>
           </div>
           <div
             className={`w-1/3 p-3 ml-2 rounded-sm ${
@@ -142,7 +161,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             }`}
           >
             <h4 className="text-lg text-center uppercase tracking-tight">
-              Vot{vote.isWorking ? 'ing' : 'e'}
+              Vot{vote.isWorking ? 'ing' : vote.isFinished ? 'ed' : 'e'}
             </h4>
             <div className="text-center my-6">
               <FontAwesomeIcon
@@ -151,14 +170,16 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
                 spin={vote.isWorking}
               />
             </div>
-            <p className="mt-4">Distribute staked votes between delegates</p>
+            <p className="mt-4">
+              Add <b>{formatNumber(estimatedICX.dividedBy(delegations.length))}&nbsp;votes</b> to
+              each of your <b>{delegations.length} delegation(s)</b>
+            </p>
           </div>
         </div>
-      ) : (
-        <Button type="button" onClick={startClaimStakeVote} className="mt-6">
-          Continue
-        </Button>
       )}
+      <Button type="button" onClick={startClaimStakeVote} disabled={hasStarted} className="mt-6">
+        Continue
+      </Button>
     </BaseModal>
   );
 }
