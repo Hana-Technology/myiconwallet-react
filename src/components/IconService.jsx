@@ -252,11 +252,12 @@ function IconService({ children }) {
     const MAX_ATTEMPTS = 10;
     const MS_BETWEEN_ATTEMPS = 600;
 
+    let transaction;
     let count = 0;
     let done = false;
     while (!done) {
       try {
-        await iconService.getTransactionResult(txHash).execute();
+        transaction = await iconService.getTransactionResult(txHash).execute();
         done = true;
       } catch (error) {
         count++;
@@ -266,6 +267,8 @@ function IconService({ children }) {
         await wait(MS_BETWEEN_ATTEMPS);
       }
     }
+
+    return transaction;
   }
 
   /**

@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExchangeAlt, faFlag, faVoteYea } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/formatNumber';
+import { wait } from 'utils/wait';
 import BaseModal from 'components/modals/Base';
 import Button from 'components/Button';
+import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
 const INITIAL_STATE = {
@@ -25,7 +27,7 @@ function reducer(state, action) {
     case ACTIONS.SET_WORKING:
       return { ...state, isWorking: true };
     case ACTIONS.SET_FINISHED:
-      return { ...state, isFinished: true, isWorking: false, transaction: action.payload };
+      return { ...state, isWorking: false, isFinished: true, transaction: action.payload };
     case ACTIONS.SET_ERROR:
       return { ...state, isWorking: false, error: action.payload };
     default:
@@ -35,7 +37,12 @@ function reducer(state, action) {
 
 function ClaimStakeVoteModal({ isOpen, onClose }) {
   const {
+    claimIScore,
+    waitForTransaction,
+  } = useIconService();
+  const {
     iScore: { iScore, estimatedICX },
+    wallet,
   } = useWallet();
   const [hasStarted, setHasStarted] = useState(false);
   const [claim, claimDispatch] = useReducer(reducer, INITIAL_STATE);
@@ -51,12 +58,16 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
 
   async function handleClaim() {
     claimDispatch({ type: ACTIONS.SET_WORKING });
-    return new Promise(resolve =>
-      setTimeout(() => {
-        claimDispatch({ type: ACTIONS.SET_FINISHED, payloud: 'abc123' });
-        resolve();
-      }, 2000)
-    );
+    while (!claim.isFinished) {
+      try {
+        const transactionHash = await claimIScore(wallet);
+        await waitForTransaction(transactionHash);
+        claimDispatch({ type: ACTIONS.SET_FINISHED, payload: transactionHash });
+      } catch (error) {
+        claimDispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      }
+      await wait();
+    }
   }
 
   async function handleStake() {
