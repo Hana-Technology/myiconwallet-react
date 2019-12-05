@@ -75,7 +75,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     await handleVote(claimedICX);
 
     setHasFinished(true);
-    refreshWallet();
   }
 
   async function handleClaim() {
@@ -151,6 +150,11 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       }
       await wait();
     }
+  }
+
+  function handleClose() {
+    refreshWallet();
+    onClose();
   }
 
   return (
@@ -290,7 +294,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       )}
       <div className="flex flex-row-reverse">
         {hasFinished ? (
-          <Button type="button" onClick={onClose} className="mt-6">
+          <Button type="button" onClick={handleClose} className="mt-6">
             Close
           </Button>
         ) : (
