@@ -1,6 +1,12 @@
 import React, { useReducer, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faExchangeAlt, faFlag, faVoteYea } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleNotch,
+  faExchangeAlt,
+  faExternalLinkAlt,
+  faFlag,
+  faVoteYea,
+} from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
@@ -31,7 +37,7 @@ function reducer(state, action) {
     case ACTIONS.SET_WORKING:
       return { ...state, isWorking: true };
     case ACTIONS.SET_FINISHED:
-      const { data, transactionHash } = action.payload;
+      const { data = {}, transactionHash } = action.payload;
       return { ...state, isWorking: false, isFinished: true, transactionHash, data };
     case ACTIONS.SET_ERROR:
       return { ...state, isWorking: false, error: action.payload };
@@ -43,33 +49,44 @@ function reducer(state, action) {
 function ClaimStakeVoteModal({ isOpen, onClose }) {
   const {
     claimIScore,
+    network: { trackerUrl },
+    setDelegations,
+    setStake,
     waitForTransaction,
   } = useIconService();
   const {
     delegations,
     iScore: { iScore, estimatedICX },
+    refreshWallet,
     stake: { staked },
     wallet,
   } = useWallet();
   const [hasStarted, setHasStarted] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
   const [claim, claimDispatch] = useReducer(reducer, INITIAL_STATE);
   const [stake, stakeDispatch] = useReducer(reducer, INITIAL_STATE);
   const [vote, voteDispatch] = useReducer(reducer, INITIAL_STATE);
 
   async function startClaimStakeVote() {
     setHasStarted(true);
-    await handleClaim();
-    await handleStake();
-    await handleVote();
+
+    const claimedICX = await handleClaim();
+    await handleStake(claimedICX);
+    await handleVote(claimedICX);
+
+    setHasFinished(true);
+    refreshWallet();
   }
 
   async function handleClaim() {
     claimDispatch({ type: ACTIONS.SET_WORKING });
+
     let isFinished = false;
     while (!isFinished) {
       try {
+        // TODO: show message for Ledger and ICONex to approve transaction
         const transactionHash = await claimIScore(wallet);
-        const transaction = await waitForTransaction(transactionHash);
+        const transaction = await waitForTransaction(transactionHash, 100);
         const claimedICXAsLoop = transaction.eventLogs.find(({ indexed }) =>
           indexed.includes(ISCORE_CLAIMED_EVENT)
         ).data[1];
@@ -78,8 +95,9 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
           type: ACTIONS.SET_FINISHED,
           payload: { transactionHash, data: { claimedICX } },
         });
-        isFinished = true;
+        return claimedICX;
       } catch (error) {
+        // TODO: show error, give user option to retry?
         claimDispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
         isFinished = true;
       }
@@ -87,24 +105,52 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     }
   }
 
-  async function handleStake() {
+  async function handleStake(claimedICX) {
     stakeDispatch({ type: ACTIONS.SET_WORKING });
-    return new Promise(resolve =>
-      setTimeout(() => {
-        stakeDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash: 'abc123' } });
-        resolve();
-      }, 2000)
-    );
+
+    const stakeAmount = staked.plus(claimedICX);
+
+    let isFinished = false;
+    while (!isFinished) {
+      try {
+        // TODO: show message for Ledger and ICONex to approve transaction
+        const transactionHash = await setStake(wallet, stakeAmount);
+        await waitForTransaction(transactionHash, 100);
+        stakeDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash } });
+        return;
+      } catch (error) {
+        // TODO: show error, give user option to retry?
+        stakeDispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+        isFinished = true;
+      }
+      await wait();
+    }
   }
 
-  async function handleVote() {
+  async function handleVote(claimedICX) {
     voteDispatch({ type: ACTIONS.SET_WORKING });
-    return new Promise(resolve =>
-      setTimeout(() => {
-        voteDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash: 'abc123' } });
-        resolve();
-      }, 2000)
-    );
+
+    const votesPerDelegate = claimedICX.dividedBy(delegations.length);
+    const delegationsToSet = delegations.map(({ address, value }) => ({
+      value: value.plus(votesPerDelegate),
+      address,
+    }));
+
+    let isFinished = false;
+    while (!isFinished) {
+      try {
+        // TODO: show message for Ledger and ICONex to approve transaction
+        const transactionHash = await setDelegations(wallet, delegationsToSet);
+        await waitForTransaction(transactionHash, 100);
+        voteDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash } });
+        return;
+      } catch (error) {
+        // TODO: show error, give user option to retry?
+        voteDispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+        isFinished = true;
+      }
+      await wait();
+    }
   }
 
   return (
@@ -113,6 +159,10 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       <p className="mt-4">
         Use this feature to claim your current I-Score as ICX, immediately stake the claimed ICX and
         then allocate the votes evenly to your current P-Rep delegations.
+      </p>
+      <p className="mt-4">
+        TODO: can't proceed if no delegations!! Maybe not an issue? Shouldn't have I-Score without
+        delegations?
       </p>
       {iScore && staked && delegations && (
         <div className="flex mt-6">
@@ -133,8 +183,26 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             </div>
             <p className="mt-4">
               Claim <b>{formatNumber(iScore)}&nbsp;I-Score</b> as an estimated{' '}
-              <b>{formatNumber(claim.data.claimedICX || estimatedICX)}&nbsp;ICX</b>
+              <b>{formatNumber(estimatedICX)}&nbsp;ICX</b>
             </p>
+            {claim.isFinished && (
+              <div className="mt-4">
+                <div className="text-xs text-green-700 uppercase tracking-tight">
+                  Transaction hash
+                </div>
+                <div className="text-sm break-all">
+                  {claim.transactionHash}
+                  <a
+                    href={`${trackerUrl}/transaction/${claim.transactionHash}`}
+                    title="View on ICON tracker"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
           <div
             className={`w-1/3 p-3 ml-2 rounded-sm ${
@@ -152,8 +220,27 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
               />
             </div>
             <p className="mt-4">
-              Increase stake to <b>{formatNumber(staked.plus(estimatedICX))}&nbsp;ICX</b>
+              Increase stake to{' '}
+              <b>{formatNumber(staked.plus(claim.data.claimedICX || estimatedICX))}&nbsp;ICX</b>
             </p>
+            {stake.isFinished && (
+              <div className="mt-4">
+                <div className="text-xs text-green-700 uppercase tracking-tight">
+                  Transaction hash
+                </div>
+                <div className="text-sm break-all">
+                  {stake.transactionHash}
+                  <a
+                    href={`${trackerUrl}/transaction/${stake.transactionHash}`}
+                    title="View on ICON tracker"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
           <div
             className={`w-1/3 p-3 ml-2 rounded-sm ${
@@ -171,15 +258,52 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
               />
             </div>
             <p className="mt-4">
-              Add <b>{formatNumber(estimatedICX.dividedBy(delegations.length))}&nbsp;votes</b> to
-              each of your <b>{delegations.length} delegation(s)</b>
+              Add{' '}
+              <b>
+                {formatNumber(
+                  (claim.data.claimedICX || estimatedICX).dividedBy(delegations.length)
+                )}
+                &nbsp;votes
+              </b>{' '}
+              to each of your <b>{delegations.length} delegation(s)</b>
             </p>
+            {vote.isFinished && (
+              <div className="mt-4">
+                <div className="text-xs text-green-700 uppercase tracking-tight">
+                  Transaction hash
+                </div>
+                <div className="text-sm break-all">
+                  {vote.transactionHash}
+                  <a
+                    href={`${trackerUrl}/transaction/${vote.transactionHash}`}
+                    title="View on ICON tracker"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
-      <Button type="button" onClick={startClaimStakeVote} disabled={hasStarted} className="mt-6">
-        Continue
-      </Button>
+      <div className="flex flex-row-reverse">
+        {hasFinished ? (
+          <Button type="button" onClick={onClose} className="mt-6">
+            Close
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            onClick={startClaimStakeVote}
+            disabled={hasStarted}
+            className="mt-6"
+          >
+            Continue
+          </Button>
+        )}
+      </div>
     </BaseModal>
   );
 }

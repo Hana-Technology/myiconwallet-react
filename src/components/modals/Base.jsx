@@ -1,6 +1,6 @@
 import React from 'react';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
-import VisuallyHidden from '@reach/visually-hidden';
+// import VisuallyHidden from '@reach/visually-hidden';
 import PropTypes from 'prop-types';
 import { animated, useTransition } from 'react-spring';
 
@@ -23,10 +23,10 @@ function BaseModal({ isOpen, onClose, children, ...props }) {
             }}
             {...props}
           >
-            <button onClick={onClose}>
+            {/* <button onClick={onClose}>
               <VisuallyHidden>Close</VisuallyHidden>
               <span aria-hidden>×</span>
-            </button>
+            </button> */}
             <>{children}</>
           </AnimatedDialogContent>
         </AnimatedDialogOverlay>

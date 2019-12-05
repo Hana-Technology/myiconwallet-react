@@ -248,27 +248,22 @@ function IconService({ children }) {
     }
   }
 
-  async function waitForTransaction(txHash) {
-    const MAX_ATTEMPTS = 10;
+  async function waitForTransaction(txHash, maxAttempts = 10) {
     const MS_BETWEEN_ATTEMPS = 600;
 
-    let transaction;
     let count = 0;
-    let done = false;
-    while (!done) {
+    while (true) {
       try {
-        transaction = await iconService.getTransactionResult(txHash).execute();
-        done = true;
+        let transaction = await iconService.getTransactionResult(txHash).execute();
+        return transaction;
       } catch (error) {
         count++;
-        if (count === MAX_ATTEMPTS)
+        if (count === maxAttempts)
           throw new Error(`Gave up waiting for transaction ${txHash}, last error: ${error}`);
 
         await wait(MS_BETWEEN_ATTEMPS);
       }
     }
-
-    return transaction;
   }
 
   /**
