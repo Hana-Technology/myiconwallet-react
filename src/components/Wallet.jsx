@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { IconWallet } from 'icon-sdk-js';
+import { WALLET_TYPE } from 'utils/constants';
 import { useIconService } from 'components/IconService';
 
 const INITIAL_STATE = {
@@ -15,6 +16,7 @@ const INITIAL_STATE = {
   createWallet: null,
   unlockWallet: null,
   accessLedgerWallet: null,
+  accessICONexWallet: null,
   unloadWallet: null,
   refreshWallet: null,
   isLoading: false,
@@ -47,6 +49,7 @@ function Wallet({ children }) {
   function unlockWallet(keystore, password) {
     try {
       const wallet = IconWallet.loadKeystore(keystore, password);
+      wallet.type = WALLET_TYPE.KEYSTORE;
       setWallet(wallet);
       setKeystore(keystore);
       refreshWallet(wallet);
@@ -60,10 +63,19 @@ function Wallet({ children }) {
     const newWallet = {
       getAddress: () => wallet.address,
       getPath: () => wallet.path,
-      isLedgerWallet: () => true,
+      type: WALLET_TYPE.LEDGER,
     };
     setWallet(newWallet);
     refreshWallet(newWallet);
+  }
+
+  function accessICONexWallet(address) {
+    const wallet = {
+      getAddress: () => address,
+      type: WALLET_TYPE.ICONEX,
+    };
+    setWallet(wallet);
+    refreshWallet(wallet);
   }
 
   function unloadWallet() {
@@ -113,6 +125,7 @@ function Wallet({ children }) {
         createWallet,
         unlockWallet,
         accessLedgerWallet,
+        accessICONexWallet,
         unloadWallet,
         refreshWallet,
         isLoading,

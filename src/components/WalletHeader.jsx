@@ -3,14 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSyncAlt, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@reach/router';
 import ReactTooltip from 'react-tooltip';
-import { copyToClipboard } from 'utils/copyToClipboard';
+import { COPY_TOOLTIPS, copyToClipboard } from 'utils/copyToClipboard';
 import { formatNumber } from 'utils/formatNumber';
 import { useWallet } from 'components/Wallet';
-
-const COPY_TOOLTIPS = {
-  INITIAL: 'Copy address',
-  COPIED: 'Address copied',
-};
 
 function WalletHeader() {
   const { fullBalance, isLoading, refreshWallet, wallet } = useWallet();
