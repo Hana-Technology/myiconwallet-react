@@ -50,6 +50,9 @@
     "react-scripts": "3.3.0",
     "tailwindcss": "^1.1.4"
   },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
