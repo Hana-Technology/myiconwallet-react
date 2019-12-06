@@ -6,18 +6,16 @@ import queryString from 'query-string';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
+import { WALLET_TYPE } from 'utils/constants';
 import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import LedgerIcon from 'components/LedgerIcon';
+import IconLogo from 'components/Logo';
+import UnlockWithICONex from 'components/UnlockWithICONex';
 import UnlockWithKeystore from 'components/UnlockWithKeystore';
 import UnlockWithLedger from 'components/UnlockWithLedger';
 import authenticationSvg from 'assets/authentication.svg';
-
-const UNLOCK_METHODS = {
-  KEYSTORE: 'keystore',
-  LEDGER: 'ledger',
-};
 
 function TabButton({ className, isActive, ...props }) {
   return (
@@ -33,7 +31,7 @@ function TabButton({ className, isActive, ...props }) {
 
 function UnlockWalletPage({ location }) {
   const { changeNetwork, network } = useIconService();
-  const [unlockMethod, setUnlockMethod] = useState(UNLOCK_METHODS.KEYSTORE);
+  const [unlockMethod, setUnlockMethod] = useState(WALLET_TYPE.KEYSTORE);
 
   function onUnlockWallet() {
     const queryParams = queryString.parse(location.search);
@@ -91,28 +89,39 @@ function UnlockWalletPage({ location }) {
 
           <div className="mt-3">
             <TabButton
-              onClick={() => setUnlockMethod(UNLOCK_METHODS.KEYSTORE)}
-              isActive={unlockMethod === UNLOCK_METHODS.KEYSTORE}
+              onClick={() => setUnlockMethod(WALLET_TYPE.KEYSTORE)}
+              isActive={unlockMethod === WALLET_TYPE.KEYSTORE}
             >
               <FontAwesomeIcon icon={faKey} className="mr-2 opacity-75" />
-              With keystore
+              Keystore
             </TabButton>
             <TabButton
-              onClick={() => setUnlockMethod(UNLOCK_METHODS.LEDGER)}
-              isActive={unlockMethod === UNLOCK_METHODS.LEDGER}
+              onClick={() => setUnlockMethod(WALLET_TYPE.LEDGER)}
+              isActive={unlockMethod === WALLET_TYPE.LEDGER}
               className="ml-2"
             >
               <LedgerIcon className="mr-1 opacity-75" />
-              With Ledger
+              Ledger
+            </TabButton>
+            <TabButton
+              onClick={() => setUnlockMethod(WALLET_TYPE.ICONEX)}
+              isActive={unlockMethod === WALLET_TYPE.ICONEX}
+              className="ml-2"
+            >
+              <IconLogo iconOnly={true} className="mr-2 opacity-75" />
+              ICONex
             </TabButton>
           </div>
 
           <div className="mt-6">
-            {unlockMethod === UNLOCK_METHODS.KEYSTORE && (
+            {unlockMethod === WALLET_TYPE.KEYSTORE && (
               <UnlockWithKeystore onUnlockWallet={onUnlockWallet} />
             )}
-            {unlockMethod === UNLOCK_METHODS.LEDGER && (
+            {unlockMethod === WALLET_TYPE.LEDGER && (
               <UnlockWithLedger onUnlockWallet={onUnlockWallet} />
+            )}
+            {unlockMethod === WALLET_TYPE.ICONEX && (
+              <UnlockWithICONex onUnlockWallet={onUnlockWallet} />
             )}
           </div>
         </div>

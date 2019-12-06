@@ -3,7 +3,7 @@
 exports[`renders with no props passed 1`] = `
 <svg
   aria-label="ICON Foundation logo"
-  class="fill-current inline align-middle "
+  class="fill-current inline align-middle  "
   data-testid="logo"
   role="logo"
   style="height: 0.68em;"

@@ -9,7 +9,7 @@ exports[`renders the logo 1`] = `
   my
   <svg
     aria-label="ICON Foundation logo"
-    class="fill-current inline align-middle text-cyan mx-1"
+    class="fill-current inline align-middle  text-cyan mx-1"
     data-testid="logo"
     role="logo"
     style="height: 0.68em;"

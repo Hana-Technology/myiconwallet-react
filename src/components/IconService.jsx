@@ -9,6 +9,7 @@ import IconSDK, {
   HttpProvider,
   SignedTransaction,
 } from 'icon-sdk-js';
+import { ICONEX_RELAY, WALLET_TYPE } from 'utils/constants';
 import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
 import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { wait } from 'utils/wait';
@@ -232,8 +233,8 @@ function IconService({ children }) {
   }
 
   async function signTransaction(transaction, wallet) {
-    if (wallet.isLedgerWallet) {
-      const rawTransaction = IconConverter.toRawTransaction(transaction);
+    const rawTransaction = IconConverter.toRawTransaction(transaction);
+    if (wallet.type === WALLET_TYPE.LEDGER) {
       const hashKey = IconUtil.generateHashKey(rawTransaction);
       const transport = await Transport.create();
       const icx = new AppIcx(transport);
@@ -243,6 +244,39 @@ function IconService({ children }) {
         getProperties: () => rawTransaction,
         getSignature: () => signedRawTxBase64,
       };
+    } else if (wallet.type === WALLET_TYPE.ICONEX) {
+      const transactionHash = IconUtil.makeTxHash(rawTransaction);
+      return new Promise((resolve, reject) => {
+        window.addEventListener(
+          ICONEX_RELAY.RESPONSE,
+          ({ detail: { type, payload } }) => {
+            if (type === 'RESPONSE_SIGNING') {
+              rawTransaction.signature = payload;
+              resolve({
+                getProperties: () => rawTransaction,
+                getSignature: () => payload,
+              });
+            } else if (type === 'CANCEL_SIGNING') {
+              reject(
+                new Error(
+                  'Transaction was rejected in ICONex. Either the Cancel button was clicked or the ICONex popup was closed.'
+                )
+              );
+            } else {
+              reject(new Error(`Received unknown ICONex event ${type}.`));
+            }
+          },
+          { once: true }
+        );
+        window.dispatchEvent(
+          new CustomEvent(ICONEX_RELAY.REQUEST, {
+            detail: {
+              type: 'REQUEST_SIGNING',
+              payload: { from: wallet.getAddress(), hash: transactionHash },
+            },
+          })
+        );
+      });
     } else {
       return new SignedTransaction(transaction, wallet);
     }
@@ -313,7 +347,7 @@ export default IconService;
  * @typedef {Object} Wallet
  * @property {Function} getAddress
  * @property {Function} [getPath]
- * @property {boolean} [isLedgerWallet]
+ * @property {'keystore'|'ledger'|'iconex'} type
  *
  * @typedef {Object} PRep
  * @property {string} address a wallet address
