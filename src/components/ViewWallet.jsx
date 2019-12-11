@@ -42,6 +42,7 @@ function ViewWallet() {
   } = useIconService();
   const {
     balance,
+    delegations,
     fullBalance,
     stake: { staked, unstaking },
     iScore: { iScore, estimatedICX },
@@ -258,13 +259,15 @@ function ViewWallet() {
                       <FontAwesomeIcon icon={faExchangeAlt} className="mr-2 opacity-75" />
                       Convert to ICX
                     </button>
-                    <button
-                      onClick={() => setIsCSVModalOpen(true)}
-                      className="bg-gray-100 border border-gray-300 uppercase tracking-tight text-gray-700 px-2 py-px rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow ml-4"
-                    >
-                      <FontAwesomeIcon icon={faRetweet} className="mr-2 opacity-75" />
-                      Claim-Stake-Vote
-                    </button>
+                    {delegations && delegations.length > 0 && (
+                      <button
+                        onClick={() => setIsCSVModalOpen(true)}
+                        className="bg-gray-100 border border-gray-300 uppercase tracking-tight text-gray-700 px-2 py-px rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow ml-4"
+                      >
+                        <FontAwesomeIcon icon={faRetweet} className="mr-2 opacity-75" />
+                        Claim-Stake-Vote
+                      </button>
+                    )}
                   </>
                 )}
               </div>
