@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import PropTypes from 'prop-types';
+import { WALLET_TYPE } from 'utils/constants';
 import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
@@ -188,30 +189,13 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
               Claim <b>{formatNumber(iScore)}&nbsp;I-Score</b> as an estimated{' '}
               <b>{formatNumber(estimatedICX)}&nbsp;ICX</b>
             </p>
-            {claim.error && (
-              <div className="mt-4">
-                <div className="text-xs text-red-700 uppercase tracking-tight">Error</div>
-                {claim.error}
-              </div>
-            )}
-            {claim.isFinished && (
-              <div className="mt-4">
-                <div className="text-xs text-green-700 uppercase tracking-tight">
-                  Transaction hash
-                </div>
-                <div className="text-sm break-all">
-                  {claim.transactionHash}
-                  <a
-                    href={`${trackerUrl}/transaction/${claim.transactionHash}`}
-                    title="View on ICON tracker"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
-                  </a>
-                </div>
-              </div>
-            )}
+            <ErrorMessage error={claim.error} />
+            <ConfirmTransaction isWorking={claim.isWorking} walletType={wallet.type} />
+            <TransactionResult
+              isFinished={claim.isFinished}
+              transactionHash={claim.transactionHash}
+              trackerUrl={trackerUrl}
+            />
           </div>
 
           <div className={`w-1/3 p-3 ml-2 rounded-sm ${getColours(stake)}`}>
@@ -229,30 +213,13 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
               Increase stake to{' '}
               <b>{formatNumber(staked.plus(claim.data.claimedICX || estimatedICX))}&nbsp;ICX</b>
             </p>
-            {stake.error && (
-              <div className="mt-4">
-                <div className="text-xs text-red-700 uppercase tracking-tight">Error</div>
-                {stake.error}
-              </div>
-            )}
-            {stake.isFinished && (
-              <div className="mt-4">
-                <div className="text-xs text-green-700 uppercase tracking-tight">
-                  Transaction hash
-                </div>
-                <div className="text-sm break-all">
-                  {stake.transactionHash}
-                  <a
-                    href={`${trackerUrl}/transaction/${stake.transactionHash}`}
-                    title="View on ICON tracker"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
-                  </a>
-                </div>
-              </div>
-            )}
+            <ErrorMessage error={stake.error} />
+            <ConfirmTransaction isWorking={stake.isWorking} walletType={wallet.type} />
+            <TransactionResult
+              isFinished={stake.isFinished}
+              transactionHash={stake.transactionHash}
+              trackerUrl={trackerUrl}
+            />
           </div>
 
           <div className={`w-1/3 p-3 ml-2 rounded-sm ${getColours(vote)}`}>
@@ -276,30 +243,13 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
               </b>{' '}
               to each of your <b>{delegations.length} delegation(s)</b>
             </p>
-            {vote.error && (
-              <div className="mt-4">
-                <div className="text-xs text-red-700 uppercase tracking-tight">Error</div>
-                {vote.error}
-              </div>
-            )}
-            {vote.isFinished && (
-              <div className="mt-4">
-                <div className="text-xs text-green-700 uppercase tracking-tight">
-                  Transaction hash
-                </div>
-                <div className="text-sm break-all">
-                  {vote.transactionHash}
-                  <a
-                    href={`${trackerUrl}/transaction/${vote.transactionHash}`}
-                    title="View on ICON tracker"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
-                  </a>
-                </div>
-              </div>
-            )}
+            <ErrorMessage error={vote.error} />
+            <ConfirmTransaction isWorking={vote.isWorking} walletType={wallet.type} />
+            <TransactionResult
+              isFinished={vote.isFinished}
+              transactionHash={vote.transactionHash}
+              trackerUrl={trackerUrl}
+            />
           </div>
         </div>
       )}
@@ -312,7 +262,13 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
         ) : claim.error || stake.error || vote.error ? (
           <Button
             type="button"
-            onClick={claim.error ? handleClaim : stake.error ? handleStake : handleVote}
+            onClick={() =>
+              claim.error
+                ? handleClaim()
+                : stake.error
+                ? handleStake(claim.data.claimedICX)
+                : handleVote(claim.data.claimedICX)
+            }
             className="mt-6"
           >
             Retry {claim.error ? 'claim' : stake.error ? 'stake' : 'vote'}
@@ -333,3 +289,52 @@ ClaimStakeVoteModal.propTypes = {
 };
 
 export default ClaimStakeVoteModal;
+
+function ErrorMessage({ error }) {
+  return error ? (
+    <div className="mt-4">
+      <div className="text-xs text-red-700 uppercase tracking-tight">Error</div>
+      <div className="text-sm">{error}</div>
+    </div>
+  ) : null;
+}
+
+function TransactionResult({ isFinished, trackerUrl, transactionHash }) {
+  return isFinished ? (
+    <div className="mt-4">
+      <div className="text-xs text-green-700 uppercase tracking-tight">Transaction hash</div>
+      <div className="text-sm break-all">
+        {transactionHash}
+        <a
+          href={`${trackerUrl}/transaction/${transactionHash}`}
+          title="View on ICON tracker"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 opacity-75" />
+        </a>
+      </div>
+    </div>
+  ) : null;
+}
+
+function ConfirmTransaction({ isWorking, walletType }) {
+  return isWorking && walletType !== WALLET_TYPE.KEYSTORE ? (
+    <div className="mt-4">
+      <div className="text-xs text-blue-700 uppercase tracking-tight">Confirm transaction</div>
+      <div className="text-sm">
+        {walletType === WALLET_TYPE.LEDGER ? (
+          <>
+            Make sure your Ledger device is connected and unlocked with the <b>ICON</b> app running.
+            You will need to confirm the transaction on your Ledger.
+          </>
+        ) : (
+          <>
+            Enter your wallet password and click the <i>Confirm</i> button in the <b>ICONex</b>{' '}
+            popup to confirm the transaction.
+          </>
+        )}
+      </div>
+    </div>
+  ) : null;
+}
