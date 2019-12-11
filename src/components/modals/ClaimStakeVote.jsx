@@ -12,6 +12,7 @@ import BigNumber from 'bignumber.js';
 import PropTypes from 'prop-types';
 import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
+import { wait } from 'utils/wait';
 import BaseModal from 'components/modals/Base';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
@@ -135,9 +136,10 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     setHasFinished(true);
   }
 
-  function handleClose() {
-    refreshWallet();
+  async function handleClose() {
     onClose();
+    await wait(500);
+    refreshWallet();
   }
 
   function getColours(step) {
