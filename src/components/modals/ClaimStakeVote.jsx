@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleNotch,
@@ -30,6 +30,7 @@ const INITIAL_STATE = {
 };
 
 const ACTIONS = {
+  SET_INITIAL: 'SET INITIAL',
   SET_WORKING: 'SET WORKING',
   SET_FINISHED: 'SET FINISHED',
   SET_ERROR: 'SET ERROR',
@@ -37,6 +38,8 @@ const ACTIONS = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case ACTIONS.SET_INITIAL:
+      return INITIAL_STATE;
     case ACTIONS.SET_WORKING:
       return { ...state, isWorking: true, error: null };
     case ACTIONS.SET_FINISHED:
@@ -69,6 +72,16 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
   const [claim, claimDispatch] = useReducer(reducer, INITIAL_STATE);
   const [stake, stakeDispatch] = useReducer(reducer, INITIAL_STATE);
   const [vote, voteDispatch] = useReducer(reducer, INITIAL_STATE);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHasStarted(false);
+      setHasFinished(false);
+      claimDispatch({ type: ACTIONS.SET_INITIAL });
+      stakeDispatch({ type: ACTIONS.SET_INITIAL });
+      voteDispatch({ type: ACTIONS.SET_INITIAL });
+    }
+  }, [isOpen]);
 
   async function handleClaim() {
     setHasStarted(true);
