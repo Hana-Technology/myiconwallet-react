@@ -166,9 +166,39 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
   }
 
   return (
-    <BaseModal isOpen={isOpen} onClose={onClose} aria-label="Claim-Stake-Vote">
-      <h3 className="text-xl uppercase tracking-tight">Claim-Stake-Vote</h3>
-      <p className="mt-4">
+    <BaseModal
+      isOpen={isOpen}
+      onClose={onClose}
+      aria-label="Claim-Stake-Vote"
+      buttons={
+        <>
+          {!hasFinished &&
+            (claim.error || stake.error || vote.error ? (
+              <Button
+                type="button"
+                onClick={() =>
+                  claim.error
+                    ? handleClaim()
+                    : stake.error
+                    ? handleStake(claim.data.claimedICX)
+                    : handleVote(claim.data.claimedICX)
+                }
+                className="ml-4"
+              >
+                Retry {claim.error ? 'claim' : stake.error ? 'stake' : 'vote'}
+              </Button>
+            ) : (
+              <Button type="button" onClick={handleClaim} disabled={hasStarted} className="ml-4">
+                Continue
+              </Button>
+            ))}
+          <Button type="button" onClick={handleClose} muted={!hasFinished}>
+            {hasFinished ? 'Ok' : 'Cancel'}
+          </Button>
+        </>
+      }
+    >
+      <p>
         Use this feature to claim your current I-Score as ICX, immediately stake the claimed ICX and
         then allocate the votes evenly to your current P-Rep delegations.
       </p>
@@ -253,32 +283,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
           </div>
         </div>
       )}
-
-      <div className="flex flex-row-reverse">
-        {hasFinished ? (
-          <Button type="button" onClick={handleClose} className="mt-6">
-            Close
-          </Button>
-        ) : claim.error || stake.error || vote.error ? (
-          <Button
-            type="button"
-            onClick={() =>
-              claim.error
-                ? handleClaim()
-                : stake.error
-                ? handleStake(claim.data.claimedICX)
-                : handleVote(claim.data.claimedICX)
-            }
-            className="mt-6"
-          >
-            Retry {claim.error ? 'claim' : stake.error ? 'stake' : 'vote'}
-          </Button>
-        ) : (
-          <Button type="button" onClick={handleClaim} disabled={hasStarted} className="mt-6">
-            Continue
-          </Button>
-        )}
-      </div>
     </BaseModal>
   );
 }

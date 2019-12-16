@@ -4,7 +4,7 @@ import { DialogContent, DialogOverlay } from '@reach/dialog';
 import PropTypes from 'prop-types';
 import { animated, useTransition } from 'react-spring';
 
-function BaseModal({ isOpen, onClose, children, ...props }) {
+function BaseModal({ buttons = null, isOpen, onClose, children, ...props }) {
   const AnimatedDialogContent = animated(DialogContent);
   const AnimatedDialogOverlay = animated(DialogOverlay);
   const transitions = useTransition(isOpen, null, {
@@ -27,7 +27,8 @@ function BaseModal({ isOpen, onClose, children, ...props }) {
               <VisuallyHidden>Close</VisuallyHidden>
               <span aria-hidden>×</span>
             </button> */}
-            <>{children}</>
+            <div className="p-5">{children}</div>
+            <div className="bg-gray-100 p-5 flex flex-row-reverse">{buttons}</div>
           </AnimatedDialogContent>
         </AnimatedDialogOverlay>
       )
@@ -35,6 +36,7 @@ function BaseModal({ isOpen, onClose, children, ...props }) {
 }
 
 BaseModal.propTypes = {
+  buttons: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

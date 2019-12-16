@@ -10,7 +10,7 @@
 
 /* Reach UI - Dialog (Modal) overrides */
 [data-reach-dialog-content] {
-  @apply bg-white text-gray-900 rounded;
+  @apply bg-white text-gray-900 p-0 rounded overflow-hidden;
 }
 
 /* Base font styles */
