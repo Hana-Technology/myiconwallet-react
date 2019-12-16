@@ -1,10 +1,9 @@
 import React from 'react';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
-// import VisuallyHidden from '@reach/visually-hidden';
 import PropTypes from 'prop-types';
 import { animated, useTransition } from 'react-spring';
 
-function BaseModal({ buttons = null, isOpen, onClose, children, ...props }) {
+function BaseModal({ buttons = null, isOpen, onClose, children, wide, ...props }) {
   const AnimatedDialogContent = animated(DialogContent);
   const AnimatedDialogOverlay = animated(DialogOverlay);
   const transitions = useTransition(isOpen, null, {
@@ -21,12 +20,9 @@ function BaseModal({ buttons = null, isOpen, onClose, children, ...props }) {
             style={{
               transform: styles.y.interpolate(value => `translate3d(0px, ${value}px, 0px)`),
             }}
+            className={wide ? 'wide' : ''}
             {...props}
           >
-            {/* <button onClick={onClose}>
-              <VisuallyHidden>Close</VisuallyHidden>
-              <span aria-hidden>×</span>
-            </button> */}
             <div className="p-5">{children}</div>
             <div className="bg-gray-100 p-5 flex flex-row-reverse">{buttons}</div>
           </AnimatedDialogContent>
@@ -40,6 +36,7 @@ BaseModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  wide: PropTypes.bool,
 };
 
 export default BaseModal;

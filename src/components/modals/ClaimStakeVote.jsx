@@ -182,6 +182,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     <BaseModal
       isOpen={isOpen}
       onClose={onClose}
+      wide={true}
       aria-label="Claim-Stake-Vote"
       buttons={
         <>
@@ -216,8 +217,8 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
         then allocate the votes evenly to your current P-Rep delegations.
       </p>
       {iScore && staked && delegations && (
-        <div className="flex mt-6">
-          <div className={`w-1/3 p-3 rounded-sm ${getColours(claim)}`}>
+        <div className="sm:flex mt-6">
+          <div className={`sm:w-1/3 p-3 rounded-sm ${getColours(claim)}`}>
             <h4 className="text-lg text-center uppercase tracking-tight">
               Claim{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
             </h4>
@@ -241,7 +242,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className={`w-1/3 p-3 ml-2 rounded-sm ${getColours(stake)}`}>
+          <div className={`sm:w-1/3 p-3 mt-2 sm:mt-0 sm:ml-2 rounded-sm ${getColours(stake)}`}>
             <h4 className="text-lg text-center uppercase tracking-tight">
               Stak{stake.isWorking ? 'ing' : stake.isFinished ? 'ed' : 'e'}
             </h4>
@@ -265,7 +266,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className={`w-1/3 p-3 ml-2 rounded-sm ${getColours(vote)}`}>
+          <div className={`sm:w-1/3 p-3 mt-2 sm:mt-0 sm:ml-2 rounded-sm ${getColours(vote)}`}>
             <h4 className="text-lg text-center uppercase tracking-tight">
               Vot{vote.isWorking ? 'ing' : vote.isFinished ? 'ed' : 'e'}
             </h4>

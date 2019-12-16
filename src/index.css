@@ -10,7 +10,20 @@
 
 /* Reach UI - Dialog (Modal) overrides */
 [data-reach-dialog-content] {
-  @apply bg-white text-gray-900 p-0 rounded overflow-hidden;
+  @apply bg-white text-gray-900 p-0 rounded overflow-hidden w-11/12;
+}
+@media (min-width: 640px) {
+  [data-reach-dialog-content] {
+    width: 478px;
+  }
+  [data-reach-dialog-content].wide {
+    @apply w-10/12;
+  }
+}
+@media (min-width: 768px) {
+  [data-reach-dialog-content].wide {
+    @apply w-9/12;
+  }
 }
 
 /* Base font styles */
