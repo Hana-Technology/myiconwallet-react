@@ -15,6 +15,7 @@ import { convertLoopToIcx } from 'utils/convertIcx';
 import { formatNumber } from 'utils/formatNumber';
 import { wait } from 'utils/wait';
 import BaseModal from 'components/modals/Base';
+import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
@@ -89,7 +90,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
 
     let claimedICX;
     try {
-      // TODO: show message for Ledger and ICONex to approve transaction
       const transactionHash = await claimIScore(wallet);
       const transaction = await waitForTransaction(transactionHash, 100);
       const claimedICXAsLoop = transaction.eventLogs.find(({ indexed }) =>
@@ -114,7 +114,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     const stakeAmount = staked.plus(claimedICX);
 
     try {
-      // TODO: show message for Ledger and ICONex to approve transaction
       const transactionHash = await setStake(wallet, stakeAmount);
       await waitForTransaction(transactionHash, 100);
       stakeDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash } });
@@ -138,7 +137,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     }));
 
     try {
-      // TODO: show message for Ledger and ICONex to approve transaction
       const transactionHash = await setDelegations(wallet, delegationsToSet);
       await waitForTransaction(transactionHash, 100);
       voteDispatch({ type: ACTIONS.SET_FINISHED, payload: { transactionHash } });
@@ -154,17 +152,6 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
     onClose();
     await wait(500);
     refreshWallet();
-  }
-
-  function getColours(step) {
-    switch (true) {
-      case step.error !== null:
-        return 'bg-red-100 text-red-900';
-      case step.isFinished:
-        return 'bg-green-100 text-green-900';
-      default:
-        return 'bg-blue-100 text-blue-900';
-    }
   }
 
   function getIcon(step, defaultIcon) {
@@ -218,21 +205,25 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       </p>
       {iScore && staked && delegations && (
         <div className="sm:flex mt-6">
-          <div className={`sm:w-1/3 p-3 rounded-sm ${getColours(claim)}`}>
-            <h4 className="text-lg text-center uppercase tracking-tight">
-              Claim{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
-            </h4>
-            <div className="text-center my-6">
+          <div className="sm:w-1/3 p-3 bg-gray-100 rounded-sm shadow-md">
+            <h3 className="text-xl text-center uppercase tracking-tight">
               <FontAwesomeIcon
                 icon={getIcon(claim, faExchangeAlt)}
-                className="text-3xl opacity-75"
+                className="opacity-75 mr-3"
                 spin={claim.isWorking}
               />
-            </div>
-            <p className="mt-4">
-              Claim <b>{formatNumber(iScore)}&nbsp;I-Score</b> as an estimated{' '}
-              <b>{formatNumber(estimatedICX)}&nbsp;ICX</b>
-            </p>
+              Claim{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
+            </h3>
+            <Alert
+              type={claim.isFinished ? ALERT_TYPE_SUCCESS : ALERT_TYPE_INFO}
+              className="mt-4"
+              text={
+                <>
+                  Converting <b>{formatNumber(iScore)}&nbsp;I-Score</b> to an estimated{' '}
+                  <b>{formatNumber(estimatedICX)}&nbsp;ICX</b>
+                </>
+              }
+            />
             <ErrorMessage error={claim.error} />
             <ConfirmTransaction isWorking={claim.isWorking} walletType={wallet.type} />
             <TransactionResult
@@ -242,21 +233,26 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className={`sm:w-1/3 p-3 mt-2 sm:mt-0 sm:ml-2 rounded-sm ${getColours(stake)}`}>
-            <h4 className="text-lg text-center uppercase tracking-tight">
-              Stak{stake.isWorking ? 'ing' : stake.isFinished ? 'ed' : 'e'}
-            </h4>
-            <div className="text-center my-6">
+          <div className="sm:w-1/3 p-3 mt-3 sm:mt-0 sm:ml-3 bg-gray-100 rounded-sm shadow-md">
+            <h4 className="text-xl text-center uppercase tracking-tight">
               <FontAwesomeIcon
                 icon={getIcon(stake, faFlag)}
-                className="text-3xl opacity-75"
+                className="opacity-75 mr-3"
                 spin={stake.isWorking}
               />
-            </div>
-            <p className="mt-4">
-              Increase stake to{' '}
-              <b>{formatNumber(staked.plus(claim.data.claimedICX || estimatedICX))}&nbsp;ICX</b>
-            </p>
+              Stak{stake.isWorking ? 'ing' : stake.isFinished ? 'ed' : 'e'}
+            </h4>
+            <Alert
+              type={stake.isFinished ? ALERT_TYPE_SUCCESS : ALERT_TYPE_INFO}
+              className="mt-4"
+              text={
+                <>
+                  Increasing your stake by{' '}
+                  <b>{formatNumber(claim.data.claimedICX || estimatedICX)}&nbsp;ICX</b> to{' '}
+                  <b>{formatNumber(staked.plus(claim.data.claimedICX || estimatedICX))}&nbsp;ICX</b>
+                </>
+              }
+            />
             <ErrorMessage error={stake.error} />
             <ConfirmTransaction isWorking={stake.isWorking} walletType={wallet.type} />
             <TransactionResult
@@ -266,27 +262,30 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className={`sm:w-1/3 p-3 mt-2 sm:mt-0 sm:ml-2 rounded-sm ${getColours(vote)}`}>
-            <h4 className="text-lg text-center uppercase tracking-tight">
-              Vot{vote.isWorking ? 'ing' : vote.isFinished ? 'ed' : 'e'}
-            </h4>
-            <div className="text-center my-6">
+          <div className="sm:w-1/3 p-3 mt-3 sm:mt-0 sm:ml-3 bg-gray-100 rounded-sm shadow-md">
+            <h4 className="text-xl text-center uppercase tracking-tight">
               <FontAwesomeIcon
                 icon={getIcon(vote, faVoteYea)}
-                className="text-3xl opacity-75"
+                className="opacity-75 mr-3"
                 spin={vote.isWorking}
               />
-            </div>
-            <p className="mt-4">
-              Add{' '}
-              <b>
-                {formatNumber(
-                  (claim.data.claimedICX || estimatedICX).dividedBy(delegations.length)
-                )}
-                &nbsp;votes
-              </b>{' '}
-              to each of your <b>{delegations.length} delegation(s)</b>
-            </p>
+              Vot{vote.isWorking ? 'ing' : vote.isFinished ? 'ed' : 'e'}
+            </h4>
+            <Alert
+              type={vote.isFinished ? ALERT_TYPE_SUCCESS : ALERT_TYPE_INFO}
+              className="mt-4"
+              text={
+                <>
+                  Increasing your votes to each of your <b>{delegations.length} delegate(s)</b> by{' '}
+                  <b>
+                    {formatNumber(
+                      (claim.data.claimedICX || estimatedICX).dividedBy(delegations.length)
+                    )}
+                    &nbsp;ICX
+                  </b>
+                </>
+              }
+            />
             <ErrorMessage error={vote.error} />
             <ConfirmTransaction isWorking={vote.isWorking} walletType={wallet.type} />
             <TransactionResult
@@ -310,17 +309,14 @@ export default ClaimStakeVoteModal;
 
 function ErrorMessage({ error }) {
   return error ? (
-    <div className="mt-4">
-      <div className="text-xs text-red-700 uppercase tracking-tight">Error</div>
-      <div className="text-sm">{error}</div>
-    </div>
+    <Alert type={ALERT_TYPE_DANGER} className="mt-4" title="Error" text={error} />
   ) : null;
 }
 
 function TransactionResult({ isFinished, trackerUrl, transactionHash }) {
   return isFinished ? (
     <div className="mt-4">
-      <div className="text-xs text-green-700 uppercase tracking-tight">Transaction hash</div>
+      <div className="text-xs text-gray-600 uppercase tracking-tight">Transaction hash</div>
       <div className="text-sm break-all">
         {transactionHash}
         <a
@@ -339,7 +335,7 @@ function TransactionResult({ isFinished, trackerUrl, transactionHash }) {
 function ConfirmTransaction({ isWorking, walletType }) {
   return isWorking && walletType !== WALLET_TYPE.KEYSTORE ? (
     <div className="mt-4">
-      <div className="text-xs text-blue-700 uppercase tracking-tight">Confirm transaction</div>
+      <div className="text-xs text-gray-600 uppercase tracking-tight">Confirm transaction</div>
       <div className="text-sm">
         {walletType === WALLET_TYPE.LEDGER ? (
           <>
