@@ -19,7 +19,9 @@
     "@fortawesome/react-fontawesome": "^0.1.8",
     "@ledgerhq/hw-app-icx": "file:packages/hw-app-icx",
     "@ledgerhq/hw-transport-u2f": "^4.78.0",
+    "@reach/dialog": "^0.6.4",
     "@reach/router": "^1.2.1",
+    "@reach/visually-hidden": "^0.6.2",
     "@sweetalert/with-react": "^0.1.1",
     "bignumber.js": "^9.0.0",
     "chart.js": "^2.9.3",
@@ -32,6 +34,7 @@
     "react-dom": "^16.12.0",
     "react-rangeslider": "^2.2.0",
     "react-select": "^3.0.8",
+    "react-spring": "^8.0.27",
     "react-switch": "^5.0.1",
     "react-tooltip": "^3.11.1",
     "sweetalert": "^2.1.2"

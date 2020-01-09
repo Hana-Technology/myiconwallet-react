@@ -9,7 +9,7 @@ function Layout({ children, styleMain = true, title }) {
   }, [title]);
 
   return (
-    <div className="flex flex-col min-h-screen font-sans font-light">
+    <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4">
         {styleMain ? (
