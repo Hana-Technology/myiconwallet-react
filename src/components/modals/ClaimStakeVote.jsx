@@ -170,7 +170,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       isOpen={isOpen}
       onClose={onClose}
       wide={true}
-      aria-label="Claim-Stake-Vote"
+      aria-label="Convert-Stake-Vote"
       buttons={
         <>
           {!hasFinished &&
@@ -186,7 +186,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
                 }
                 className="ml-4"
               >
-                Retry {claim.error ? 'claim' : stake.error ? 'stake' : 'vote'}
+                Retry {claim.error ? 'convert' : stake.error ? 'stake' : 'vote'}
               </Button>
             ) : (
               <Button type="button" onClick={handleClaim} disabled={hasStarted} className="ml-4">
@@ -200,8 +200,8 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       }
     >
       <p>
-        Use this feature to claim your current I-Score as ICX, immediately stake the claimed ICX and
-        then allocate the votes evenly to your current P-Rep delegations.
+        Use this feature to convert your current I-Score to ICX, immediately stake the claimed ICX
+        and then allocate the votes evenly to your current P-Rep delegations.
       </p>
       {iScore && staked && delegations && (
         <div className="sm:flex mt-6">
@@ -212,7 +212,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
                 className="opacity-75 mr-3"
                 spin={claim.isWorking}
               />
-              Claim{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
+              Convert{claim.isWorking ? 'ing' : claim.isFinished ? 'ed' : ''}
             </h3>
             <Alert
               type={claim.isFinished ? ALERT_TYPE_SUCCESS : ALERT_TYPE_INFO}

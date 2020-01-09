@@ -265,7 +265,7 @@ function ViewWallet() {
                         className="bg-gray-100 border border-gray-300 uppercase tracking-tight text-gray-700 px-2 py-px rounded hover:bg-gray-200 focus:bg-gray-200 hover:shadow focus:shadow ml-4"
                       >
                         <FontAwesomeIcon icon={faRetweet} className="mr-2 opacity-75" />
-                        Claim-Stake-Vote
+                        Convert-Stake-Vote
                       </button>
                     )}
                   </>
