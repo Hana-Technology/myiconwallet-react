@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
+import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
 import PropTypes from 'prop-types';
 import { IconWallet } from 'icon-sdk-js';
-import { WALLET_TYPE } from 'utils/constants';
 import { useIconService } from 'components/IconService';
 
 const INITIAL_STATE = {

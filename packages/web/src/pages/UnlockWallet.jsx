@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import colors from '@myiconwallet/shared/utils/colors';
+import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from '@myiconwallet/shared/utils/network';
 import { navigate } from '@reach/router';
 import queryString from 'query-string';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
-import colors from 'utils/colors';
-import { WALLET_TYPE } from 'utils/constants';
-import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
 import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import LedgerIcon from 'components/LedgerIcon';

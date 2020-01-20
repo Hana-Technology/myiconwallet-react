@@ -1,0 +1,14 @@
+{
+  "name": "@myiconwallet/shared",
+  "description": "Shared utils and components for MyIconWallet",
+  "version": "1.0.0",
+  "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bignumber.js": "^9.0.0",
+    "icon-sdk-js": "^0.0.18",
+    "lodash-es": "^4.17.15",
+    "react": "^16.12.0"
+  }
+}

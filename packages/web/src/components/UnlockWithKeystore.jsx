@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
+import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import {
   ERROR_FAILED_READING_FILE,
   ERROR_INVALID_KEYSTORE,
   readKeystoreFile,
 } from 'utils/readKeystoreFile';
-import { useTextInput } from 'utils/useTextInput';
-import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';

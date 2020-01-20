@@ -9,13 +9,13 @@ import {
   faShareSquare,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import colors from '@myiconwallet/shared/utils/colors';
+import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
 import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import ReactTooltip from 'react-tooltip';
-import colors from 'utils/colors';
-import { WALLET_TYPE } from 'utils/constants';
 import { COPY_TOOLTIPS, copyToClipboard } from 'utils/copyToClipboard';
-import { formatNumber } from 'utils/formatNumber';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';

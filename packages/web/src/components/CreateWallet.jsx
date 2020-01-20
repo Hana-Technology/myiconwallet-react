@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { PASSWORD_COMPLEXITY_REGEXP } from '@myiconwallet/shared/utils/constants';
+import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import PropTypes from 'prop-types';
-import { PASSWORD_COMPLEXITY_REGEXP } from 'utils/constants';
-import { useTextInput } from 'utils/useTextInput';
-import { wait } from 'utils/wait';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
 import { useWallet } from 'components/Wallet';

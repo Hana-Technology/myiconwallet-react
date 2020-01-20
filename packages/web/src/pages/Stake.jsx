@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-solid-svg-icons';
+import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from '@myiconwallet/shared/utils/constants';
+import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import BigNumber from 'bignumber.js';
 import Slider from 'react-rangeslider';
-import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from 'utils/constants';
-import { formatNumber } from 'utils/formatNumber';
-import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { useIconService } from 'components/IconService';

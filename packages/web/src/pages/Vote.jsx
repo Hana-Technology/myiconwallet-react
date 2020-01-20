@@ -6,14 +6,14 @@ import {
   faTimes,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import { WALLET_TYPE, ZERO } from '@myiconwallet/shared/utils/constants';
+import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
 import Select from 'react-select';
 import { shuffle } from 'lodash-es';
-import { WALLET_TYPE, ZERO } from 'utils/constants';
-import { formatNumber } from 'utils/formatNumber';
-import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { InputGroup } from 'components/Forms';

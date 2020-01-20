@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faShareSquare } from '@fortawesome/free-solid-svg-icons';
+import { TRANSACTION_FEE, WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
-import { TRANSACTION_FEE, WALLET_TYPE } from 'utils/constants';
-import { formatNumber } from 'utils/formatNumber';
-import { useTextInput } from 'utils/useTextInput';
-import { wait } from 'utils/wait';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';

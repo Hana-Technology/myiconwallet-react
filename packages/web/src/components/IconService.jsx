@@ -2,6 +2,14 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
+import { ICONEX_RELAY, WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { convertIcxToLoop, convertLoopToIcx } from '@myiconwallet/shared/utils/convertIcx';
+import {
+  getNetwork,
+  NETWORK_REF_MAINNET,
+  NETWORK_REF_TESTNET,
+} from '@myiconwallet/shared/utils/network';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import IconSDK, {
   IconBuilder,
   IconConverter,
@@ -9,10 +17,6 @@ import IconSDK, {
   HttpProvider,
   SignedTransaction,
 } from 'icon-sdk-js';
-import { ICONEX_RELAY, WALLET_TYPE } from 'utils/constants';
-import { convertIcxToLoop, convertLoopToIcx } from 'utils/convertIcx';
-import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from 'utils/network';
-import { wait } from 'utils/wait';
 
 const API_VERSION = IconConverter.toBigNumber(3);
 const GOVERNANCE_ADDRESS = 'cx0000000000000000000000000000000000000001';

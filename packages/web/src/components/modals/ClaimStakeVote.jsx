@@ -8,12 +8,12 @@ import {
   faFlag,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { convertLoopToIcx } from '@myiconwallet/shared/utils/convertIcx';
+import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { wait } from '@myiconwallet/shared/utils/wait';
 import BigNumber from 'bignumber.js';
 import PropTypes from 'prop-types';
-import { WALLET_TYPE } from 'utils/constants';
-import { convertLoopToIcx } from 'utils/convertIcx';
-import { formatNumber } from 'utils/formatNumber';
-import { wait } from 'utils/wait';
 import BaseModal from 'components/modals/Base';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
