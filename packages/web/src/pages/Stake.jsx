@@ -15,7 +15,6 @@ import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
 import financeSvg from 'assets/finance.svg';
-import 'react-rangeslider/lib/index.css';
 
 function StakePage() {
   const {

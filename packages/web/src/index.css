@@ -8,6 +8,9 @@
 /* Reach UI imports */
 @import '@reach/dialog/styles.css';
 
+/* React-Rangeslider */
+@import 'react-rangeslider/lib/index.css';
+
 /* Reach UI - Dialog (Modal) overrides */
 [data-reach-dialog-content] {
   @apply bg-white text-gray-900 p-0 rounded overflow-hidden w-11/12;
