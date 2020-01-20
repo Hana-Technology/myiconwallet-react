@@ -1,0 +1,11 @@
+[build]
+  base = "packages/web/"
+  build = "packages/web/build/"
+  command = "yarn test && yarn build"
+  ignore = "git diff --quiet HEAD^ HEAD packages/web/"
+
+# Clean URLs for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
