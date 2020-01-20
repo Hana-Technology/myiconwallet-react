@@ -9,7 +9,7 @@ import {
   faVoteYea,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { NETWORK_REF_TESTNET } from '@myiconwallet/shared/utils/network';
+import { NETWORK_REF_TESTNET } from '@myiconwallet/utils/network';
 import { Link, navigate } from '@reach/router';
 import { useIconService } from 'components/IconService';
 import Logo from 'components/Logo';

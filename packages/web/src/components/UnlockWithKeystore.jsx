@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
-import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { useTextInput } from '@myiconwallet/utils/useTextInput';
+import { wait } from '@myiconwallet/utils/wait';
 import {
   ERROR_FAILED_READING_FILE,
   ERROR_INVALID_KEYSTORE,

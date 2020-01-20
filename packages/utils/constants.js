@@ -1,4 +1,4 @@
-import { convertLoopToIcx } from '@myiconwallet/shared/utils/convertIcx';
+import { convertLoopToIcx } from '@myiconwallet/utils/convertIcx';
 import { IconConverter } from 'icon-sdk-js';
 
 export const WALLET_TYPE = {

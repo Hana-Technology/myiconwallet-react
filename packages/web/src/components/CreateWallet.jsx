@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { PASSWORD_COMPLEXITY_REGEXP } from '@myiconwallet/shared/utils/constants';
-import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { PASSWORD_COMPLEXITY_REGEXP } from '@myiconwallet/utils/constants';
+import { useTextInput } from '@myiconwallet/utils/useTextInput';
+import { wait } from '@myiconwallet/utils/wait';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';

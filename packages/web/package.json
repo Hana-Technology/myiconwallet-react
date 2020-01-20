@@ -19,7 +19,7 @@
     "@fortawesome/react-fontawesome": "^0.1.8",
     "@ledgerhq/hw-app-icx": "0.1.0",
     "@ledgerhq/hw-transport-u2f": "^4.78.0",
-    "@myiconwallet/shared": "1.0.0",
+    "@myiconwallet/utils": "1.0.0",
     "@reach/dialog": "^0.6.4",
     "@reach/router": "^1.2.1",
     "@reach/visually-hidden": "^0.6.2",

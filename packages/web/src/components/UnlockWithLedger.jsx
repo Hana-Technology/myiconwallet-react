@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import swal from '@sweetalert/with-react';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO } from 'components/Alert';
 import Button from 'components/Button';

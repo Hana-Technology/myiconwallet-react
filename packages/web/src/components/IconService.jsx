@@ -2,14 +2,10 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import AppIcx from '@ledgerhq/hw-app-icx';
-import { ICONEX_RELAY, WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
-import { convertIcxToLoop, convertLoopToIcx } from '@myiconwallet/shared/utils/convertIcx';
-import {
-  getNetwork,
-  NETWORK_REF_MAINNET,
-  NETWORK_REF_TESTNET,
-} from '@myiconwallet/shared/utils/network';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { ICONEX_RELAY, WALLET_TYPE } from '@myiconwallet/utils/constants';
+import { convertIcxToLoop, convertLoopToIcx } from '@myiconwallet/utils/convertIcx';
+import { getNetwork, NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from '@myiconwallet/utils/network';
+import { wait } from '@myiconwallet/utils/wait';
 import IconSDK, {
   IconBuilder,
   IconConverter,

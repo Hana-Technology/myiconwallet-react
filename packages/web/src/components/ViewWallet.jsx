@@ -9,9 +9,9 @@ import {
   faShareSquare,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
-import colors from '@myiconwallet/shared/utils/colors';
-import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import colors from '@myiconwallet/utils/colors';
+import { WALLET_TYPE } from '@myiconwallet/utils/constants';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import swal from '@sweetalert/with-react';
 import { Pie } from 'react-chartjs-2';
 import ReactTooltip from 'react-tooltip';

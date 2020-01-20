@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
+import { WALLET_TYPE } from '@myiconwallet/utils/constants';
 import PropTypes from 'prop-types';
 import { IconWallet } from 'icon-sdk-js';
 import { useIconService } from 'components/IconService';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ICONEX_RELAY } from '@myiconwallet/shared/utils/constants';
+import { ICONEX_RELAY } from '@myiconwallet/utils/constants';
 import Alert, { ALERT_TYPE_DANGER } from 'components/Alert';
 import Button from 'components/Button';
 import IconLogo from 'components/Logo';

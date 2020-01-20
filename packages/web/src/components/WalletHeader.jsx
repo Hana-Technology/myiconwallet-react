@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSyncAlt, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import { Link } from '@reach/router';
 import ReactTooltip from 'react-tooltip';
 import { COPY_TOOLTIPS, copyToClipboard } from 'utils/copyToClipboard';

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-solid-svg-icons';
-import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from '@myiconwallet/shared/utils/constants';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from '@myiconwallet/utils/constants';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
+import { wait } from '@myiconwallet/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import BigNumber from 'bignumber.js';

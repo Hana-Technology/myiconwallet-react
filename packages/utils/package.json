@@ -1,6 +1,6 @@
 {
-  "name": "@myiconwallet/shared",
-  "description": "Shared utils and components for MyIconWallet",
+  "name": "@myiconwallet/utils",
+  "description": "Shared utils for MyIconWallet",
   "version": "1.0.0",
   "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
   "license": "MIT",

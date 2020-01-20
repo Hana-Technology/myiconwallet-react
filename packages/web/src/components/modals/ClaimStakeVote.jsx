@@ -8,10 +8,10 @@ import {
   faFlag,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
-import { WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
-import { convertLoopToIcx } from '@myiconwallet/shared/utils/convertIcx';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { WALLET_TYPE } from '@myiconwallet/utils/constants';
+import { convertLoopToIcx } from '@myiconwallet/utils/convertIcx';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
+import { wait } from '@myiconwallet/utils/wait';
 import BigNumber from 'bignumber.js';
 import PropTypes from 'prop-types';
 import BaseModal from 'components/modals/Base';

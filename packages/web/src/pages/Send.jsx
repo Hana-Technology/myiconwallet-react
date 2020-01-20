@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faShareSquare } from '@fortawesome/free-solid-svg-icons';
-import { TRANSACTION_FEE, WALLET_TYPE } from '@myiconwallet/shared/utils/constants';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
-import { useTextInput } from '@myiconwallet/shared/utils/useTextInput';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { TRANSACTION_FEE, WALLET_TYPE } from '@myiconwallet/utils/constants';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
+import { useTextInput } from '@myiconwallet/utils/useTextInput';
+import { wait } from '@myiconwallet/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';

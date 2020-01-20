@@ -6,9 +6,9 @@ import {
   faTimes,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
-import { WALLET_TYPE, ZERO } from '@myiconwallet/shared/utils/constants';
-import { formatNumber } from '@myiconwallet/shared/utils/formatNumber';
-import { wait } from '@myiconwallet/shared/utils/wait';
+import { WALLET_TYPE, ZERO } from '@myiconwallet/utils/constants';
+import { formatNumber } from '@myiconwallet/utils/formatNumber';
+import { wait } from '@myiconwallet/utils/wait';
 import { Link, navigate } from '@reach/router';
 import swal from '@sweetalert/with-react';
 import { IconConverter } from 'icon-sdk-js';
