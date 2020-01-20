@@ -1,0 +1,16 @@
+{
+  "name": "@ledgerhq/hw-app-icx",
+  "version": "0.1.0",
+  "description": "Ledger Hardware Wallet ICON Application API",
+  "keywords": [
+    "Ledger",
+    "LedgerWallet",
+    "ICON",
+    "eth",
+    "NanoS",
+    "Blue",
+    "Hardware Wallet"
+  ],
+  "main": "lib/Icx.js",
+  "license": "Apache-2.0"
+}
