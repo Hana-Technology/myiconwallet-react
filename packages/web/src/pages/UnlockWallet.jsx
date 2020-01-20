@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import colors from '@myiconwallet/utils/colors';
 import { WALLET_TYPE } from '@myiconwallet/utils/constants';
 import { NETWORK_REF_MAINNET, NETWORK_REF_TESTNET } from '@myiconwallet/utils/network';
@@ -8,7 +9,6 @@ import { navigate } from '@reach/router';
 import queryString from 'query-string';
 import Switch from 'react-switch';
 import ReactTooltip from 'react-tooltip';
-import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import LedgerIcon from 'components/LedgerIcon';
 import IconLogo from 'components/Logo';

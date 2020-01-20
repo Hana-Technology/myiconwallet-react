@@ -9,6 +9,7 @@ import {
   faShareSquare,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import colors from '@myiconwallet/utils/colors';
 import { WALLET_TYPE } from '@myiconwallet/utils/constants';
 import { formatNumber } from '@myiconwallet/utils/formatNumber';
@@ -18,7 +19,6 @@ import ReactTooltip from 'react-tooltip';
 import { COPY_TOOLTIPS, copyToClipboard } from 'utils/copyToClipboard';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
-import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';
 import ClaimStakeVoteModal from 'components/modals/ClaimStakeVote';

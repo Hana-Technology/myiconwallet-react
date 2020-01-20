@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faShareSquare } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import { TRANSACTION_FEE, WALLET_TYPE } from '@myiconwallet/utils/constants';
 import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import { useTextInput } from '@myiconwallet/utils/useTextInput';
@@ -11,7 +12,6 @@ import { IconConverter } from 'icon-sdk-js';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { ErrorMessage, Input, InputGroup, Label } from 'components/Forms';
-import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';

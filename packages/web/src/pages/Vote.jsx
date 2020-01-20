@@ -6,6 +6,7 @@ import {
   faTimes,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import { WALLET_TYPE, ZERO } from '@myiconwallet/utils/constants';
 import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import { wait } from '@myiconwallet/utils/wait';
@@ -17,7 +18,6 @@ import { shuffle } from 'lodash-es';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
 import { InputGroup } from 'components/Forms';
-import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';

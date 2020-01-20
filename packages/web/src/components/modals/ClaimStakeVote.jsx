@@ -8,6 +8,7 @@ import {
   faFlag,
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import { WALLET_TYPE } from '@myiconwallet/utils/constants';
 import { convertLoopToIcx } from '@myiconwallet/utils/convertIcx';
 import { formatNumber } from '@myiconwallet/utils/formatNumber';
@@ -17,7 +18,6 @@ import PropTypes from 'prop-types';
 import BaseModal from 'components/modals/Base';
 import Alert, { ALERT_TYPE_DANGER, ALERT_TYPE_INFO, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
-import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
 const ISCORE_CLAIMED_EVENT = 'IScoreClaimed(int,int)';

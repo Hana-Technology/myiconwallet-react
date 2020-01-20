@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faExternalLinkAlt, faFlag } from '@fortawesome/free-solid-svg-icons';
+import { useIconService } from '@myiconwallet/components/IconService';
 import { WALLET_TYPE, WITHHOLD_BALANCE, ZERO } from '@myiconwallet/utils/constants';
 import { formatNumber } from '@myiconwallet/utils/formatNumber';
 import { wait } from '@myiconwallet/utils/wait';
@@ -10,7 +11,6 @@ import BigNumber from 'bignumber.js';
 import Slider from 'react-rangeslider';
 import Alert, { ALERT_TYPE_INFO, ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS } from 'components/Alert';
 import Button from 'components/Button';
-import { useIconService } from 'components/IconService';
 import Layout from 'components/Layout';
 import { useWallet } from 'components/Wallet';
 import WalletHeader from 'components/WalletHeader';

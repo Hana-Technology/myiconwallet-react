@@ -1,0 +1,16 @@
+{
+  "name": "@myiconwallet/components",
+  "description": "Shared components for MyIconWallet",
+  "version": "1.0.0",
+  "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@ledgerhq/hw-app-icx": "0.1.0",
+    "@ledgerhq/hw-transport-u2f": "^4.78.0",
+    "@myiconwallet/utils": "1.0.0",
+    "icon-sdk-js": "^0.0.18",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0"
+  }
+}
