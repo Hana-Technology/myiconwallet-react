@@ -14,7 +14,7 @@ function AppBanner() {
           New
         </span>
         <span className="text-left flex-auto mx-3">
-          Checkout the new MyIconWallet app on iPhone and Android
+          Check out the new MyIconWallet app on iPhone and Android
         </span>
         <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
       </a>
