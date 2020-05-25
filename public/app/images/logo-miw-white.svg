@@ -1,0 +1,9 @@
+<svg width="221" height="36" 
+  xmlns="http://www.w3.org/2000/svg">
+  <g fill="#ffffff" fill-rule="evenodd">
+    <text font-family="AvenirNext-DemiBold, Avenir Next" font-size="35" font-weight="500" letter-spacing=".007" transform="translate(-2 -8)">
+      <tspan x="0" y="35">myiconwallet.</tspan>
+    </text>
+    <path d="M31.768 35.348L.72 33.135l2.223-3.486 30.427 2.03z"/>
+  </g>
+</svg>

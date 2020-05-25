@@ -1,0 +1,188 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin-top: 0px;
+  font-family: 'Avenir Next', 'Muli', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  height: 100vh;
+  background-color: #f4f6f8;
+}
+p {
+  margin: 0;
+}
+.description {
+  width: 620px;
+  max-width: 100%;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 34px;
+  margin-bottom: 40px;
+}
+h1 {
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 58px;
+  margin: 0;
+}
+a:link {
+  text-decoration: none;
+}
+main {
+  position: relative;
+  width: 100%;
+  flex: 1 1 0%;
+  margin: 0px auto;
+  padding: 60px 30px;
+  text-align: center;
+}
+.myiconwallet-logo {
+  margin-top: 2px;
+  margin-bottom: 30px;
+  width: 203px;
+  height: 33px;
+}
+footer {
+  padding-top: 0px;
+  margin-top: 0px;
+  z-index: 10;
+}
+.phone-trio-wrapper {
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.phones-trio {
+  width: 677px;
+  max-width: 100%;
+  margin-bottom: -65px;
+}
+.rn-container a {
+  font-weight: 500;
+  color: #030303;
+  padding-top: 10px;
+}
+.rn-container p {
+  color: #040304;
+}
+.social-container p {
+  font-style: italic;
+  color: #020202;
+}
+.background-mask {
+  background-image: linear-gradient(180deg, #5c6ac4 0%, #1c2260 100%);
+  width: 100%;
+  min-height: 100vh;
+}
+.logo-header {
+  margin-bottom: 30px;
+}
+.white-logo {
+  width: 120px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.store-icons {
+  font-size: 0; /* ignore whitespace */
+}
+.appstore {
+  width: 203px;
+}
+.googleplay {
+  width: 203px;
+  margin-left: 30px;
+}
+.wave {
+  bottom: 19px;
+}
+.wave-small {
+  display: none;
+}
+.footer-content {
+  height: 120px;
+  background-color: #f4f6f8;
+  padding: 15px 150px 30px 150px;
+}
+.rn-icon {
+  width: 75px;
+  height: 75px;
+  margin-right: 20px;
+}
+.rn-container-arrow {
+  vertical-align: baseline;
+  margin-left: 5px;
+}
+.icon-box {
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #5c6ac4;
+  border-radius: 4px;
+}
+.icon-box:first-child {
+  margin-left: 0;
+}
+.twitter-icon {
+  margin-top: 3px;
+}
+
+@media (max-width: 576px) {
+  h1.logo-header {
+    font-size: 40px;
+    line-height: 52px;
+  }
+  .white-logo {
+    width: 96px;
+    margin-bottom: 4px;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .phones-trio {
+    width: 100%;
+  }
+  .googleplay {
+    margin-left: 0;
+    margin-top: 30px;
+  }
+  .wave {
+    display: none;
+  }
+  .wave-small {
+    display: block;
+    bottom: 212px;
+  }
+  .rn-container {
+    padding-bottom: 20px;
+  }
+  .rn-icon {
+    margin-right: 16px;
+  }
+  .footer-content {
+    height: auto;
+    padding: 40px 20px;
+  }
+  .social-container {
+    padding-top: 28px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .footer-content {
+    height: auto;
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+}
