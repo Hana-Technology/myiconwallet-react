@@ -43,7 +43,7 @@ function UnlockWalletPage({ location }) {
   }
 
   return (
-    <Layout title="Unlock Existing Wallet">
+    <Layout title="Unlock Existing Wallet" showAppBanner>
       <div className="sm:flex items-start justify-between">
         <img
           src={authenticationSvg}

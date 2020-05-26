@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import AppBanner from 'components/AppBanner';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 
-function Layout({ children, styleMain = true, title }) {
+function Layout({ children, showAppBanner = false, styleMain = true, title }) {
   useEffect(() => {
     document.title = `${title ? `${title} | ` : ''}MyIconWallet`;
   }, [title]);
 
   return (
     <div className="flex flex-col min-h-screen">
+      {showAppBanner && <AppBanner />}
       <Header />
       <main className="flex-1 bg-gray-100 text-gray-800 sm:px-4">
         {styleMain ? (
@@ -27,6 +29,7 @@ function Layout({ children, styleMain = true, title }) {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  showAppBanner: PropTypes.bool,
   styleMain: PropTypes.bool,
   title: PropTypes.string,
 };

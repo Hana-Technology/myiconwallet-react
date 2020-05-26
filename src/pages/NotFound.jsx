@@ -7,7 +7,7 @@ import notFoundSvg from 'assets/not_found.svg';
 
 function NotFoundPage() {
   return (
-    <Layout title="Page Not Found">
+    <Layout title="Page Not Found" showAppBanner>
       <div className="sm:flex items-start justify-between">
         <img
           src={notFoundSvg}

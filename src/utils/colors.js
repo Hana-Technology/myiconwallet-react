@@ -3,6 +3,13 @@ module.exports = {
   white: '#fff',
   cyan: '#19c6ca',
 
+  // MIW app branding for banner
+  miw: {
+    dark: '#1c2260',
+    primary: '#5c6ac4',
+    primary30: 'rgba(92,106,196,0.3)', // 30% opacity
+  },
+
   gray: {
     100: '#f7fafc',
     200: '#edf2f7',
