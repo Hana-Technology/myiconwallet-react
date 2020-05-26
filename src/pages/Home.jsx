@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBanner from 'components/AppBanner';
 import Landing from 'components/Landing';
 import Layout from 'components/Layout';
 import ViewWallet from 'components/ViewWallet';
@@ -9,10 +8,9 @@ function HomePage() {
   const { wallet } = useWallet();
 
   return (
-    <>
-      {!wallet && <AppBanner />}
-      <Layout styleMain={!!wallet}>{wallet ? <ViewWallet /> : <Landing />}</Layout>
-    </>
+    <Layout showAppBanner={!wallet} styleMain={!!wallet}>
+      {wallet ? <ViewWallet /> : <Landing />}
+    </Layout>
   );
 }
 

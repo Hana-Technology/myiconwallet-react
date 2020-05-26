@@ -11,7 +11,7 @@ function CreateWalletPage() {
   }
 
   return (
-    <Layout title="Create a New Wallet">
+    <Layout title="Create a New Wallet" showAppBanner={!isCreated}>
       <h2 className="text-2xl uppercase tracking-tight">Create{isCreated && 'd'} a new wallet</h2>
       {isCreated ? <CreatedWallet /> : <CreateWallet onCreateWallet={handleOnCreateWallet} />}
     </Layout>
