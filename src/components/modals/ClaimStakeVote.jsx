@@ -20,7 +20,7 @@ import Button from 'components/Button';
 import { useIconService } from 'components/IconService';
 import { useWallet } from 'components/Wallet';
 
-const ISCORE_CLAIMED_EVENT = 'IScoreClaimed(int,int)';
+const ISCORE_CLAIMED_EVENT = 'IScoreClaimed';
 
 const INITIAL_STATE = {
   isWorking: false,
@@ -93,7 +93,7 @@ function ClaimStakeVoteModal({ isOpen, onClose }) {
       const transactionHash = await claimIScore(wallet);
       const transaction = await waitForTransaction(transactionHash, 100);
       const claimedICXAsLoop = transaction.eventLogs.find(({ indexed }) =>
-        indexed.includes(ISCORE_CLAIMED_EVENT)
+        indexed.some(indexed => indexed.includes(ISCORE_CLAIMED_EVENT))
       ).data[1];
       claimedICX = convertLoopToIcx(claimedICXAsLoop);
       claimDispatch({
