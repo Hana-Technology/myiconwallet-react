@@ -71,11 +71,12 @@ function IconService({ children }) {
 
     return {
       staked: convertLoopToIcx(IconConverter.toBigNumber(result.stake)),
-      unstaking: result.unstake
-        ? convertLoopToIcx(IconConverter.toBigNumber(result.unstake))
-        : null,
-      remainingBlocks: result.remainingBlocks
-        ? IconConverter.toBigNumber(result.remainingBlocks)
+      unstaking: result.unstakes
+        ? result.unstakes.reduce(
+            (unstaking, { unstake }) =>
+              unstaking.plus(convertLoopToIcx(IconConverter.toBigNumber(unstake))),
+            IconConverter.toBigNumber(0)
+          )
         : null,
     };
   }
@@ -364,7 +365,6 @@ export default IconService;
  * @typedef {Object} StakeResult
  * @property {BigNumber} staked value as ICX
  * @property {BigNumber} [unstaking] value as ICX
- * @property {BigNumber} [remainingBlocks] value as number
  *
  * @typedef {Object} IScoreResult
  * @property {BigNumber} iScore value as ICX
