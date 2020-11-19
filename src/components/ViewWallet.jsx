@@ -10,6 +10,7 @@ import {
   faVoteYea,
 } from '@fortawesome/free-solid-svg-icons';
 import swal from '@sweetalert/with-react';
+import { IconConverter } from 'icon-sdk-js';
 import { Pie } from 'react-chartjs-2';
 import ReactTooltip from 'react-tooltip';
 import colors from 'utils/colors';
@@ -33,6 +34,16 @@ const EMPTY_CHART_DATA = {
   ],
 };
 const EMPTY_CHART_OPTIONS = { events: [] };
+const CHART_OPTIONS = {
+  tooltips: {
+    callbacks: {
+      label: ({ index, datasetIndex }, { datasets }) => {
+        const value = datasets[datasetIndex].data[index];
+        return `${formatNumber(IconConverter.toBigNumber(value))} ICX`;
+      },
+    },
+  },
+};
 
 function ViewWallet() {
   const {
@@ -278,7 +289,7 @@ function ViewWallet() {
               <Pie
                 data={isChartEmpty ? EMPTY_CHART_DATA : chartData}
                 legend={{ position: 'bottom' }}
-                options={isChartEmpty ? EMPTY_CHART_OPTIONS : {}}
+                options={isChartEmpty ? EMPTY_CHART_OPTIONS : CHART_OPTIONS}
                 height={200}
               />
             )}
