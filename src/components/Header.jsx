@@ -109,20 +109,12 @@ function Header() {
                 </li>
               </>
             ) : (
-              <>
-                <li>
-                  <NavLink to="/create">
-                    <FontAwesomeIcon icon={faWallet} fixedWidth className="mr-1 opacity-75" />
-                    Create Wallet
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/unlock">
-                    <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
-                    Unlock
-                  </NavLink>
-                </li>
-              </>
+              <li>
+                <NavLink to="/unlock">
+                  <FontAwesomeIcon icon={faUnlockAlt} fixedWidth className="mr-1 opacity-75" />
+                  Unlock
+                </NavLink>
+              </li>
             )}
           </ul>
         </nav>

@@ -3,7 +3,6 @@ import { Router } from '@reach/router';
 import IconService from 'components/IconService';
 import Wallet from 'components/Wallet';
 import Home from 'pages/Home';
-import CreateWallet from 'pages/CreateWallet';
 import UnlockWallet from 'pages/UnlockWallet';
 import Send from 'pages/Send';
 import Stake from 'pages/Stake';
@@ -16,7 +15,6 @@ function App() {
       <Wallet>
         <Router>
           <Home path="/" />
-          <CreateWallet path="create" />
           <UnlockWallet path="unlock" />
           <Send path="send" />
           <Stake path="stake" />

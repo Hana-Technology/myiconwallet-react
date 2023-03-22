@@ -9,10 +9,7 @@ it('renders the logo', () => {
 
 it('renders the nav links', () => {
   const { getByText } = render(<Header />);
-  const createLink = getByText('Create Wallet');
-  expect(createLink).toBeInTheDocument();
-  expect(createLink).toHaveAttribute('href', '/create');
-  const updateLink = getByText('Unlock');
-  expect(updateLink).toBeInTheDocument();
-  expect(updateLink).toHaveAttribute('href', '/unlock');
+  const unlockLink = getByText('Unlock');
+  expect(unlockLink).toBeInTheDocument();
+  expect(unlockLink).toHaveAttribute('href', '/unlock');
 });

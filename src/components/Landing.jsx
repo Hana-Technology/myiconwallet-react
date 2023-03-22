@@ -1,11 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faLongArrowAltRight,
-  faShieldAlt,
-  faUnlockAlt,
-  faWallet,
-} from '@fortawesome/free-solid-svg-icons';
+import { faLongArrowAltRight, faShieldAlt, faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@reach/router';
 import connectedWorldSvg from 'assets/connected_world.svg';
 
@@ -43,8 +38,7 @@ function Landing() {
             Your private key never leaves the browser.
           </p>
           <p className="text-lg mt-2">
-            Use your existing wallet from ICONex or create a new one. All wallets are compatible
-            with ICONex.
+            Use your existing wallet from ICONex or connect your Ledger.
           </p>
         </div>
         <img
@@ -53,22 +47,14 @@ function Landing() {
           className="hidden sm:block w-0 md:w-1/2 max-w-full flex-none pr-6"
         />
       </div>
-      <div className="sm:flex justify-between max-w-4xl mx-auto mt-8 sm:mt-12 px-4 sm:px-6">
-        <MegaButton
-          to="/create"
-          title="Create a wallet"
-          description="Enter a password to create a new wallet and download the keystore to access it next time"
-          cta="Get started"
-          icon={faWallet}
-          className="bg-teal-500 hover:bg-teal-600 text-teal-100"
-        />
+      <div className="sm:flex justify-between max-w-6xl mx-auto mt-8 sm:mt-12 px-4 sm:px-6">
         <MegaButton
           to="/unlock"
           title="Unlock a wallet"
           description="Provide your existing keystore and password to unlock and start using your wallet"
           cta="Access now"
           icon={faUnlockAlt}
-          className="mt-6 sm:mt-0 sm:ml-6 bg-blue-600 hover:bg-blue-700 text-blue-100"
+          className="mt-6 sm:mt-0 bg-blue-600 hover:bg-blue-700 text-blue-100"
         />
       </div>
     </div>

@@ -13,7 +13,6 @@ const INITIAL_STATE = {
   iScore: {},
   delegations: null,
   votingPower: null, // Is this required?
-  createWallet: null,
   unlockWallet: null,
   accessLedgerWallet: null,
   accessICONexWallet: null,
@@ -39,12 +38,6 @@ function Wallet({ children }) {
   const [delegations, setDelegations] = useState(INITIAL_STATE.delegations);
   const [votingPower, setVotingPower] = useState(INITIAL_STATE.votingPower);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
-
-  function createWallet(password) {
-    const wallet = IconWallet.create();
-    const keystore = wallet.store(password);
-    setKeystore(keystore);
-  }
 
   function unlockWallet(keystore, password) {
     try {
@@ -122,7 +115,6 @@ function Wallet({ children }) {
         iScore,
         delegations,
         votingPower,
-        createWallet,
         unlockWallet,
         accessLedgerWallet,
         accessICONexWallet,

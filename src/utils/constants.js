@@ -16,5 +16,3 @@ export const WITHHOLD_BALANCE = IconConverter.toBigNumber(3);
 export const ZERO = IconConverter.toBigNumber(0);
 
 export const TRANSACTION_FEE = convertLoopToIcx(Math.pow(10, 15));
-
-export const PASSWORD_COMPLEXITY_REGEXP = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[?!:;.,%+-/*=<>{}()[\]`"'~_^\\|@#$&]).{8,}$/;
