@@ -7,7 +7,6 @@ import {
   faSignOutAlt,
   faUnlockAlt,
   faVoteYea,
-  faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, navigate } from '@reach/router';
 import { NETWORK_REF_TESTNET } from 'utils/network';
