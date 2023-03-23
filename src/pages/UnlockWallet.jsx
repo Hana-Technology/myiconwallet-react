@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { navigate } from '@reach/router';
 import queryString from 'query-string';
 import Switch from 'react-switch';
@@ -13,7 +13,6 @@ import Layout from 'components/Layout';
 import LedgerIcon from 'components/LedgerIcon';
 import IconLogo from 'components/Logo';
 import UnlockWithICONex from 'components/UnlockWithICONex';
-import UnlockWithKeystore from 'components/UnlockWithKeystore';
 import UnlockWithLedger from 'components/UnlockWithLedger';
 import authenticationSvg from 'assets/authentication.svg';
 
@@ -31,7 +30,7 @@ function TabButton({ className, isActive, ...props }) {
 
 function UnlockWalletPage({ location }) {
   const { changeNetwork, network } = useIconService();
-  const [unlockMethod, setUnlockMethod] = useState(WALLET_TYPE.KEYSTORE);
+  const [unlockMethod, setUnlockMethod] = useState(WALLET_TYPE.LEDGER);
 
   function onUnlockWallet() {
     const queryParams = queryString.parse(location.search);
@@ -89,16 +88,8 @@ function UnlockWalletPage({ location }) {
 
           <div className="mt-3">
             <TabButton
-              onClick={() => setUnlockMethod(WALLET_TYPE.KEYSTORE)}
-              isActive={unlockMethod === WALLET_TYPE.KEYSTORE}
-            >
-              <FontAwesomeIcon icon={faKey} className="mr-2 opacity-75" />
-              Keystore
-            </TabButton>
-            <TabButton
               onClick={() => setUnlockMethod(WALLET_TYPE.LEDGER)}
               isActive={unlockMethod === WALLET_TYPE.LEDGER}
-              className="ml-2"
             >
               <LedgerIcon className="mr-1 opacity-75" />
               Ledger
@@ -114,9 +105,6 @@ function UnlockWalletPage({ location }) {
           </div>
 
           <div className="mt-6">
-            {unlockMethod === WALLET_TYPE.KEYSTORE && (
-              <UnlockWithKeystore onUnlockWallet={onUnlockWallet} />
-            )}
             {unlockMethod === WALLET_TYPE.LEDGER && (
               <UnlockWithLedger onUnlockWallet={onUnlockWallet} />
             )}

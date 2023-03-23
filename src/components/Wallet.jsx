@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { IconWallet } from 'icon-sdk-js';
 import { WALLET_TYPE } from 'utils/constants';
 import { useIconService } from 'components/IconService';
 
@@ -13,7 +12,6 @@ const INITIAL_STATE = {
   iScore: {},
   delegations: null,
   votingPower: null, // Is this required?
-  unlockWallet: null,
   accessLedgerWallet: null,
   accessICONexWallet: null,
   unloadWallet: null,
@@ -38,19 +36,6 @@ function Wallet({ children }) {
   const [delegations, setDelegations] = useState(INITIAL_STATE.delegations);
   const [votingPower, setVotingPower] = useState(INITIAL_STATE.votingPower);
   const [isLoading, setIsLoading] = useState(INITIAL_STATE.isLoading);
-
-  function unlockWallet(keystore, password) {
-    try {
-      const wallet = IconWallet.loadKeystore(keystore, password);
-      wallet.type = WALLET_TYPE.KEYSTORE;
-      setWallet(wallet);
-      setKeystore(keystore);
-      refreshWallet(wallet);
-      return true;
-    } catch (_error) {
-      return false;
-    }
-  }
 
   function accessLedgerWallet(wallet) {
     const newWallet = {
@@ -115,7 +100,6 @@ function Wallet({ children }) {
         iScore,
         delegations,
         votingPower,
-        unlockWallet,
         accessLedgerWallet,
         accessICONexWallet,
         unloadWallet,
